@@ -13,6 +13,11 @@ export class UserResolver {
     return this.userService.getUser();
   }
 
+  @Query(() => [User])
+  findAllUsers(): Promise<UserModel[]> {
+    return this.userService.findAllUsers();
+  }
+
   @Mutation(() => User)
   createUser(@Args() user: UserInput): Promise<UserModel> {
     const createdUser = this.userService.createUser(user);
