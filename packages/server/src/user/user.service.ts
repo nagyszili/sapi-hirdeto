@@ -10,6 +10,11 @@ export class UserService {
     @InjectModel(UserModel.name) private userModel: Model<UserModel>,
   ) {}
 
+  async findAllUsers(): Promise<UserModel[]> {
+    const getUsers = this.userModel.find().exec();
+    return getUsers;
+  }
+
   async createUser(userInput: UserInput): Promise<UserModel> {
     const newUser = new this.userModel(userInput);
 
@@ -18,7 +23,6 @@ export class UserService {
 
   async getUser(): Promise<UserModel> {
     const getUser = this.userModel.findOne().exec();
-
     return getUser;
   }
 }

@@ -7,5 +7,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {}
+  "scripts": {
+    "postinstall": "cd ./packages/client && expo-yarn-workspaces postinstall"
+  }
 }
