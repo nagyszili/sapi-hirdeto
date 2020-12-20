@@ -20,6 +20,12 @@ export const config = convict({
       env: 'MONGO_DB_ACCESS_URL',
     },
   },
+  jwtSecret: {
+    doc: 'The secret used for signing JWT tokens',
+    format: String,
+    default: '',
+    env: 'JWT_SIGNING_SECRET',
+  },
 });
 
 convict.addParser({ extension: ['yml', 'yaml'], parse: yaml.safeLoad });
