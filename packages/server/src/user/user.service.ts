@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserModel } from './user.schema';
 import { UserInput } from './user.input';
+import { hashPassword } from 'src/util/util-functions';
+import { UserUpdate } from './user.update';
 
 @Injectable()
 export class UserService {
@@ -15,10 +17,37 @@ export class UserService {
     return getUsers;
   }
 
-  async createUser(userInput: UserInput): Promise<UserModel> {
-    const newUser = new this.userModel(userInput);
+  async findOneUserById(id: string): Promise<UserModel> {
+    const user = await this.userModel.findById(id).exec();
+    if (!user) {
+      throw new NotFoundException({
+        message: 'User not found!',
+      });
+    }
+    return user;
+  }
 
-    return newUser.save();
+  async findOneUserByEmail(email: string): Promise<UserModel> {
+    const user = this.userModel.findOne({ email }).exec();
+    if (!user) {
+      throw new NotFoundException({
+        message: 'User not found!',
+      });
+    }
+    return user;
+  }
+
+  async createUser(userInput: UserInput): Promise<UserModel> {
+    const newUser = {
+      password: hashPassword(userInput.password),
+      email: userInput.email,
+    };
+    const createdUser = new this.userModel(newUser);
+    return createdUser.save();
+  }
+
+  async updateUser(userUpdate: UserUpdate): Promise<UserModel> {
+    return null;
   }
 
   async getUser(): Promise<UserModel> {

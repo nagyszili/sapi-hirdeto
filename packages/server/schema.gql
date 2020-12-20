@@ -3,7 +3,15 @@
 # ------------------------------------------------------
 
 type User {
-  name: String!
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phoneNumber: String
+}
+
+type AccessToken {
+  access_token: String!
 }
 
 type Query {
@@ -12,5 +20,6 @@ type Query {
 }
 
 type Mutation {
-  createUser(name: String!): User!
+  createUser(email: String!, password: String!): User!
+  login(email: String!, password: String!): AccessToken!
 }
