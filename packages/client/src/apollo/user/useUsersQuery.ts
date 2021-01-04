@@ -3,7 +3,11 @@ import { useQuery, gql } from '@apollo/client';
 export const FIND_ALL_USER = gql`
   query findAllUsers {
     findAllUsers {
-      name
+      id
+      firstName
+      lastName
+      email
+      phoneNumber
     }
   }
 `;
