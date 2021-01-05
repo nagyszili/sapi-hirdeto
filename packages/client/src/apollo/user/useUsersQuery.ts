@@ -1,7 +1,9 @@
-import { useQuery, gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
+
+import { FindAllUsers_findAllUsers } from '../types/FindAllUsers';
 
 export const FIND_ALL_USER = gql`
-  query findAllUsers {
+  query FindAllUsers {
     findAllUsers {
       id
       firstName
@@ -12,5 +14,5 @@ export const FIND_ALL_USER = gql`
   }
 `;
 
-// export const useUserQuery = () =>
-//   useQuery<, {}>(GET_ALL_USER, );
+export const useUsersQuery = () =>
+  useQuery<FindAllUsers_findAllUsers>(FIND_ALL_USER);
