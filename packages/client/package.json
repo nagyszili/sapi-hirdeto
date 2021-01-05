@@ -10,7 +10,7 @@
     "eject": "expo eject",
     "test": "jest --watchAll",
     "lint": "tsc --noEmit --skipLibCheck && eslint ../client --ext .js,.jsx,.ts,.tsx",
-    "generate-types": "yarn apollo codegen:generate --endpoint=http://localhost:3000/graphql --target=typescript --includes='apollo/**/*.ts' --tagName=gql  --globalTypesFile=apollo/types/graphql-global-types.ts apollo/types --outputFlat"
+    "generate-types": "yarn apollo codegen:generate --endpoint=http://localhost:3000/graphql --target=typescript --includes='src/apollo/**/*.ts' --tagName=gql  --globalTypesFile=src/apollo/types/graphql-global-types.ts src/apollo/types --outputFlat"
   },
   "jest": {
     "preset": "jest-expo"

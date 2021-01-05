@@ -2,11 +2,13 @@ import * as React from 'react';
 import { StyleSheet, Button } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
+import { useCreateUserMutation } from '../apollo/user/useCreateUserMutation';
 import { Text, View } from '../components/Themed';
 
 export const LoginForm = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [createUser] = useCreateUserMutation();
 
   return (
     <View style={styles.container}>
@@ -25,7 +27,15 @@ export const LoginForm = () => {
         value={password}
         onChangeText={(password) => setPassword(password)}
       />
-      <Button title="Submit" onPress={() => {}} />
+      <Button
+        title="Submit"
+        onPress={() => {
+          console.log(email);
+          console.log(password);
+
+          createUser({ variables: { email, password } });
+        }}
+      />
     </View>
   );
 };

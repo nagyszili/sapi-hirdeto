@@ -18,6 +18,6 @@ export interface CreateUserMutation {
 }
 
 export interface CreateUserMutationVariables {
-  createUserEmail: string;
-  createUserPassword: string;
+  email: string;
+  password: string;
 }

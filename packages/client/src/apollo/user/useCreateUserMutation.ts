@@ -1,16 +1,18 @@
-import { useQuery, gql } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
+
+import {
+  CreateUserMutation,
+  CreateUserMutationVariables,
+} from '../types/CreateUserMutation';
 
 export const CREATE_USER = gql`
-  mutation CreateUserMutation(
-    $createUserEmail: String!
-    $createUserPassword: String!
-  ) {
-    createUser(email: $createUserEmail, password: $createUserPassword) {
+  mutation CreateUserMutation($email: String!, $password: String!) {
+    createUser(email: $email, password: $password) {
       id
       email
     }
   }
 `;
 
-// export const useCreateUserMutation = () =>
-//   useMutation<, {}>(CREATE_USER, );
+export const useCreateUserMutation = () =>
+  useMutation<CreateUserMutation, CreateUserMutationVariables>(CREATE_USER);

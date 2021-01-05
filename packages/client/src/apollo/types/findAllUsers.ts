@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: findAllUsers
+// GraphQL query operation: FindAllUsers
 // ====================================================
 
-export interface findAllUsers_findAllUsers {
+export interface FindAllUsers_findAllUsers {
   __typename: "User";
   id: string;
   firstName: string;
@@ -16,6 +16,6 @@ export interface findAllUsers_findAllUsers {
   phoneNumber: string | null;
 }
 
-export interface findAllUsers {
-  findAllUsers: findAllUsers_findAllUsers[];
+export interface FindAllUsers {
+  findAllUsers: FindAllUsers_findAllUsers[];
 }
