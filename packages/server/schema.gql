@@ -14,12 +14,82 @@ type AccessToken {
   access_token: String!
 }
 
+type Attribute {
+  title: String!
+  type: String!
+  possibleValues: [String!]!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  identifier: String!
+  attributes: [Attribute!]!
+}
+
+type AttributeValue {
+  key: String!
+  value: String!
+}
+
+type Ad {
+  id: ID!
+  identifier: String!
+  name: String!
+  user: User!
+  price: Float!
+  description: String
+  images: [String!]
+  createdAt: DateTime!
+  updatedAt: DateTime
+  location: String!
+  views: Int!
+  category: Category!
+  attributeValues: [AttributeValue!]
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type MainCategory {
+  id: ID!
+  identifier: String!
+  name: String!
+  categories: [Category!]!
+}
+
 type Query {
   findUser: User!
   findAllUsers: [User!]!
+  findAdById(id: String!): Ad!
+  findAllAds: [Ad!]!
+  findMainCategoryById(id: String!): MainCategory!
+  findAllMainCategories: [MainCategory!]!
 }
 
 type Mutation {
   createUser(email: String!, password: String!): User!
   login(email: String!, password: String!): AccessToken!
+  createAd(name: String!, price: Float!, description: String, images: [String!], location: String!, category: CategoryInput, attributeValues: [AttributeValueInput!]): Ad!
+  updateAd(name: String, price: Float, description: String, images: [String!], location: String, category: String, attributeValues: [AttributeValueInput!], id: String!): Ad!
+  updateMainCategory(identifier: String, name: String, categories: [CategoryInput!], id: String!): MainCategory!
+}
+
+input CategoryInput {
+  identifier: String!
+  name: String!
+  attributes: [AttributeInput!]!
+}
+
+input AttributeInput {
+  title: String!
+  type: String!
+  possibleValues: [String!]!
+}
+
+input AttributeValueInput {
+  key: String!
+  value: String!
 }

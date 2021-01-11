@@ -1,11 +1,12 @@
 import { ApolloClient, createHttpLink } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Constants from 'expo-constants';
 
 import { cache } from './cache';
 
 const httpLink = createHttpLink({
-  uri: process.env.BACKEND_URL,
+  uri: Constants.manifest.extra.backendUrl,
 });
 
 const authLink = setContext(async (_, { headers }) => {
