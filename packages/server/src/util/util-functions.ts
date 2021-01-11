@@ -7,3 +7,7 @@ export const comparePassword = (
   oldPassword: string,
   hashedPassword: string,
 ): boolean => bcrypt.compareSync(oldPassword, hashedPassword);
+
+export const generateIdentifier = (): string => {
+  return Math.random().toString(20).substr(2, 8);
+};
