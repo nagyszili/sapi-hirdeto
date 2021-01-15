@@ -8,6 +8,7 @@
     "packages/*"
   ],
   "scripts": {
-    "postinstall": "cd ./packages/client && expo-yarn-workspaces postinstall"
+    "postinstall": "cd ./packages/client && expo-yarn-workspaces postinstall",
+    "lint": "cd ./packages/client && yarn lint && cd ../server && yarn lint"
   }
 }

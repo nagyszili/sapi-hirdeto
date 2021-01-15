@@ -3,10 +3,7 @@ import { ArgsType, Field } from '@nestjs/graphql';
 @ArgsType()
 export class UserUpdate {
   @Field({ nullable: true })
-  firstName?: string;
-
-  @Field({ nullable: true })
-  lastName?: string;
+  name?: string;
 
   @Field({ nullable: true })
   email?: string;

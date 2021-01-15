@@ -4,8 +4,8 @@ import { AdInput } from './ad.input';
 import { AdService } from './ad.service';
 import { modelToObject } from 'src/util/mappers';
 import { AdUpdate } from './ad.update';
-import { User } from 'src/user/user.type';
 import { CurrentUser } from 'src/util/decorators';
+import { User } from 'src/user/user.type';
 
 @Resolver()
 export class AdResolver {
@@ -19,6 +19,21 @@ export class AdResolver {
   @Query(() => [Ad])
   async findAllAds(): Promise<Ad[]> {
     return (await this.adService.findAllAds()).map((ad) => modelToObject(ad));
+  }
+
+  @Query(() => [Ad])
+  async findAdsByCategoryId(
+    @Args('id') id: string,
+    @Args('all') all: boolean,
+  ): Promise<Ad[]> {
+    if (all) {
+      return (await this.adService.findAdsByMainCategoryId(id)).map((ad) =>
+        modelToObject(ad),
+      );
+    }
+    return (await this.adService.findAdsByCategoryId(id)).map((ad) =>
+      modelToObject(ad),
+    );
   }
 
   @Mutation(() => Ad)

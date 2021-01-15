@@ -7,7 +7,7 @@ import {
 } from 'src/attribute-value/attribute-value.schema';
 import { UserModel } from 'src/user/user.schema';
 
-@Schema()
+@Schema({ timestamps: true })
 export class AdModel extends Document {
   @Prop()
   name: string;
@@ -45,7 +45,6 @@ export class AdModel extends Document {
   @Prop({
     type: MongooseSchema.Types.ObjectId,
     ref: CategoryModel.name,
-    index: true,
   })
   category: CategoryModel;
 

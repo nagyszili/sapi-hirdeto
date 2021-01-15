@@ -1,5 +1,4 @@
 import { Field, ArgsType } from '@nestjs/graphql';
-import { CategoryInput } from 'src/category/category.input';
 
 @ArgsType()
 export class MainCategoryInput {
@@ -8,7 +7,4 @@ export class MainCategoryInput {
 
   @Field({ nullable: true })
   name?: string;
-
-  @Field(() => [CategoryInput], { nullable: true })
-  categories?: CategoryInput[];
 }

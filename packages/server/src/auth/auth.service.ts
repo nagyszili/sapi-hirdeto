@@ -13,7 +13,7 @@ export class AuthService {
   ) {}
 
   async validateUser(email: string, password: string): Promise<UserModel> {
-    const user = await this.usersService.findOneUserByEmail(email);
+    const user = await this.usersService.findUserByEmail(email);
     if (!user || !bcrypt.compareSync(password, user.password)) {
       throw new UnauthorizedException({
         message: 'Bad login credentials!',

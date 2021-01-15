@@ -1,18 +1,22 @@
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { UserModule } from './user/user.module';
 import { config } from './config/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
-import { AdModule } from './ad/ad.module';
 import { MainCategoryModule } from './main-category/main-category.module';
+import { AdModule } from './ad/ad.module';
+import { SeederModule } from './seeder/seeder.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
     AuthModule,
-    UserModule,
     AdModule,
     MainCategoryModule,
+    UserModule,
+    SeederModule,
+    CategoryModule,
     GraphQLModule.forRoot({ autoSchemaFile: 'schema.gql' }),
     MongooseModule.forRoot(config.get('db.url'), {
       useCreateIndex: true,

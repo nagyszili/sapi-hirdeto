@@ -1,5 +1,4 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
-import { Category } from 'src/category/category.type';
 
 @ObjectType()
 export class MainCategory {
@@ -11,7 +10,4 @@ export class MainCategory {
 
   @Field()
   name: string;
-
-  @Field(() => [Category])
-  categories: Category[];
 }

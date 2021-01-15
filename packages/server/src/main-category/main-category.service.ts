@@ -12,8 +12,7 @@ export class MainCategoryService {
   ) {}
 
   async findAllMainCategories(): Promise<MainCategoryModel[]> {
-    const ads = await this.mainCategoryModel.find().exec();
-    return ads;
+    return this.mainCategoryModel.find().exec();
   }
 
   async findMainCategoryById(id: string): Promise<MainCategoryModel> {
@@ -30,15 +29,6 @@ export class MainCategoryService {
     mainCategoryInput: MainCategoryInput,
   ): Promise<MainCategoryModel> {
     const mainCategory = new this.mainCategoryModel(mainCategoryInput);
-    return mainCategory.save();
-  }
-
-  async updateMainCategory(
-    id: string,
-    mainCategoryInput: MainCategoryInput,
-  ): Promise<MainCategoryModel> {
-    const mainCategory = await this.findMainCategoryById(id);
-    mainCategory.set({ ...mainCategoryInput });
     return mainCategory.save();
   }
 }
