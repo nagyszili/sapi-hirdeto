@@ -1,24 +1,39 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  Inject,
+  forwardRef,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UserModel } from './user.schema';
 import { UserInput } from './user.input';
 import { hashPassword } from 'src/util/util-functions';
 import { UserUpdate } from './user.update';
+import { LOGIN_TYPES, ERROR_CODES } from 'src/util/constants';
+import { AdService } from 'src/ad/ad.service';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(UserModel.name) private userModel: Model<UserModel>,
+    @Inject(forwardRef(() => AdService))
+    private adService: AdService,
   ) {}
 
+  async getUser(): Promise<UserModel> {
+    const getUser = await this.userModel.findOne().exec();
+    return getUser;
+  }
+
   async findAllUsers(): Promise<UserModel[]> {
-    const getUsers = this.userModel.find().exec();
+    const getUsers = await this.userModel.find().exec();
     return getUsers;
   }
 
   async findUserById(id: string): Promise<UserModel> {
-    const user = await this.userModel.findById(id).exec();
+    const user = await this.userModel.findById(id).populate('favorites').exec();
     if (!user) {
       throw new NotFoundException({
         message: 'User not found!',
@@ -27,8 +42,8 @@ export class UserService {
     return user;
   }
 
-  async findOneUserByEmail(email: string): Promise<UserModel> {
-    const user = this.userModel.findOne({ email }).exec();
+  async findUserByEmail(email: string): Promise<UserModel> {
+    const user = await this.userModel.findOne({ email }).exec();
     if (!user) {
       throw new NotFoundException({
         message: 'User not found!',
@@ -38,20 +53,48 @@ export class UserService {
   }
 
   async createUser(userInput: UserInput): Promise<UserModel> {
+    await this.checkIfEmailAlreadyExists(userInput.email);
     const newUser = {
       password: hashPassword(userInput.password),
       email: userInput.email,
+      loginType: LOGIN_TYPES.PASSWORD,
     };
     const createdUser = new this.userModel(newUser);
     return createdUser.save();
   }
 
-  async updateUser(userUpdate: UserUpdate): Promise<UserModel> {
-    return null;
+  async updateUser(userId: string, userUpdate: UserUpdate): Promise<UserModel> {
+    const currentUser = await this.findUserById(userId);
+    currentUser.set({ ...userUpdate });
+    return currentUser.save();
   }
 
-  async getUser(): Promise<UserModel> {
-    const getUser = this.userModel.findOne().exec();
-    return getUser;
+  async addAdToFavorites(adId: string, userId: string): Promise<UserModel> {
+    const user = await this.findUserById(userId);
+    const ad = await this.adService.findAdById(adId);
+
+    if (ad && user) {
+      if (user.favorites) {
+        user.favorites.push(ad);
+      } else {
+        user.favorites = [ad];
+      }
+    } else {
+      throw new NotFoundException({
+        message: 'Ad not found!',
+      });
+    }
+
+    return user.save();
+  }
+
+  async checkIfEmailAlreadyExists(email: string): Promise<void> {
+    const user = await this.userModel.findOne({ email }).exec();
+    if (user) {
+      throw new ConflictException({
+        message: 'This email address is already used!',
+        code: ERROR_CODES.USER.EMAIL_ALREADY_USED,
+      });
+    }
   }
 }

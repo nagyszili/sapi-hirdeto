@@ -38,7 +38,7 @@ export class Ad {
   @Field(() => Int)
   views: number;
 
-  @Field()
+  @Field(() => Category)
   category: Category;
 
   @Field(() => [AttributeValue], { nullable: true })

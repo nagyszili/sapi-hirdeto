@@ -26,6 +26,12 @@ export const config = convict({
     default: '',
     env: 'JWT_SIGNING_SECRET',
   },
+  runSeeders: {
+    doc: 'If this value is true, run the seeders at start.',
+    format: Boolean,
+    default: false,
+    env: 'RUN_SEEDERS',
+  },
 });
 
 convict.addParser({ extension: ['yml', 'yaml'], parse: yaml.safeLoad });

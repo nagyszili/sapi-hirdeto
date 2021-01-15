@@ -11,4 +11,7 @@ export class CategoryInput {
 
   @Field(() => [AttributeInput])
   attributes: AttributeInput[];
+
+  @Field()
+  mainCategoryId: string;
 }

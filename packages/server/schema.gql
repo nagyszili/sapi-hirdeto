@@ -2,22 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  id: ID!
-  firstName: String!
-  lastName: String!
-  email: String!
-  phoneNumber: String
-}
-
-type AccessToken {
-  access_token: String!
-}
-
 type Attribute {
   title: String!
   type: String!
   possibleValues: [String!]!
+}
+
+type MainCategory {
+  id: ID!
+  identifier: String!
+  name: String!
 }
 
 type Category {
@@ -25,6 +19,7 @@ type Category {
   name: String!
   identifier: String!
   attributes: [Attribute!]!
+  mainCategory: MainCategory!
 }
 
 type AttributeValue {
@@ -53,40 +48,40 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type MainCategory {
+type User {
   id: ID!
-  identifier: String!
   name: String!
-  categories: [Category!]!
+  email: String!
+  phoneNumber: String
+  favorites: [Ad!]
+}
+
+type AccessToken {
+  access_token: String!
 }
 
 type Query {
   findUser: User!
+  findUserById(id: String!): User!
   findAllUsers: [User!]!
   findAdById(id: String!): Ad!
   findAllAds: [Ad!]!
+  findAdsByCategoryId(all: Boolean!, id: String!): [Ad!]!
+  findCategoryById(id: String!): Category!
+  findAllCategories: [Category!]!
+  findCategoriesByMainCategoryId(id: String!): [Category!]!
   findMainCategoryById(id: String!): MainCategory!
   findAllMainCategories: [MainCategory!]!
 }
 
 type Mutation {
   createUser(email: String!, password: String!): User!
-  login(email: String!, password: String!): AccessToken!
-  createAd(name: String!, price: Float!, description: String, images: [String!], location: String!, category: CategoryInput, attributeValues: [AttributeValueInput!]): Ad!
+  updateCurrentUser(name: String, email: String, password: String, phoneNumber: String): User!
+  updateUser(name: String, email: String, password: String, phoneNumber: String, id: String!): User!
+  addAdToFavorites(adId: String!): User!
+  createAd(name: String!, price: Float!, description: String, images: [String!], location: String!, categoryId: String!, attributeValues: [AttributeValueInput!]): Ad!
   updateAd(name: String, price: Float, description: String, images: [String!], location: String, category: String, attributeValues: [AttributeValueInput!], id: String!): Ad!
-  updateMainCategory(identifier: String, name: String, categories: [CategoryInput!], id: String!): MainCategory!
-}
-
-input CategoryInput {
-  identifier: String!
-  name: String!
-  attributes: [AttributeInput!]!
-}
-
-input AttributeInput {
-  title: String!
-  type: String!
-  possibleValues: [String!]!
+  login(email: String!, password: String!): AccessToken!
 }
 
 input AttributeValueInput {

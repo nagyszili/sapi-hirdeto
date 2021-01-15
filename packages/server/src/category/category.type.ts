@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Attribute } from 'src/attribute/attribute.type';
+import { MainCategory } from 'src/main-category/main-category.type';
 
 @ObjectType()
 export class Category {
@@ -14,4 +15,7 @@ export class Category {
 
   @Field(() => [Attribute])
   attributes: Attribute[];
+
+  @Field(() => MainCategory)
+  mainCategory: MainCategory;
 }

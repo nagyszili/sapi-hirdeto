@@ -4,10 +4,12 @@ import { AdModel, AdSchema } from './ad.schema';
 import { AdResolver } from './ad.resolver';
 import { AdService } from './ad.service';
 import { UserModule } from 'src/user/user.module';
+import { CategoryModule } from 'src/category/category.module';
 
 @Module({
   imports: [
     forwardRef(() => UserModule),
+    CategoryModule,
     MongooseModule.forFeature([
       { name: AdModel.name, schema: AdSchema, collection: 'Ad' },
     ]),
