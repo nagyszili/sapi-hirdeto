@@ -8,6 +8,7 @@ import { MainCategoryModule } from './main-category/main-category.module';
 import { AdModule } from './ad/ad.module';
 import { SeederModule } from './seeder/seeder.module';
 import { CategoryModule } from './category/category.module';
+import { LocationModule } from './location/locations.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CategoryModule } from './category/category.module';
     AdModule,
     MainCategoryModule,
     UserModule,
+    LocationModule,
     SeederModule,
     CategoryModule,
     GraphQLModule.forRoot({ autoSchemaFile: 'schema.gql' }),

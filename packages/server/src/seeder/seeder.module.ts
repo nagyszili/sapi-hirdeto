@@ -8,6 +8,7 @@ import {
 } from 'src/main-category/main-category.schema';
 import { UserSchema, UserModel } from 'src/user/user.schema';
 import { CategoryModel, CategorySchema } from 'src/category/category.schema';
+import { LocationModel, LocationSchema } from 'src/location/locations.schema';
 
 @Module({
   imports: [
@@ -27,6 +28,13 @@ import { CategoryModel, CategorySchema } from 'src/category/category.schema';
     ]),
     MongooseModule.forFeature([
       { name: AdModel.name, schema: AdSchema, collection: 'Ad' },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: LocationModel.name,
+        schema: LocationSchema,
+        collection: 'Location',
+      },
     ]),
     MongooseModule.forFeature([
       {

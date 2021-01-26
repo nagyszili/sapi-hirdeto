@@ -12,8 +12,12 @@ import { MainCategoryModel } from 'src/main-category/main-category.schema';
 import { CategoryModel } from 'src/category/category.schema';
 import { CategoryMock } from './mock-data/categories.mock';
 import { CategoryInput } from 'src/category/category.input';
+import { LocationModel } from 'src/location/locations.schema';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ObjectId = require('mongoose').Types.ObjectId;
+import { LocationInput } from 'src/location/location.input';
+
+import * as locations from '../../assets/locations.json';
 
 @Injectable()
 export class SeederService {
@@ -24,6 +28,8 @@ export class SeederService {
     @InjectModel(AdModel.name) private adModel: Model<AdModel>,
     @InjectModel(MainCategoryModel.name)
     private mainCategoryModel: Model<MainCategoryModel>,
+    @InjectModel(LocationModel.name)
+    private locationModel: Model<LocationModel>,
   ) {}
 
   async seedMainCategories(): Promise<void> {
@@ -54,16 +60,31 @@ export class SeederService {
     console.log('Seeding ads');
 
     AdMock.forEach(async (ad) => {
-      const randomCategory =
-        categories[Math.floor(Math.random() * categories.length)];
-      await this.createAd(
-        ad,
-        randomUser,
-        randomCategory,
-        createdAt,
-        randomViews,
-      );
+      let category = categories[Math.floor(Math.random() * categories.length)];
+      if (ad.categoryId) {
+        category = await this.categoryModel
+          .findOne({
+            identifier: ad.categoryId,
+          })
+          .exec();
+      }
+      await this.createAd(ad, randomUser, category, createdAt, randomViews);
     });
+  }
+
+  async seedLocations(): Promise<void> {
+    console.log('Seed locations');
+
+    locations.forEach(async (loc) => {
+      await this.createLocation(loc);
+    });
+  }
+
+  private async createLocation(
+    location: LocationInput,
+  ): Promise<LocationModel> {
+    const newLocation = new this.locationModel(location);
+    return newLocation.save();
   }
 
   private async createAd(

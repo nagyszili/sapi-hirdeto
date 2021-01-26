@@ -19,6 +19,8 @@ async function bootstrap() {
     await sleep(5000);
     await seeder.seedAds();
     await sleep(5000);
+    await seeder.seedLocations();
+    await sleep(150000);
   }
   await app.listen(config.get('server.port'));
   console.log('Server listening on: ', config.get('server.port'));

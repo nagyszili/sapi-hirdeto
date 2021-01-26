@@ -1,11 +1,12 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { Ad } from './ad.type';
 import { AdInput } from './ad.input';
 import { AdService } from './ad.service';
-import { modelToObject } from 'src/util/mappers';
+import { modelToObject, mapModelsToObject } from 'src/util/mappers';
 import { AdUpdate } from './ad.update';
 import { CurrentUser } from 'src/util/decorators';
 import { User } from 'src/user/user.type';
+import { QueryParameters } from 'src/util/graphql-util-types/QueryParameters';
 
 @Resolver()
 export class AdResolver {
@@ -17,23 +18,13 @@ export class AdResolver {
   }
 
   @Query(() => [Ad])
-  async findAllAds(): Promise<Ad[]> {
-    return (await this.adService.findAllAds()).map((ad) => modelToObject(ad));
+  async findAllAds(@Args() queryParameters: QueryParameters): Promise<Ad[]> {
+    return mapModelsToObject(await this.adService.findAllAds(queryParameters));
   }
 
-  @Query(() => [Ad])
-  async findAdsByCategoryId(
-    @Args('id') id: string,
-    @Args('all') all: boolean,
-  ): Promise<Ad[]> {
-    if (all) {
-      return (await this.adService.findAdsByMainCategoryId(id)).map((ad) =>
-        modelToObject(ad),
-      );
-    }
-    return (await this.adService.findAdsByCategoryId(id)).map((ad) =>
-      modelToObject(ad),
-    );
+  @Query(() => Int)
+  async countAllAds(@Args() queryParameters: QueryParameters): Promise<number> {
+    return this.adService.count(queryParameters);
   }
 
   @Mutation(() => Ad)

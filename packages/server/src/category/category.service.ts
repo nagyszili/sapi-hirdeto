@@ -28,6 +28,9 @@ export class CategoryService {
   }
 
   async findCategoriesByMainCategoryId(id: string): Promise<CategoryModel[]> {
+    if (id === '') {
+      return [];
+    }
     return this.categoryModel
       .find({ mainCategory: new ObjectId(id) })
       .populate('mainCategory')

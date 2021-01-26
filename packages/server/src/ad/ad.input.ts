@@ -1,5 +1,6 @@
 import { ArgsType, Field } from '@nestjs/graphql';
 import { AttributeValueInput } from 'src/attribute-value/attribute-value.input';
+import { LocationInput } from 'src/location/location.input';
 
 @ArgsType()
 export class AdInput {
@@ -9,14 +10,17 @@ export class AdInput {
   @Field()
   price: number;
 
+  @Field()
+  currency: string;
+
   @Field({ nullable: true })
   description: string;
 
   @Field(() => [String], { nullable: true })
   images: string[];
 
-  @Field()
-  location: string;
+  @Field(() => LocationInput)
+  location: LocationInput;
 
   @Field()
   categoryId: string;

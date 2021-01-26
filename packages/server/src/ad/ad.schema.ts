@@ -6,6 +6,8 @@ import {
   AttributeValueSchema,
 } from 'src/attribute-value/attribute-value.schema';
 import { UserModel } from 'src/user/user.schema';
+import { CURRENCY } from 'src/util/constants';
+import { LocationModel, LocationSchema } from 'src/location/locations.schema';
 
 @Schema({ timestamps: true })
 export class AdModel extends Document {
@@ -17,6 +19,11 @@ export class AdModel extends Document {
 
   @Prop()
   price: number;
+
+  @Prop({
+    enum: [CURRENCY.EURO, CURRENCY.LEI],
+  })
+  currency: string;
 
   @Prop()
   description: string;
@@ -36,8 +43,8 @@ export class AdModel extends Document {
   })
   user: UserModel;
 
-  @Prop()
-  location: string;
+  @Prop(LocationSchema)
+  location: LocationModel;
 
   @Prop()
   views: number;

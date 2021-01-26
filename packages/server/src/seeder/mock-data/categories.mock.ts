@@ -1,4 +1,5 @@
 import { CategoryInput } from 'src/category/category.input';
+import { ATTRIBUTE_TYPES, ATTRIBUTE_NAMES } from 'src/util/constants';
 
 export const CategoryMock: CategoryInput[] = [
   {
@@ -7,14 +8,80 @@ export const CategoryMock: CategoryInput[] = [
     name: 'Autoturisme',
     attributes: [
       {
-        title: 'Marca',
-        type: 'Select',
+        title: ATTRIBUTE_NAMES.CARS.BRAND,
+        type: ATTRIBUTE_TYPES.SELECT,
         possibleValues: ['Audi', 'BMW', 'Cadillac', 'Dacia', 'Ford', 'Opel'],
       },
       {
-        title: 'Culoare',
-        type: 'Checkbox',
-        possibleValues: ['Alb', 'Negru', 'Gri', 'Rosu', 'Verde', 'Maro'],
+        title: ATTRIBUTE_NAMES.CARS.COLOR,
+        type: ATTRIBUTE_TYPES.MULTI_SELECT,
+        possibleValues: [
+          'Toate',
+          'Alb',
+          'Negru',
+          'Gri',
+          'Argintiu',
+          'Albastru',
+          'Rosu',
+          'Verde',
+          'Galben / Auriu',
+          'Maro / Bej',
+          'Alte culoare',
+        ],
+      },
+      {
+        title: ATTRIBUTE_NAMES.CARS.YEAR_OF_MANUFACTURE,
+        type: ATTRIBUTE_TYPES.RANGE,
+        possibleValues: [],
+      },
+      {
+        title: ATTRIBUTE_NAMES.CARS.TURNOVER,
+        type: ATTRIBUTE_TYPES.RANGE,
+        possibleValues: [],
+      },
+      {
+        title: ATTRIBUTE_NAMES.CARS.ENGINE_CAPACITY,
+        type: ATTRIBUTE_TYPES.RANGE,
+        possibleValues: [],
+      },
+      {
+        title: ATTRIBUTE_NAMES.CARS.CONDITION,
+        type: ATTRIBUTE_TYPES.MULTI_SELECT,
+        possibleValues: ['Toate', 'Utilizat', 'Nou'],
+      },
+      {
+        title: ATTRIBUTE_NAMES.CARS.COMBUSTIBLE,
+        type: ATTRIBUTE_TYPES.MULTI_SELECT,
+        possibleValues: [
+          'Toate',
+          'Benzina',
+          'Diesel',
+          'GPL',
+          'Hibrid',
+          'Electric',
+        ],
+      },
+      {
+        title: ATTRIBUTE_NAMES.CARS.CAR_BODY,
+        type: ATTRIBUTE_TYPES.MULTI_SELECT,
+        possibleValues: [
+          'Toate',
+          'Cabrio',
+          'Berlina',
+          'Coupe',
+          'Pickup',
+          'Hatchback',
+          'Break',
+          'Off-road',
+          'Minibus',
+          'Monovolum',
+          'SUV',
+        ],
+      },
+      {
+        title: ATTRIBUTE_NAMES.CARS.GEARBOX,
+        type: ATTRIBUTE_TYPES.MULTI_SELECT,
+        possibleValues: ['Toate', 'Manuala', 'Automata'],
       },
     ],
   },
@@ -84,9 +151,55 @@ export const CategoryMock: CategoryInput[] = [
     name: 'Apartamente - Garsoniere de vanzare',
     attributes: [
       {
-        title: '',
-        type: '',
+        title: ATTRIBUTE_NAMES.APARTMENT.ROOMS,
+        type: ATTRIBUTE_TYPES.MULTI_SELECT,
+        possibleValues: [
+          'Toate',
+          '1 camera',
+          '2 camere',
+          '3 camere',
+          '4 sau mai multe camere',
+        ],
+      },
+      {
+        title: ATTRIBUTE_NAMES.APARTMENT.TYPE,
+        type: ATTRIBUTE_TYPES.MULTI_SELECT,
+        possibleValues: [
+          'Toate',
+          'Decomandat',
+          'Semidecomandat',
+          'Nedecomandat',
+          'Circular',
+        ],
+      },
+      {
+        title: ATTRIBUTE_NAMES.APARTMENT.USABLE_AREA,
+        type: ATTRIBUTE_TYPES.RANGE,
         possibleValues: [],
+      },
+      {
+        title: ATTRIBUTE_NAMES.APARTMENT.YEAR_OF_CONSTRUCTION,
+        type: ATTRIBUTE_TYPES.RANGE,
+        possibleValues: [],
+      },
+      {
+        title: ATTRIBUTE_NAMES.APARTMENT.FLOOR,
+        type: ATTRIBUTE_TYPES.MULTI_SELECT,
+        possibleValues: [
+          'Toate',
+          'Parter',
+          '1',
+          '2',
+          '3',
+          '4',
+          '5',
+          '6',
+          '7',
+          '8',
+          '9',
+          '10 sau peste',
+          'Mansarda',
+        ],
       },
     ],
   },

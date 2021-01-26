@@ -12,6 +12,9 @@ import { generateIdentifier } from 'src/util/util-functions';
 import { AdUpdate } from './ad.update';
 import { UserService } from 'src/user/user.service';
 import { CategoryService } from 'src/category/category.service';
+import { QueryParameters } from 'src/util/graphql-util-types/QueryParameters';
+import { ATTRIBUTE_TYPES } from 'src/util/constants';
+import { Filter } from 'src/util/graphql-util-types/Filter';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -24,9 +27,15 @@ export class AdService {
     private categoryService: CategoryService,
   ) {}
 
-  async findAllAds(): Promise<AdModel[]> {
+  async count(queryParameters: QueryParameters): Promise<number> {
+    const queryObject = await this.createQueryObject(queryParameters);
+    return this.adModel.countDocuments(queryObject);
+  }
+
+  async findAllAds(queryParameters: QueryParameters): Promise<AdModel[]> {
+    const queryObject = await this.createQueryObject(queryParameters);
     return this.adModel
-      .find()
+      .find(queryObject)
       .populate({
         path: 'category',
         populate: {
@@ -34,6 +43,9 @@ export class AdService {
         },
       })
       .populate('user')
+      .sort({ [queryParameters.sortField]: queryParameters.sortOrder })
+      .limit(queryParameters.perPage)
+      .skip(queryParameters.page * queryParameters.perPage)
       .exec();
   }
 
@@ -45,41 +57,6 @@ export class AdService {
       });
     }
     return ad;
-  }
-
-  async findAdsByCategoryId(id: string): Promise<AdModel[]> {
-    const ads = await this.adModel
-      .find({ category: new ObjectId(id) })
-      .populate({
-        path: 'category',
-        populate: {
-          path: 'mainCategory',
-        },
-      })
-      .populate('user')
-      .exec();
-    return ads;
-  }
-
-  async findAdsByMainCategoryId(id: string): Promise<AdModel[]> {
-    const categories = await this.categoryService.findCategoriesByMainCategoryId(
-      id,
-    );
-    const ads = await this.adModel
-      .find({
-        category: {
-          $in: categories.map((category) => new ObjectId(category.id)),
-        },
-      })
-      .populate({
-        path: 'category',
-        populate: {
-          path: 'mainCategory',
-        },
-      })
-      .populate('user')
-      .exec();
-    return ads;
   }
 
   async createAd(adInput: AdInput, userId: string): Promise<AdModel> {
@@ -94,5 +71,74 @@ export class AdService {
     const currentAd = await this.findAdById(id);
     currentAd.set({ ...adUpdate });
     return currentAd.save();
+  }
+
+  async createQueryObject(queryParameters: QueryParameters) {
+    const categories = queryParameters.mainCategoryId
+      ? await this.categoryService.findCategoriesByMainCategoryId(
+          queryParameters.mainCategoryId,
+        )
+      : [];
+
+    return {
+      $and: [
+        queryParameters.categoryId
+          ? { category: new ObjectId(queryParameters.categoryId) }
+          : queryParameters.mainCategoryId
+          ? {
+              category: {
+                $in: categories.map((category) => new ObjectId(category.id)),
+              },
+            }
+          : {},
+        queryParameters.queryString
+          ? queryParameters.inDescription
+            ? {
+                description: {
+                  $regex: queryParameters.queryString,
+                  $options: 'xi',
+                },
+              }
+            : {
+                name: { $regex: queryParameters.queryString, $options: 'xi' },
+              }
+          : {},
+        queryParameters.filters && queryParameters.filters.length > 0
+          ? this.createFilterObject(queryParameters.filters)
+          : {},
+      ],
+    };
+  }
+
+  createFilterObject(filters: Filter[]) {
+    return {
+      $and: filters.map((filter) => {
+        switch (filter.type) {
+          case ATTRIBUTE_TYPES.RANGE: {
+            return {
+              $and: [
+                { [filter.name]: { $gte: filter.from } },
+                { [filter.name]: { $lte: filter.to } },
+              ],
+            };
+          }
+
+          case ATTRIBUTE_TYPES.SELECT:
+          case ATTRIBUTE_TYPES.MULTI_SELECT:
+          case ATTRIBUTE_TYPES.CHECKBOX: {
+            return {
+              attributeValues: {
+                $elemMatch: {
+                  key: filter.name,
+                  value: {
+                    $in: filter.selectedAttributeValues,
+                  },
+                },
+              },
+            };
+          }
+        }
+      }),
+    };
   }
 }
