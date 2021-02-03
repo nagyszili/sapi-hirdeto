@@ -27,17 +27,25 @@ type AttributeValue {
   value: String!
 }
 
+type Location {
+  longitude: Float
+  latitude: Float
+  name: String
+  county: String!
+}
+
 type Ad {
   id: ID!
   identifier: String!
   name: String!
   user: User!
   price: Float!
+  currency: String!
   description: String
   images: [String!]
   createdAt: DateTime!
   updatedAt: DateTime
-  location: String!
+  location: Location!
   views: Int!
   category: Category!
   attributeValues: [AttributeValue!]
@@ -65,13 +73,33 @@ type Query {
   findUserById(id: String!): User!
   findAllUsers: [User!]!
   findAdById(id: String!): Ad!
-  findAllAds: [Ad!]!
-  findAdsByCategoryId(all: Boolean!, id: String!): [Ad!]!
+  findAllAds(page: Int, perPage: Int, sortField: String, sortOrder: String, queryString: String, inDescription: Boolean, categoryId: String, mainCategoryId: String, location: LocationInput, currency: String, filters: [Filter!]): [Ad!]!
+  countAllAds(page: Int, perPage: Int, sortField: String, sortOrder: String, queryString: String, inDescription: Boolean, categoryId: String, mainCategoryId: String, location: LocationInput, currency: String, filters: [Filter!]): Int!
   findCategoryById(id: String!): Category!
   findAllCategories: [Category!]!
   findCategoriesByMainCategoryId(id: String!): [Category!]!
   findMainCategoryById(id: String!): MainCategory!
   findAllMainCategories: [MainCategory!]!
+  countLocations: Int!
+  allLocations: [Location!]!
+  allCounties: [String!]!
+  findLocationsByName(name: String!): [Location!]!
+  findLocationsByCounty(county: String!): [Location!]!
+}
+
+input LocationInput {
+  longitude: Float!
+  latitude: Float!
+  name: String!
+  county: String!
+}
+
+input Filter {
+  type: String!
+  name: String!
+  from: Int
+  to: Int
+  selectedAttributeValues: [String!]
 }
 
 type Mutation {
@@ -79,7 +107,7 @@ type Mutation {
   updateCurrentUser(name: String, email: String, password: String, phoneNumber: String): User!
   updateUser(name: String, email: String, password: String, phoneNumber: String, id: String!): User!
   addAdToFavorites(adId: String!): User!
-  createAd(name: String!, price: Float!, description: String, images: [String!], location: String!, categoryId: String!, attributeValues: [AttributeValueInput!]): Ad!
+  createAd(name: String!, price: Float!, currency: String!, description: String, images: [String!], location: LocationInput!, categoryId: String!, attributeValues: [AttributeValueInput!]): Ad!
   updateAd(name: String, price: Float, description: String, images: [String!], location: String, category: String, attributeValues: [AttributeValueInput!], id: String!): Ad!
   login(email: String!, password: String!): AccessToken!
 }

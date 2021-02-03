@@ -18,7 +18,10 @@ export class CategoryService {
   }
 
   async findCategoryById(id: string): Promise<CategoryModel> {
-    const category = await this.categoryModel.findById(id).exec();
+    const category = await this.categoryModel
+      .findById(id)
+      .populate('mainCategory')
+      .exec();
     if (!category) {
       throw new NotFoundException({
         message: 'Category not found!',

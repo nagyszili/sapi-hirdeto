@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { AdInput } from 'src/ad/ad.input';
-import { AdMock } from './mock-data/ad.mock';
 import { AdModel } from 'src/ad/ad.schema';
 import { UserModel } from 'src/user/user.schema';
 import { Model } from 'mongoose';
@@ -18,6 +16,8 @@ const ObjectId = require('mongoose').Types.ObjectId;
 import { LocationInput } from 'src/location/location.input';
 
 import * as locations from '../../assets/locations.json';
+import { CURRENCY, ATTRIBUTE_TYPES } from 'src/util/constants';
+import { AttributeValueModel } from 'src/attribute-value/attribute-value.schema';
 
 @Injectable()
 export class SeederService {
@@ -30,6 +30,8 @@ export class SeederService {
     private mainCategoryModel: Model<MainCategoryModel>,
     @InjectModel(LocationModel.name)
     private locationModel: Model<LocationModel>,
+    @InjectModel(AttributeValueModel.name)
+    private attributeValueModel: Model<AttributeValueModel>,
   ) {}
 
   async seedMainCategories(): Promise<void> {
@@ -54,22 +56,83 @@ export class SeederService {
     const users = await this.userModel.find().exec();
     const createdAt = this.randomDate(new Date(2020, 0, 1), new Date());
     const randomUser = users[Math.floor(Math.random() * users.length)];
-    const randomViews = Math.floor(Math.random() * 500) + 1;
     const categories = await this.categoryModel.find().exec();
+    const countLocations = await this.locationModel.estimatedDocumentCount();
+    const location = await this.locationModel
+      .find()
+      .limit(-1)
+      .skip(Math.floor(Math.random() * countLocations) + 1)
+      .exec();
 
     console.log('Seeding ads');
 
-    AdMock.forEach(async (ad) => {
-      let category = categories[Math.floor(Math.random() * categories.length)];
-      if (ad.categoryId) {
-        category = await this.categoryModel
-          .findOne({
-            identifier: ad.categoryId,
-          })
-          .exec();
+    categories.forEach(async (category) => {
+      for (let i = 0; i < 100; i++) {
+        const currency = i % 2 === 0 ? CURRENCY.EURO : CURRENCY.LEI;
+        const attributeValues = [];
+        let name = '';
+        category.attributes.forEach((attribute) => {
+          const newAttributeValue = new this.attributeValueModel();
+          newAttributeValue.key = attribute.title;
+          if (attribute.type === ATTRIBUTE_TYPES.RANGE) {
+            if (attribute.title.includes('year')) {
+              newAttributeValue.value =
+                Math.floor(Math.random() * (1 + 2020 - 1950)) + 1950;
+              attributeValues.push(newAttributeValue);
+            } else {
+              newAttributeValue.value = Math.floor(Math.random() * 10000) + 1;
+              attributeValues.push(newAttributeValue);
+            }
+          } else {
+            newAttributeValue.value =
+              attribute.possibleValues[
+                Math.floor(
+                  Math.random() * attribute.possibleValues.length - 1,
+                ) + 1
+              ];
+            attributeValues.push(newAttributeValue);
+          }
+          name = name.concat(
+            attribute.title + ' ' + newAttributeValue.value + ' ',
+          );
+        });
+        await this.createAd(
+          name,
+          randomUser,
+          category,
+          createdAt,
+          location[0],
+          currency,
+          attributeValues,
+        );
       }
-      await this.createAd(ad, randomUser, category, createdAt, randomViews);
     });
+  }
+
+  private async createAd(
+    name: string,
+    user: UserModel,
+    category: CategoryModel,
+    createdAt: Date,
+    location: LocationModel,
+    currency: string,
+    attributeValues: AttributeValueModel[],
+  ): Promise<AdModel> {
+    const randomViews = Math.floor(Math.random() * 10000) + 1;
+    const randomPrice = Math.floor(Math.random() * 100000) + 1;
+    const newAd = new this.adModel();
+    newAd.name = name;
+    newAd.user = user;
+    newAd.createdAt = createdAt;
+    newAd.views = randomViews;
+    newAd.identifier = generateIdentifier();
+    newAd.category = new ObjectId(category.id);
+    newAd.location = location;
+    newAd.currency = currency;
+    newAd.price = randomPrice;
+    newAd.attributeValues = attributeValues;
+
+    return newAd.save();
   }
 
   async seedLocations(): Promise<void> {
@@ -85,23 +148,6 @@ export class SeederService {
   ): Promise<LocationModel> {
     const newLocation = new this.locationModel(location);
     return newLocation.save();
-  }
-
-  private async createAd(
-    ad: AdInput,
-    user: UserModel,
-    category: CategoryModel,
-    createdAt: Date,
-    views: number,
-  ): Promise<AdModel> {
-    const newAd = new this.adModel(ad);
-    newAd.user = user;
-    newAd.createdAt = createdAt;
-    newAd.views = views;
-    newAd.identifier = generateIdentifier();
-    newAd.category = new ObjectId(category.id);
-
-    return newAd.save();
   }
 
   private async mainCategories(

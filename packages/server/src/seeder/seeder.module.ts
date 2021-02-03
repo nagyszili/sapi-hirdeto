@@ -9,6 +9,10 @@ import {
 import { UserSchema, UserModel } from 'src/user/user.schema';
 import { CategoryModel, CategorySchema } from 'src/category/category.schema';
 import { LocationModel, LocationSchema } from 'src/location/locations.schema';
+import {
+  AttributeValueModel,
+  AttributeValueSchema,
+} from 'src/attribute-value/attribute-value.schema';
 
 @Module({
   imports: [
@@ -34,6 +38,13 @@ import { LocationModel, LocationSchema } from 'src/location/locations.schema';
         name: LocationModel.name,
         schema: LocationSchema,
         collection: 'Location',
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: AttributeValueModel.name,
+        schema: AttributeValueSchema,
+        collection: 'AttributeValue',
       },
     ]),
     MongooseModule.forFeature([

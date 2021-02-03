@@ -6,8 +6,8 @@ export class AttributeValueModel extends Document {
   @Prop()
   key: string;
 
-  @Prop()
-  value: string;
+  @Prop({ type: {} })
+  value: string | number;
 }
 
 export const AttributeValueSchema = SchemaFactory.createForClass(

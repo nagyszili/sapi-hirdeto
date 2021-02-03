@@ -1,11 +1,10 @@
-import { AdInput } from 'src/ad/ad.input';
-import { ATTRIBUTE_NAMES } from 'src/util/constants';
+import { ATTRIBUTE_NAMES, CURRENCY } from 'src/util/constants';
 
-export const AdMock: AdInput[] = [
+export const AdMock = [
   {
     name: 'Apartament de vanzare',
     price: 30000,
-    currency: 'euro',
+    currency: CURRENCY.EURO,
     description:
       'A/885 Tudor, str, Progresului, confort II, decomandat, Pî din IV, transformat din uscătorie, sc 22 mp, convector, boiler, termopan, parchet, contorizat, mobilat bucătăria, posibilitate DE PRELUARE A CHIRIAŞILOR . Preţ 30.000 Euro',
     images: [
@@ -15,20 +14,20 @@ export const AdMock: AdInput[] = [
     ],
     attributeValues: [
       {
-        key: ATTRIBUTE_NAMES.APARTMENT.FLOOR,
-        value: '4',
+        key: ATTRIBUTE_NAMES.APARTMENT_FOR_SALE.FLOOR,
+        value: 4,
       },
       {
-        key: ATTRIBUTE_NAMES.APARTMENT.YEAR_OF_CONSTRUCTION,
-        value: '1997',
+        key: ATTRIBUTE_NAMES.APARTMENT_FOR_SALE.YEAR_OF_CONSTRUCTION,
+        value: 1997,
       },
       {
-        key: ATTRIBUTE_NAMES.APARTMENT.ROOMS,
-        value: '1',
+        key: ATTRIBUTE_NAMES.APARTMENT_FOR_SALE.ROOMS,
+        value: 1,
       },
       {
-        key: ATTRIBUTE_NAMES.APARTMENT.USABLE_AREA,
-        value: '22',
+        key: ATTRIBUTE_NAMES.APARTMENT_FOR_SALE.USABLE_AREA,
+        value: 22,
       },
     ],
     location: {
@@ -40,19 +39,28 @@ export const AdMock: AdInput[] = [
     categoryId: 'apartamente-garsoniere-de-vanzare',
   },
   {
-    name: 'Buick',
-    price: 109.6,
-    currency: 'euro',
-    description: 'Enclave',
+    name: 'Canon 7D Mark II',
+    price: 3250,
+    currency: CURRENCY.LEI,
+    description:
+      'Canon 7D Mark II Fratele mai mic al seriei 1Dx 72k shuttercount Se vinde: 1x body 7D Mark II 1x baterie LP-N6 1x Grip aftermarket (care merge cu 2x LP-N6) Usor negociabil.',
     images: [
-      'http://dummyimage.com/212x130.jpg/cc0000/ffffff',
-      'http://dummyimage.com/134x164.bmp/ff4444/ffffff',
-      'http://dummyimage.com/128x164.jpg/ff4444/ffffff',
+      'https://frankfurt.apollo.olxcdn.com/v1/files/1y8p4hiyri7p3-RO/image;s=1000x700',
+      'https://frankfurt.apollo.olxcdn.com/v1/files/y8xbvu3be25y-RO/image;s=1000x700',
+      'https://frankfurt.apollo.olxcdn.com/v1/files/qflc1q7wiqpc2-RO/image;s=1000x700',
     ],
     attributeValues: [
       {
-        key: 'color',
-        value: 'Teal',
+        key: ATTRIBUTE_NAMES.CAMERA_PHOTO.CONDITION,
+        value: 'Utilizat',
+      },
+      {
+        key: ATTRIBUTE_NAMES.CAMERA_PHOTO.BRAND,
+        value: 'Canon',
+      },
+      {
+        key: ATTRIBUTE_NAMES.CAMERA_PHOTO.CATEGORY,
+        value: 'Aparate foto',
       },
     ],
     location: {
@@ -61,22 +69,55 @@ export const AdMock: AdInput[] = [
       longitude: 24.56,
       latitude: 46.54,
     },
-    categoryId: null,
+    categoryId: 'camera-foto-video',
   },
   {
-    name: 'Land Rover',
-    price: 450.89,
-    currency: 'euro',
-    description: 'Discovery Series II',
+    name: 'Audi a6 c6 2.0 tdi',
+    price: 3999,
+    currency: CURRENCY.EURO,
+    description:
+      'Vand audi a 6 c6 -2006 2.0 tdi blb -turbina noua -injectoare reconditionate -ax ulei rezolvat de cand am luat o -masina ruleaza perfect pe orice distanta -piele impecabila -dublu climatronic -pilot automat -faruri automate -follow me home -leave me home -stopuri led -jante audi pe 16 cu cauciucuri iarna noi Schimb doar cu Ml, touareg, land rover sport ,de preferat autoutilitare ofer dif unde e cazul',
     images: [
-      'http://dummyimage.com/127x142.jpg/ff4444/ffffff',
-      'http://dummyimage.com/123x183.png/cc0000/ffffff',
-      'http://dummyimage.com/229x209.png/dddddd/000000',
+      'https://frankfurt.apollo.olxcdn.com/v1/files/gs4ixfhimcdi3-RO/image;s=1000x700',
+      'https://frankfurt.apollo.olxcdn.com/v1/files/zzqaw38qemfu-RO/image;s=1000x700',
+      'https://frankfurt.apollo.olxcdn.com/v1/files/e4f5mubk1dg62-RO/image;s=1000x700',
     ],
     attributeValues: [
       {
-        key: 'color',
-        value: 'Purple',
+        key: ATTRIBUTE_NAMES.CARS.COLOR,
+        value: 'Negru',
+      },
+      {
+        key: ATTRIBUTE_NAMES.CARS.BRAND,
+        value: 'Audi',
+      },
+      {
+        key: ATTRIBUTE_NAMES.CARS.CAR_BODY,
+        value: 'Berlina',
+      },
+      {
+        key: ATTRIBUTE_NAMES.CARS.CONDITION,
+        value: 'Utilizat',
+      },
+      {
+        key: ATTRIBUTE_NAMES.CARS.ENGINE_CAPACITY,
+        value: 2000,
+      },
+      {
+        key: ATTRIBUTE_NAMES.CARS.GEARBOX,
+        value: 'Manuala',
+      },
+      {
+        key: ATTRIBUTE_NAMES.CARS.TURNOVER,
+        value: 245000,
+      },
+      {
+        key: ATTRIBUTE_NAMES.CARS.YEAR_OF_MANUFACTURE,
+        value: 2006,
+      },
+      {
+        key: ATTRIBUTE_NAMES.CARS.COMBUSTIBLE,
+        value: 'Diesel',
       },
     ],
     location: {
@@ -85,22 +126,26 @@ export const AdMock: AdInput[] = [
       longitude: 24.56,
       latitude: 46.54,
     },
-    categoryId: null,
+    categoryId: 'autoturisme',
   },
   {
-    name: 'Mitsubishi',
-    price: 425.53,
-    currency: 'euro',
-    description: 'Excel',
+    name: 'IPhone 12 Pro Max 128Gb',
+    price: 5800,
+    currency: CURRENCY.LEI,
+    description:
+      'Telefonul este că nou,nefolosit,fara risc,decodat. Garanție 2ani la eMag. Fac și schimb,dacă mă ajută preț.',
     images: [
-      'http://dummyimage.com/218x159.png/ff4444/ffffff',
-      'http://dummyimage.com/184x134.bmp/cc0000/ffffff',
-      'http://dummyimage.com/118x161.jpg/dddddd/000000',
+      'https://frankfurt.apollo.olxcdn.com/v1/files/652uefun09jd1-RO/image;s=1000x700',
+      'https://frankfurt.apollo.olxcdn.com/v1/files/t7deuluxlgqc3-RO/image;s=1000x700',
     ],
     attributeValues: [
       {
-        key: 'color',
-        value: 'Teal',
+        key: ATTRIBUTE_NAMES.PHONES.BRAND,
+        value: 'Apple',
+      },
+      {
+        key: ATTRIBUTE_NAMES.PHONES.CONDITION,
+        value: 'Utilizat',
       },
     ],
     location: {
@@ -109,22 +154,27 @@ export const AdMock: AdInput[] = [
       longitude: 24.56,
       latitude: 46.54,
     },
-    categoryId: null,
+    categoryId: 'telefoane-mobile',
   },
   {
-    name: 'Ford',
-    price: 201.9,
+    name: 'Teren, 875 Mp, Targu-Mures',
+    price: 45500,
     currency: 'euro',
-    description: 'Thunderbird',
+    description:
+      'Vă oferim spre vânzare un Teren Intravilan situat pe Viile Dealul Mic - 1 Mai foarte aproape de Cartierul Tudor, Dâmbu-Pietros și Belvedere. Terenul are o suprafață de 875 Mp și are o deschidere de 25 m la stradă.',
     images: [
-      'http://dummyimage.com/236x149.jpg/cc0000/ffffff',
-      'http://dummyimage.com/206x189.png/cc0000/ffffff',
-      'http://dummyimage.com/137x136.bmp/dddddd/000000',
+      'https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6InMycjc5eDR5ejl5Yi1BUk8iLCJ3IjpbeyJmbiI6Im8xemN3cmR4dDZ4bi1BUk8iLCJzIjoiMTQiLCJwIjoiMTAsLTEwIiwiYSI6IjAifV19.iO--830A7xTLLHI8N9SYlms2ehHl-pFYcMJDtv1_rvY/image;s=184x138;q=80',
+      'https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6Im5nY2N3MHd2MmR0bS1BUk8iLCJ3IjpbeyJmbiI6Im8xemN3cmR4dDZ4bi1BUk8iLCJzIjoiMTQiLCJwIjoiMTAsLTEwIiwiYSI6IjAifV19.zfdihCgVeR5v6ek7XMVu-nOKBsHPExNxVUBtaFsZFFU/image;s=1280x1024;q=80',
+      'https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6Im5nY2N3MHd2MmR0bS1BUk8iLCJ3IjpbeyJmbiI6Im8xemN3cmR4dDZ4bi1BUk8iLCJzIjoiMTQiLCJwIjoiMTAsLTEwIiwiYSI6IjAifV19.zfdihCgVeR5v6ek7XMVu-nOKBsHPExNxVUBtaFsZFFU/image;s=1280x1024;q=80',
     ],
     attributeValues: [
       {
-        key: 'color',
-        value: 'Green',
+        key: ATTRIBUTE_NAMES.LAND.USABLE_AREA,
+        value: 875,
+      },
+      {
+        key: ATTRIBUTE_NAMES.LAND.TYPE,
+        value: 'Intravilan',
       },
     ],
     location: {
@@ -133,7 +183,35 @@ export const AdMock: AdInput[] = [
       longitude: 24.52,
       latitude: 46.52,
     },
-    categoryId: null,
+    categoryId: 'terenuri',
+  },
+  {
+    name: 'Televizor OLED Smart LG, 139 cm, OLED55B8PLA, 4K Ultra HD',
+    price: 4000,
+    currency: 'lei',
+    description:
+      'Televizor OLED Smart LG, 139 cm, OLED55B8PLA, 4K Ultra HD! Foarte putin folosit. În stare perfecta de functionare si estetic. PRET FIX!!!',
+    images: [
+      'https://frankfurt.apollo.olxcdn.com/v1/files/2x4hj7hcnv5x2-RO/image;s=1000x700',
+      'https://frankfurt.apollo.olxcdn.com/v1/files/f1gt0xkdl28i1-RO/image;s=1000x700',
+    ],
+    attributeValues: [
+      {
+        key: ATTRIBUTE_NAMES.TV.CONDITION,
+        value: 'Utilizat',
+      },
+      {
+        key: ATTRIBUTE_NAMES.TV.BRAND,
+        value: 'LG',
+      },
+    ],
+    location: {
+      name: 'Mureseni',
+      county: 'Mures',
+      longitude: 24.52,
+      latitude: 46.52,
+    },
+    categoryId: 'TV',
   },
   {
     name: 'Audi',
@@ -677,6 +755,174 @@ export const AdMock: AdInput[] = [
       {
         key: 'color',
         value: 'Fuscia',
+      },
+    ],
+    location: {
+      name: 'Cluj-Napoca',
+      county: 'Cluj',
+      longitude: 23.61,
+      latitude: 46.78,
+    },
+    categoryId: null,
+  },
+  {
+    name: 'Volvo',
+    price: 263.84,
+    currency: 'euro',
+    description: 'V70',
+    images: [
+      'http://dummyimage.com/127x237.jpg/ff4444/ffffff',
+      'http://dummyimage.com/144x184.bmp/5fa2dd/ffffff',
+      'http://dummyimage.com/248x244.png/dddddd/000000',
+    ],
+    attributeValues: [
+      {
+        key: 'color',
+        value: 'Goldenrod',
+      },
+    ],
+    location: {
+      name: 'Cluj-Napoca',
+      county: 'Cluj',
+      longitude: 23.61,
+      latitude: 46.78,
+    },
+    categoryId: null,
+  },
+  {
+    name: 'Volvo',
+    price: 263.84,
+    currency: 'euro',
+    description: 'V70',
+    images: [
+      'http://dummyimage.com/127x237.jpg/ff4444/ffffff',
+      'http://dummyimage.com/144x184.bmp/5fa2dd/ffffff',
+      'http://dummyimage.com/248x244.png/dddddd/000000',
+    ],
+    attributeValues: [
+      {
+        key: 'color',
+        value: 'Goldenrod',
+      },
+    ],
+    location: {
+      name: 'Cluj-Napoca',
+      county: 'Cluj',
+      longitude: 23.61,
+      latitude: 46.78,
+    },
+    categoryId: null,
+  },
+  {
+    name: 'Volvo',
+    price: 263.84,
+    currency: 'euro',
+    description: 'V70',
+    images: [
+      'http://dummyimage.com/127x237.jpg/ff4444/ffffff',
+      'http://dummyimage.com/144x184.bmp/5fa2dd/ffffff',
+      'http://dummyimage.com/248x244.png/dddddd/000000',
+    ],
+    attributeValues: [
+      {
+        key: 'color',
+        value: 'Goldenrod',
+      },
+    ],
+    location: {
+      name: 'Cluj-Napoca',
+      county: 'Cluj',
+      longitude: 23.61,
+      latitude: 46.78,
+    },
+    categoryId: null,
+  },
+  {
+    name: 'Volvo',
+    price: 263.84,
+    currency: 'euro',
+    description: 'V70',
+    images: [
+      'http://dummyimage.com/127x237.jpg/ff4444/ffffff',
+      'http://dummyimage.com/144x184.bmp/5fa2dd/ffffff',
+      'http://dummyimage.com/248x244.png/dddddd/000000',
+    ],
+    attributeValues: [
+      {
+        key: 'color',
+        value: 'Goldenrod',
+      },
+    ],
+    location: {
+      name: 'Cluj-Napoca',
+      county: 'Cluj',
+      longitude: 23.61,
+      latitude: 46.78,
+    },
+    categoryId: null,
+  },
+  {
+    name: 'Volvo',
+    price: 263.84,
+    currency: 'euro',
+    description: 'V70',
+    images: [
+      'http://dummyimage.com/127x237.jpg/ff4444/ffffff',
+      'http://dummyimage.com/144x184.bmp/5fa2dd/ffffff',
+      'http://dummyimage.com/248x244.png/dddddd/000000',
+    ],
+    attributeValues: [
+      {
+        key: 'color',
+        value: 'Goldenrod',
+      },
+    ],
+    location: {
+      name: 'Cluj-Napoca',
+      county: 'Cluj',
+      longitude: 23.61,
+      latitude: 46.78,
+    },
+    categoryId: null,
+  },
+  {
+    name: 'Volvo',
+    price: 263.84,
+    currency: 'euro',
+    description: 'V70',
+    images: [
+      'http://dummyimage.com/127x237.jpg/ff4444/ffffff',
+      'http://dummyimage.com/144x184.bmp/5fa2dd/ffffff',
+      'http://dummyimage.com/248x244.png/dddddd/000000',
+    ],
+    attributeValues: [
+      {
+        key: 'color',
+        value: 'Goldenrod',
+      },
+    ],
+    location: {
+      name: 'Cluj-Napoca',
+      county: 'Cluj',
+      longitude: 23.61,
+      latitude: 46.78,
+    },
+    categoryId: null,
+  },
+  {
+    name: 'Volvo',
+    price: 263.84,
+    currency: 'euro',
+    description: 'V70',
+    images: [
+      'http://dummyimage.com/127x237.jpg/ff4444/ffffff',
+      'http://dummyimage.com/144x184.bmp/5fa2dd/ffffff',
+      'http://dummyimage.com/248x244.png/dddddd/000000',
+    ],
+    attributeValues: [
+      {
+        key: 'color',
+        value: 'Goldenrod',
       },
     ],
     location: {

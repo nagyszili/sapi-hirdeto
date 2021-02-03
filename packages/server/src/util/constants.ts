@@ -1,3 +1,8 @@
+export const ROLES = {
+  USER: 'user',
+  MANAGER: 'manager',
+};
+
 export const LOGIN_TYPES = {
   PASSWORD: 'password',
   GOOGLE: 'google',
@@ -33,7 +38,17 @@ export const ATTRIBUTE_NAMES = {
     ENGINE_CAPACITY: 'engine capacity',
     CONDITION: 'condition',
   },
+  CAMERA_PHOTO: {
+    CATEGORY: 'category',
+    BRAND: 'brand',
+    CONDITION: 'condition',
+  },
   PHONES: {
+    BRAND: 'brand',
+    CONDITION: 'condition',
+  },
+  APPLIANCES: {
+    CATEGORY: 'category',
     BRAND: 'brand',
     CONDITION: 'condition',
   },
@@ -41,14 +56,34 @@ export const ATTRIBUTE_NAMES = {
     MOBILITY: 'mobility',
     TYPE: 'type',
   },
-  HOUSE: {
+  LAPTOP_PC: {
+    BRAND: 'brand',
+    CONDITION: 'condition',
+  },
+  TV: {
+    BRAND: 'brand',
+    CONDITION: 'condition',
+  },
+  HOUSE_FOR_SALE: {
+    ROOMS: 'rooms',
+    TYPE: 'type',
+    USABLE_AREA: 'usable area',
+    YEAR_OF_CONSTRUCTION: 'year of construction',
+  },
+  HOUSE_FOR_RENT: {
+    ROOMS: 'rooms',
+    TYPE: 'type',
+    USABLE_AREA: 'usable area',
+    YEAR_OF_CONSTRUCTION: 'year of construction',
+  },
+  APARTMENT_FOR_SALE: {
     ROOMS: 'rooms',
     TYPE: 'type',
     USABLE_AREA: 'usable area',
     YEAR_OF_CONSTRUCTION: 'year of construction',
     FLOOR: 'floor',
   },
-  APARTMENT: {
+  APARTMENT_FOR_RENT: {
     ROOMS: 'rooms',
     TYPE: 'type',
     USABLE_AREA: 'usable area',
