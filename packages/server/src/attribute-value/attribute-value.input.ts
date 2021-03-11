@@ -7,4 +7,7 @@ export class AttributeValueInput {
 
   @Field()
   value: string;
+
+  @Field()
+  type: string;
 }

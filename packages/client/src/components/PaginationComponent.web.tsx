@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Pressable } from 'react-native';
 
+import { Text } from '../components/themed/Text';
 import { Icon } from '../utils/icons';
 
 interface Props {
@@ -20,9 +21,8 @@ export const PaginationComponent: React.FC<Props> = ({
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
+      <Pressable
         style={styles.item}
-        activeOpacity={0.6}
         disabled={page.current <= 0}
         onPress={() => {
           page.current = 0;
@@ -30,10 +30,9 @@ export const PaginationComponent: React.FC<Props> = ({
         }}
       >
         <Icon name="doubleLeft" />
-      </TouchableOpacity>
-      <TouchableOpacity
+      </Pressable>
+      <Pressable
         style={styles.item}
-        activeOpacity={0.6}
         disabled={page.current <= 0}
         onPress={() => {
           page.current = page.current - 1;
@@ -41,117 +40,120 @@ export const PaginationComponent: React.FC<Props> = ({
         }}
       >
         <Icon name="left" />
-      </TouchableOpacity>
+      </Pressable>
+
+      {page.current - 2 > 0 && (
+        <Pressable style={styles.item} onPress={() => {}}>
+          <Text style={styles.text}> ... </Text>
+        </Pressable>
+      )}
 
       {page.current > numPages - 3 && numPages >= 5 && (
-        <TouchableOpacity
+        <Pressable
           style={styles.item}
-          activeOpacity={0.6}
           onPress={() => {
             page.current = page.current - 4;
             refetch(page.current);
           }}
         >
           <Text style={styles.text}> {page.current - 3} </Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
 
       {page.current > numPages - 2 && numPages >= 4 && (
-        <TouchableOpacity
+        <Pressable
           style={styles.item}
-          activeOpacity={0.6}
           onPress={() => {
             page.current = page.current - 3;
             refetch(page.current);
           }}
         >
           <Text style={styles.text}> {page.current - 2} </Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
 
       {page.current >= 2 && (
-        <TouchableOpacity
+        <Pressable
           style={styles.item}
-          activeOpacity={0.6}
           onPress={() => {
             page.current = page.current - 2;
             refetch(page.current);
           }}
         >
           <Text style={styles.text}> {page.current - 1} </Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
 
       {page.current >= 1 && (
-        <TouchableOpacity
+        <Pressable
           style={styles.item}
-          activeOpacity={0.6}
           onPress={() => {
             page.current = page.current - 1;
             refetch(page.current);
           }}
         >
           <Text style={styles.text}> {page.current} </Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
 
-      <TouchableOpacity style={styles.active} activeOpacity={0.6}>
+      <Pressable style={styles.active}>
         <Text style={styles.activeText}> {page.current + 1} </Text>
-      </TouchableOpacity>
+      </Pressable>
 
       {page.current <= numPages - 2 && (
-        <TouchableOpacity
+        <Pressable
           style={styles.item}
-          activeOpacity={0.6}
           onPress={() => {
             page.current = page.current + 1;
             refetch(page.current);
           }}
         >
           <Text style={styles.text}> {page.current + 2} </Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
       {page.current <= numPages - 3 && (
-        <TouchableOpacity
+        <Pressable
           style={styles.item}
-          activeOpacity={0.6}
           onPress={() => {
             page.current = page.current + 2;
             refetch(page.current);
           }}
         >
           <Text style={styles.text}> {page.current + 3} </Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
       {page.current < 2 && page.current <= numPages - 4 && (
-        <TouchableOpacity
+        <Pressable
           style={styles.item}
-          activeOpacity={0.6}
           onPress={() => {
             page.current = page.current + 3;
             refetch(page.current);
           }}
         >
           <Text style={styles.text}> {page.current + 4} </Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
 
       {page.current < 1 && page.current <= numPages - 5 && (
-        <TouchableOpacity
+        <Pressable
           style={styles.item}
-          activeOpacity={0.6}
           onPress={() => {
             page.current = page.current + 4;
             refetch(page.current);
           }}
         >
           <Text style={styles.text}> {page.current + 5} </Text>
-        </TouchableOpacity>
+        </Pressable>
       )}
 
-      <TouchableOpacity
+      {numPages - page.current > 3 && (
+        <Pressable style={styles.item} onPress={() => {}}>
+          <Text style={styles.text}> ... </Text>
+        </Pressable>
+      )}
+
+      <Pressable
         style={styles.item}
-        activeOpacity={0.6}
         disabled={page.current >= numberOfAds / 5 - 1}
         onPress={() => {
           page.current = page.current + 1;
@@ -159,10 +161,9 @@ export const PaginationComponent: React.FC<Props> = ({
         }}
       >
         <Icon name="right" />
-      </TouchableOpacity>
-      <TouchableOpacity
+      </Pressable>
+      <Pressable
         style={styles.item}
-        activeOpacity={0.6}
         disabled={page.current >= numberOfAds / 5 - 1}
         onPress={() => {
           page.current = numPages - 1;
@@ -170,7 +171,7 @@ export const PaginationComponent: React.FC<Props> = ({
         }}
       >
         <Icon name="doubleRight" />
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 };
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    colo: 'black',
+    color: 'black',
   },
   activeText: {
     textAlign: 'center',

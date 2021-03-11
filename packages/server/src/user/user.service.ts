@@ -37,6 +37,7 @@ export class UserService {
     if (!user) {
       throw new NotFoundException({
         message: 'User not found!',
+        code: ERROR_CODES.USER.NOT_FOUND,
       });
     }
     return user;
@@ -47,6 +48,7 @@ export class UserService {
     if (!user) {
       throw new NotFoundException({
         message: 'User not found!',
+        code: ERROR_CODES.USER.NOT_FOUND,
       });
     }
     return user;
@@ -72,19 +74,13 @@ export class UserService {
   async addAdToFavorites(adId: string, userId: string): Promise<UserModel> {
     const user = await this.findUserById(userId);
     const ad = await this.adService.findAdById(adId);
-
-    if (ad && user) {
-      if (user.favorites) {
-        user.favorites.push(ad);
-      } else {
-        user.favorites = [ad];
-      }
-    } else {
-      throw new NotFoundException({
-        message: 'Ad not found!',
-      });
+    if (user.favorites.find((favorite) => favorite.id === adId)) {
+      user.favorites = user.favorites.filter(
+        (favorite) => favorite.id !== adId,
+      );
+      return user.save();
     }
-
+    user.favorites.push(ad);
     return user.save();
   }
 

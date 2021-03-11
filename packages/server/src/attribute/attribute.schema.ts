@@ -1,8 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { ATTRIBUTE_TYPES } from 'src/util/constants';
+import {
+  PossibleValuesSchema,
+  PossibleValuesModel,
+} from './possible-values/possible-values.schema';
 
-@Schema()
+@Schema({ _id: false })
 export class AttributeModel extends Document {
   @Prop()
   title: string;
@@ -17,8 +21,11 @@ export class AttributeModel extends Document {
   })
   type: string;
 
+  @Prop([PossibleValuesSchema])
+  possibleValues: PossibleValuesModel[];
+
   @Prop()
-  possibleValues: string[];
+  dependsBy: string;
 }
 
 export const AttributeSchema = SchemaFactory.createForClass(AttributeModel);

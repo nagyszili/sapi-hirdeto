@@ -7,10 +7,10 @@ export const FIND_ALL_ADS = gql`
     $page: Int
     $perPage: Int
     $sortField: String
-    $sortOrder: String
+    $sortOrder: Int
     $queryString: String
-    $mainCategoryId: String
-    $categoryId: String
+    $mainCategoryIdentifier: String
+    $categoryIdentifier: String
     $inDescription: Boolean
     $location: LocationInput
     $currency: String!
@@ -22,8 +22,8 @@ export const FIND_ALL_ADS = gql`
       sortField: $sortField
       sortOrder: $sortOrder
       queryString: $queryString
-      mainCategoryId: $mainCategoryId
-      categoryId: $categoryId
+      mainCategoryIdentifier: $mainCategoryIdentifier
+      categoryIdentifier: $categoryIdentifier
       inDescription: $inDescription
       location: $location
       currency: $currency
@@ -32,40 +32,20 @@ export const FIND_ALL_ADS = gql`
       id
       identifier
       name
-      currency
-      user {
-        id
-        name
-        email
-        favorites {
-          id
-        }
-      }
       price
+      currency
       description
-      images
       createdAt
       updatedAt
+      thumbnail
+      numberOfImages
       location {
+        longitude
+        latitude
         name
         county
       }
       views
-      category {
-        id
-        identifier
-        name
-        attributes {
-          title
-          type
-          possibleValues
-        }
-        mainCategory {
-          id
-          identifier
-          name
-        }
-      }
       attributeValues {
         key
         value

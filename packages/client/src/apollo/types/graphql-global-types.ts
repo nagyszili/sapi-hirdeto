@@ -7,6 +7,17 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface AdImageInput {
+  isThumbnail: boolean;
+  image: any;
+}
+
+export interface AttributeValueInput {
+  key: string;
+  value: string;
+  type: string;
+}
+
 export interface Filter {
   type: string;
   name: string;

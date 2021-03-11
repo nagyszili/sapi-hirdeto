@@ -32,6 +32,9 @@ export const ATTRIBUTE_NAMES = {
     COLOR: 'color',
     GEARBOX: 'gearbox',
   },
+  CAR_PARTS: {
+    CONDITION: 'condition',
+  },
   MOTORCYCLES: {
     TYPE: 'type',
     YEAR_OF_MANUFACTURE: 'year of manufacture',
@@ -130,18 +133,18 @@ export const ERROR_CODES = {
   CATEGORY: {
     NOT_FOUND: 'category.notFound',
   },
+  MAIN_CATEGORY: {
+    NOT_FOUND: 'mainCategory.notFound',
+  },
   USER: {
     NOT_FOUND: 'user.notFound',
     BAD_CREDENTIALS: 'user.badCredentials',
     UNAUTHORIZED: 'user.unauthorized',
     EMAIL_ALREADY_USED: 'user.emailAlreadyUsed',
-    PHONE_VALIDATION_FAILED: 'user.phoneValidationFailed',
-    INVALID_VERIFICATION_CODE: 'user.invalidVerificationCode',
-    WRONG_CURRENT_PASSWORD: 'user.wrongCurrentPassword',
-    CANNOT_CHANGE_PASSWORD_IN_CURRENT_LOGIN_TYPE:
-      'user.cannotChangePasswordInCurrentLoginType',
-    CANNOT_CHANGE_PASSWORD_OR_EMAIL_IN_CURRENT_LOGIN_TYPE:
-      'user.cannotChangePasswordOrEmailInCurrentLoginType',
+  },
+  AD: {
+    NOT_FOUND: 'ad.notFound',
+    NOT_FOUND_COUNT: 'ad.notFoundCount',
   },
 };
 

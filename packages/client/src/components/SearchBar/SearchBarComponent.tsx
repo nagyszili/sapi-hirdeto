@@ -4,14 +4,15 @@ import {
   StyleSheet,
   View,
   TextInput,
-  TouchableOpacity,
-  Text,
+  Pressable,
+  ScrollView,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 
+import texts from '../../../assets/texts/texts.json';
+import { Text } from '../../components/themed/Text';
 import { Icon } from '../../utils/icons';
-import { CategoryFilter } from '../CategoryFilter';
 import { CheckBoxComponent } from '../CheckboxComponent';
+import { CategoryFilter } from '../Filters/CategoryFilter';
 import { SearchBarComponentProps } from './SearchBarComponent.props';
 
 export const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
@@ -31,32 +32,30 @@ export const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
       <View style={styles.searchRow}>
         <View style={styles.searchBar}>
           <Icon name="search" color="#424242" size={24} />
-
           <TextInput
             style={styles.input}
             value={queryString}
             onChangeText={onChangeSearch}
-            placeholder="Search"
+            placeholder={texts['search']}
           />
           {queryString !== '' && (
-            <TouchableOpacity
+            <Pressable
               onPress={() => {
                 setQueryString('');
               }}
             >
-              <Icon name="cancel" color="#424242" size={24} />
-            </TouchableOpacity>
+              <Icon name="close" color="#424242" size={24} />
+            </Pressable>
           )}
         </View>
-        <TouchableOpacity
+        <Pressable
           style={styles.searchButton}
           onPress={() => {
             search(queryString);
           }}
-          activeOpacity={0.8}
         >
-          <Text style={styles.searchText}>Search</Text>
-        </TouchableOpacity>
+          <Text style={styles.searchText}>{texts['search']}</Text>
+        </Pressable>
       </View>
       <View style={styles.filters}>
         <ScrollView style={styles.filters} horizontal>
@@ -68,7 +67,7 @@ export const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
             />
           )}
           <CheckBoxComponent
-            name="Search in description"
+            title={texts['searchInDescription']}
             selected={searchInDescription}
             onSelect={() => setSearchInDescription(!searchInDescription)}
           />

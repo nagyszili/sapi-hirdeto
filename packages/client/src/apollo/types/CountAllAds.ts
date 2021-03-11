@@ -15,8 +15,8 @@ export interface CountAllAds {
 
 export interface CountAllAdsVariables {
   queryString?: string | null;
-  mainCategoryId?: string | null;
-  categoryId?: string | null;
+  mainCategoryIdentifier?: string | null;
+  categoryIdentifier?: string | null;
   inDescription?: boolean | null;
   location?: LocationInput | null;
   currency: string;

@@ -1,5 +1,5 @@
 import { Resolver, Query, Args } from '@nestjs/graphql';
-import { modelToObject } from 'src/util/mappers';
+import { modelToObject, mapModelsToObject } from 'src/util/mappers';
 import { MainCategory } from './main-category.type';
 import { MainCategoryService } from './main-category.service';
 
@@ -14,10 +14,19 @@ export class MainCategoryResolver {
     );
   }
 
+  @Query(() => MainCategory)
+  async findMainCategoryByIdentifier(
+    @Args('identifier') identifier: string,
+  ): Promise<MainCategory> {
+    return modelToObject(
+      await this.mainCategoryService.findMainCategoryByIdentifier(identifier),
+    );
+  }
+
   @Query(() => [MainCategory])
   async findAllMainCategories(): Promise<MainCategory[]> {
-    return (
-      await this.mainCategoryService.findAllMainCategories()
-    ).map((mainCategory) => modelToObject(mainCategory));
+    return mapModelsToObject(
+      await this.mainCategoryService.findAllMainCategories(),
+    );
   }
 }

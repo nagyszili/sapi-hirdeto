@@ -13,8 +13,8 @@ export class User {
   email: string;
 
   @Field({ nullable: true })
-  phoneNumber: string;
+  phoneNumber?: string;
 
   @Field(() => [Ad], { nullable: true })
-  favorites: Ad[];
+  favorites?: Ad[];
 }

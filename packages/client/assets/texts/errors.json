@@ -1,0 +1,15 @@
+{
+  "error": "Valami elromlott",
+  "category.notFound": "Ez a kategória nem található",
+  "mainCategory.notFound": "Ez a főkategória nem található",
+  "user.notFound": "A felhasználó nem található",
+  "user.badCredentials": "Nem megfelelő email vagy jelszó",
+  "user.unauthorized": "Hozzáférés megtagadva",
+  "user.emailAlreadyUsed": "Ez az email cím már foglalt",
+  "ad.notFound": "Hirdetés nem található",
+  "ad.notFoundCount": "Nem található",
+  "validator.emailEmpty": "Kérjük adja meg az email címet",
+  "validator.invalidEmail": "Érvéntelen email cím",
+  "validator.passwordEmpty": "Kérjük adja meg a jelszót",
+  "validator.passwordToShort": "A jelszó túl rövid"
+}

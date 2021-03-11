@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { UserModel } from 'src/user/user.schema';
 import { AccessToken } from './token.type';
 import { JwtService } from '@nestjs/jwt';
+import { ERROR_CODES } from 'src/util/constants';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,7 @@ export class AuthService {
     if (!user || !bcrypt.compareSync(password, user.password)) {
       throw new UnauthorizedException({
         message: 'Bad login credentials!',
+        code: ERROR_CODES.USER.BAD_CREDENTIALS,
       });
     }
     return user;

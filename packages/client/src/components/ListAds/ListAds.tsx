@@ -1,34 +1,41 @@
 import * as React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 
 import { AllAds_findAllAds } from '../../apollo/types/AllAds';
+import { greyLightColor } from '../../utils/theme/colors';
+import { AdListItem } from './AdListItem/AdListItem';
 import { ListAdsProps } from './ListAds.props';
 
-interface ItemType {
-  item: AllAds_findAllAds;
-}
-
 export const ListAds: React.FC<ListAdsProps> = ({
+  numberOfAds,
   ads,
   refetch,
   fetchMore,
   loading,
+  user,
 }) => {
   if (!ads || ads.length === 0) {
     return null;
   }
 
-  const renderItem = ({ item }: ItemType) => <Item item={item} />;
+  const renderItem = ({
+    item,
+    index,
+  }: {
+    item: AllAds_findAllAds;
+    index: number;
+  }) => (
+    <AdListItem
+      item={item}
+      index={index}
+      favorite={!!user?.favorites?.find((favorite) => favorite.id === item.id)}
+    />
+  );
   return (
     <View style={styles.container}>
       <FlatList
         data={ads}
+        numColumns={2}
         renderItem={renderItem}
         onEndReached={() => {
           fetchMore();
@@ -44,31 +51,9 @@ export const ListAds: React.FC<ListAdsProps> = ({
   );
 };
 
-const Item = ({ item }: ItemType) => (
-  <TouchableOpacity activeOpacity={0.6} onPress={() => {}}>
-    <View style={styles.item}>
-      <Text style={styles.title}>{item.name}</Text>
-      <Text style={styles.title}>{item.category.mainCategory.identifier}</Text>
-      <Text style={styles.title}>{item.category.identifier}</Text>
-      <Text style={styles.title}>{item.description}</Text>
-    </View>
-  </TouchableOpacity>
-);
-
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: '100%',
-    alignItems: 'stretch',
-  },
-  item: {
-    margin: 10,
     flex: 1,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: 'gray',
-  },
-  title: {
-    fontSize: 16,
+    backgroundColor: greyLightColor,
   },
 });

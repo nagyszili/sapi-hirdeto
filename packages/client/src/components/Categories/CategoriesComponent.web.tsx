@@ -1,38 +1,36 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View, FlatList, Pressable } from 'react-native';
 
-import { CategoriesByMainCategoryId_findCategoriesByMainCategoryId } from '../../apollo/types/CategoriesByMainCategoryId';
+import { CategoriesByMainCategoryIdentifier_findCategoriesByMainCategoryIdentifier } from '../../apollo/types/CategoriesByMainCategoryIdentifier';
+import { Text } from '../../components/themed/Text';
 
 interface Props {
-  mainCategoryId: string;
-  categories: CategoriesByMainCategoryId_findCategoriesByMainCategoryId[];
-  setCategoryId: (id: string) => void;
+  mainCategoryIdentifier: string;
+  categories: CategoriesByMainCategoryIdentifier_findCategoriesByMainCategoryIdentifier[];
+  setCategoryIdentifier: (identifier: string) => void;
 }
 interface Category {
   name: string;
-  id: string;
+  identifier: string;
 }
 interface ItemType {
-  mainCategoryId: string;
+  mainCategoryIdentifier: string;
   item: Category;
-  setCategoryId: (id: string) => void;
+  setCategoryIdentifier: (identifier: string) => void;
 }
 
 export const CategoriesComponent: React.FC<Props> = ({
-  mainCategoryId,
+  mainCategoryIdentifier,
   categories,
-  setCategoryId,
+  setCategoryIdentifier,
 }) => {
-  let items = [{ name: 'All', id: 'all' }];
+  let items = [{ name: 'All', identifier: 'all' }];
   items = items.concat(
-    categories.map((category) => ({ name: category.name, id: category.id })),
+    categories.map((category) => ({
+      name: category.name,
+      identifier: category.identifier,
+    })),
   );
 
   return (
@@ -43,34 +41,37 @@ export const CategoriesComponent: React.FC<Props> = ({
         renderItem={({ item }) => (
           <Item
             item={item}
-            setCategoryId={setCategoryId}
-            mainCategoryId={mainCategoryId}
+            setCategoryIdentifier={setCategoryIdentifier}
+            mainCategoryIdentifier={mainCategoryIdentifier}
           />
         )}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.identifier}
         horizontal
       />
     </View>
   );
 };
 
-const Item = ({ item, setCategoryId, mainCategoryId }: ItemType) => {
+const Item = ({
+  item,
+  setCategoryIdentifier,
+  mainCategoryIdentifier,
+}: ItemType) => {
   const navigation = useNavigation();
   return (
-    <TouchableOpacity
-      activeOpacity={0.6}
+    <Pressable
       onPress={() => {
-        setCategoryId(item.id);
+        setCategoryIdentifier(item.identifier);
         navigation.navigate('AdsScreen', {
-          categoryId: item.id,
-          mainCategoryId,
+          categoryIdentifier: item.identifier,
+          mainCategoryIdentifier,
         });
       }}
     >
       <View style={styles.item}>
         <Text style={styles.title}>{item.name}</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

@@ -1,0 +1,21 @@
+{
+  "price": "Ár",
+  "brand": "Márka",
+  "model": "Model",
+  "year of manufacture": "Gyártási év",
+  "turnover": "Kilométeróra állása",
+  "engine capacity": "Motor kapacitás",
+  "condition": "Állapot",
+  "combustible": "Üzemanyag",
+  "car body": "Kivitel",
+  "color": "Szín",
+  "gearbox": "Váltó",
+  "type": "Tipus",
+  "category": "Kategória",
+  "mobility": "Mobilitás",
+  "rooms": "Szobák",
+  "usable area": "Terület",
+  "year of construction": "Építési év",
+  "floor": "Emelet",
+  "sex": "Nem"
+}

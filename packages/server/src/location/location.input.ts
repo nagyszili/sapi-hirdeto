@@ -3,13 +3,13 @@ import { Field, InputType } from '@nestjs/graphql';
 @InputType()
 export class LocationInput {
   @Field()
-  longitude?: number;
+  longitude: number;
 
   @Field()
-  latitude?: number;
+  latitude: number;
 
   @Field()
-  name?: string;
+  name: string;
 
   @Field()
   county: string;

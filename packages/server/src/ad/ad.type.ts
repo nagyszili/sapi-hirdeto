@@ -25,16 +25,22 @@ export class Ad {
   currency: string;
 
   @Field({ nullable: true })
-  description: string;
+  description?: string;
+
+  @Field({ nullable: true })
+  thumbnail?: string;
+
+  @Field(() => Int)
+  numberOfImages: number;
 
   @Field(() => [String], { nullable: true })
-  images: string[];
+  images?: string[];
 
   @Field()
   createdAt: Date;
 
   @Field({ nullable: true })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @Field(() => Location)
   location: Location;
@@ -46,5 +52,5 @@ export class Ad {
   category: Category;
 
   @Field(() => [AttributeValue], { nullable: true })
-  attributeValues: AttributeValue[];
+  attributeValues?: AttributeValue[];
 }

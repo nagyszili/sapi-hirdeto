@@ -1,24 +1,39 @@
-import * as Linking from 'expo-linking';
+import { Filter } from '../apollo/types/graphql-global-types';
+import {
+  parseFilters,
+  stringifyFilters,
+  parsePage,
+  stringifyPage,
+} from '../utils/parsers';
 
-export default {
-  prefixes: [Linking.makeUrl('/')],
-  config: {
-    screens: {
-      Root: {
-        screens: {
-          TabOne: {
-            screens: {
-              Login: 'login',
-            },
-          },
-          TabTwo: {
-            screens: {
-              TabTwoScreen: 'two',
-            },
-          },
-        },
-      },
-      NotFound: '*',
+const config = {
+  screens: {
+    HomeScreen: {
+      screens: {},
     },
+    AdsScreen: {
+      path: '/ads/:mainCategoryIdentifier?/:categoryIdentifier?',
+      parse: {
+        inDescription: Boolean,
+        page: (page: string) => parsePage(page),
+        filters: (filter: string) => parseFilters(filter),
+      },
+      stringify: {
+        page: (page: number) => stringifyPage(page),
+        filters: (filters: Filter[]) => stringifyFilters(filters),
+      },
+    },
+    AdDetailsScreen: {
+      path: '/ad-details/:identifier',
+    },
+    CreateAdScreen: {
+      path: 'create-ad',
+    },
+    NotFound: '*',
   },
+};
+
+export const linking = {
+  prefixes: ['http://localhost:19006/, piacter://'],
+  config,
 };

@@ -1,10 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Document } from 'mongoose';
 import {
   AttributeModel,
   AttributeSchema,
 } from 'src/attribute/attribute.schema';
-import { MainCategoryModel } from 'src/main-category/main-category.schema';
+import {
+  MainCategoryModel,
+  MainCategorySchema,
+} from 'src/main-category/main-category.schema';
 
 @Schema()
 export class CategoryModel extends Document {
@@ -17,10 +20,7 @@ export class CategoryModel extends Document {
   @Prop([AttributeSchema])
   attributes: AttributeModel[];
 
-  @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: MainCategoryModel.name,
-  })
+  @Prop(MainCategorySchema)
   mainCategory: MainCategoryModel;
 }
 

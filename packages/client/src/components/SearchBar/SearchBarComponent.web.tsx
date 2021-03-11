@@ -1,96 +1,52 @@
 import * as React from 'react';
 import { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-} from 'react-native';
+import { StyleSheet, View, TextInput } from 'react-native';
 
+import texts from '../../../assets/texts/texts.json';
+import { Text } from '../../components/themed/Text';
 import { Icon } from '../../utils/icons';
-import { CategoryFilter } from '../CategoryFilter';
-import { CheckBoxComponent } from '../CheckboxComponent';
-import { FiltersContainer } from '../FiltersContainer';
+import { primaryColor, whiteColor } from '../../utils/theme/colors';
+import { maxContentWidth } from '../../utils/theme/layout';
+import { Button } from '../Buttons/Button';
 import { SearchBarComponentProps } from './SearchBarComponent.props';
 
 export const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
   searchString,
   search,
-  searchInDescription,
-  setSearchInDescription,
-  mainCategories,
-  selectedMainCategory,
-  setSelectedMainCategory,
-  categories,
-  selectedCategory,
-  setSelectedCategory,
-  filters,
-  setFilters,
 }) => {
   const [queryString, setQueryString] = useState(searchString || '');
 
   const onChangeSearch = (query: string) => setQueryString(query);
+
   return (
     <View style={styles.container}>
       <View style={styles.searchRow}>
         <View style={styles.searchBar}>
-          <Icon name="search" color="#424242" size={24} />
+          <Icon name="search" size={20} style={styles.searchBarIcon} />
           <TextInput
+            placeholderTextColor="#585757bf"
             style={styles.input}
             value={queryString}
             onChangeText={onChangeSearch}
-            placeholder="Search"
+            placeholder={texts['searchBetweenAds']}
           />
-          {queryString !== '' && (
-            <TouchableOpacity
-              onPress={() => {
-                setQueryString('');
-              }}
-            >
-              <Icon name="cancel" color="#424242" size={24} />
-            </TouchableOpacity>
-          )}
         </View>
-        <TouchableOpacity
+        <Button
           style={styles.searchButton}
           onPress={() => {
             search(queryString);
           }}
-          activeOpacity={0.8}
         >
-          <Text style={styles.searchText}>Search</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.filters}>
-        {mainCategories && setSelectedMainCategory && (
-          <CategoryFilter
-            style={styles.categoryFilter}
-            categories={mainCategories}
-            selectedCategory={selectedMainCategory}
-            setSelectedCategory={setSelectedMainCategory}
+          <Icon
+            name="search"
+            color={whiteColor}
+            size={20}
+            style={styles.searchIcon}
           />
-        )}
-        {categories && categories.length > 0 && setSelectedCategory && (
-          <CategoryFilter
-            style={styles.categoryFilter}
-            categories={categories}
-            selectedCategory={selectedCategory?.id}
-            setSelectedCategory={setSelectedCategory}
-          />
-        )}
-        <CheckBoxComponent
-          name="Search in description"
-          selected={searchInDescription}
-          onSelect={() => setSearchInDescription(!searchInDescription)}
-        />
-        {filters && setFilters && (
-          <FiltersContainer
-            filters={filters}
-            setFilters={setFilters}
-            attributes={selectedCategory?.attributes}
-          />
-        )}
+          <Text small semiBold style={styles.searchText}>
+            {texts['search']}
+          </Text>
+        </Button>
       </View>
     </View>
   );
@@ -98,9 +54,9 @@ export const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: '60%',
-    maxWidth: 1200,
-    minWidth: 500,
+    width: '100%',
+    marginTop: 34,
+    maxWidth: maxContentWidth,
     zIndex: 10,
   },
   searchRow: {
@@ -111,46 +67,45 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     flex: 1,
+    alignItems: 'center',
     flexDirection: 'row',
-    padding: 10,
     backgroundColor: 'white',
     marginVertical: 5,
-    marginHorizontal: 10,
     marginLeft: 0,
     minWidth: 250,
-    height: 50,
-    borderColor: 'gray',
+    height: 60,
+    borderColor: '#E4E4E4',
     borderWidth: 1.5,
     borderStyle: 'solid',
-    borderRadius: 6,
-    shadowColor: '#9E9E9E',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 1.25,
-    shadowRadius: 3.84,
-    elevation: 4,
+    borderTopLeftRadius: 6,
+    borderBottomLeftRadius: 6,
   },
   input: {
+    height: '100%',
     flex: 1,
     fontSize: 16,
-    marginHorizontal: 10,
+  },
+  searchBarIcon: {
+    padding: 20,
+    paddingRight: 18,
   },
   searchButton: {
-    height: 50,
-    width: 200,
-    backgroundColor: '#546E7A',
+    height: 60,
+    width: 120,
+    borderRadius: 0,
+    borderTopRightRadius: 6,
+    borderBottomRightRadius: 6,
+    backgroundColor: primaryColor,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
   searchText: {
-    color: 'white',
-    fontSize: 18,
+    color: whiteColor,
   },
-  filters: {
-    flexDirection: 'row',
+  searchIcon: {
+    marginRight: 12,
   },
   categoryFilter: {
     marginRight: 10,

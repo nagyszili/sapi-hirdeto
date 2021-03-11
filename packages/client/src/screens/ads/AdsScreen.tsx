@@ -1,70 +1,54 @@
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { useState, useEffect, useRef } from 'react';
 
-import { useCategoriesByMainCategoryId } from '../../apollo/category/useCategoriesByMainCategoryId';
+import { useCategoriesByMainCategoryIdentifier } from '../../apollo/category/useCategoriesByMainCategoryIdentifier';
 import { useAllMainCategories } from '../../apollo/main-category/useAllMainCategories';
-import { Filter } from '../../apollo/types/graphql-global-types';
 import { AdsScreenRouteProp } from '../../navigation/types';
 import { AdsScreenComponent } from './AdsScreenComponent';
 
 export const AdsScreen: React.FC<{}> = () => {
+  const navigation = useNavigation();
   const { data: mainCategories } = useAllMainCategories();
   const route = useRoute<AdsScreenRouteProp>();
-  const [mainCategory, setMainCategory] = useState(
-    route.params.mainCategoryId || '',
-  );
-  const [queryString, setQueryString] = useState(
-    route.params.queryString || '',
-  );
-  const [searchInDescription, setSearchInDescription] = useState(
-    route.params.searchInDescription || false,
-  );
-  const [category, setCategory] = useState(route.params.categoryId || '');
-  const prevMainCategory = usePrevious(mainCategory);
-  const [filters, setFilters] = useState<Filter[]>([]);
 
-  useEffect(() => {
-    if (mainCategory !== prevMainCategory && prevMainCategory !== undefined) {
-      setCategory('');
-    }
-  }, [mainCategory]);
+  const setQueryString = (queryString: string) =>
+    navigation.setParams({ query: queryString || undefined });
 
-  useEffect(() => {
-    setFilters([]);
-  }, [category]);
+  const setMainCategoryIdentifier = (mainCategoryIdentifier: string) =>
+    navigation.setParams({
+      mainCategoryIdentifier,
+      categoryIdentifier: '',
+      filters: undefined,
+    });
 
-  const { data: categories } = useCategoriesByMainCategoryId(mainCategory);
+  const setCategoryIdentifier = (categoryIdentifier: string) =>
+    navigation.setParams({ categoryIdentifier, filters: undefined });
+
+  const setSearchInDescription = (inDescription: boolean) =>
+    navigation.setParams({ inDescription: inDescription || undefined });
+
+  const { data: categories } = useCategoriesByMainCategoryIdentifier(
+    route?.params?.mainCategoryIdentifier || '',
+  );
 
   const getSelectedCategory = () =>
-    categories?.findCategoriesByMainCategoryId.find(
-      (cat) => cat.id === category,
+    categories?.findCategoriesByMainCategoryIdentifier.find(
+      (cat) => cat.identifier === route?.params?.categoryIdentifier,
     );
 
   return (
     <AdsScreenComponent
       search={setQueryString}
-      searchString={queryString}
-      searchInDescription={searchInDescription}
+      searchString={route?.params?.query || undefined}
+      searchInDescription={route?.params?.inDescription || false}
       setSearchInDescription={setSearchInDescription}
       mainCategories={mainCategories?.findAllMainCategories}
-      selectedMainCategory={mainCategory}
-      setSelectedMainCategory={setMainCategory}
-      categories={categories?.findCategoriesByMainCategoryId}
+      selectedMainCategory={route?.params?.mainCategoryIdentifier || ''}
+      setSelectedMainCategory={setMainCategoryIdentifier}
+      categories={categories?.findCategoriesByMainCategoryIdentifier}
       selectedCategory={getSelectedCategory()}
-      setSelectedCategory={setCategory}
-      filters={filters}
-      setFilters={setFilters}
+      setSelectedCategory={setCategoryIdentifier}
+      filters={route?.params?.filters || undefined}
     />
   );
-};
-
-const usePrevious = (value: any) => {
-  const ref = useRef();
-
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-
-  return ref.current;
 };

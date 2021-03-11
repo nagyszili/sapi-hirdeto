@@ -18,6 +18,7 @@ import { LocationInput } from 'src/location/location.input';
 import * as locations from '../../assets/locations.json';
 import { CURRENCY, ATTRIBUTE_TYPES } from 'src/util/constants';
 import { AttributeValueModel } from 'src/attribute-value/attribute-value.schema';
+import { AdMock } from './mock-data/ad.mock';
 
 @Injectable()
 export class SeederService {
@@ -54,48 +55,68 @@ export class SeederService {
 
   async seedAds(): Promise<void> {
     const users = await this.userModel.find().exec();
-    const createdAt = this.randomDate(new Date(2020, 0, 1), new Date());
-    const randomUser = users[Math.floor(Math.random() * users.length)];
     const categories = await this.categoryModel.find().exec();
     const countLocations = await this.locationModel.estimatedDocumentCount();
-    const location = await this.locationModel
-      .find()
-      .limit(-1)
-      .skip(Math.floor(Math.random() * countLocations) + 1)
-      .exec();
 
     console.log('Seeding ads');
+    await this.seedAdsFromMock(users);
 
     categories.forEach(async (category) => {
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 1000; i++) {
+        const randomUser = users[Math.floor(Math.random() * users.length)];
+        const createdAt = this.randomDate(new Date(2020, 0, 1), new Date());
+        const location = await this.locationModel
+          .find()
+          .limit(-1)
+          .skip(Math.floor(Math.random() * countLocations) + 1)
+          .exec();
+
         const currency = i % 2 === 0 ? CURRENCY.EURO : CURRENCY.LEI;
-        const attributeValues = [];
-        let name = '';
+        const attributeValues: AttributeValueModel[] = [];
+        let name = category.name + ': ';
         category.attributes.forEach((attribute) => {
           const newAttributeValue = new this.attributeValueModel();
           newAttributeValue.key = attribute.title;
           if (attribute.type === ATTRIBUTE_TYPES.RANGE) {
             if (attribute.title.includes('year')) {
               newAttributeValue.value =
-                Math.floor(Math.random() * (1 + 2020 - 1950)) + 1950;
-              attributeValues.push(newAttributeValue);
+                Math.floor(Math.random() * (1 + 2020 - 1900)) + 1900;
             } else {
               newAttributeValue.value = Math.floor(Math.random() * 10000) + 1;
-              attributeValues.push(newAttributeValue);
             }
           } else {
-            newAttributeValue.value =
-              attribute.possibleValues[
-                Math.floor(
-                  Math.random() * attribute.possibleValues.length - 1,
-                ) + 1
-              ];
-            attributeValues.push(newAttributeValue);
+            if (attribute.dependsBy) {
+              const dependsBy = attributeValues.find(
+                (attributeValue) => attributeValue.key === attribute.dependsBy,
+              );
+              const dependingValues = attribute.possibleValues.find(
+                (possibleValue) =>
+                  possibleValue.dependingKey === dependsBy.value,
+              );
+              if (dependsBy && dependingValues) {
+                newAttributeValue.value =
+                  dependingValues.values[
+                    Math.floor(
+                      Math.random() * dependingValues.values.length - 1,
+                    ) + 1
+                  ];
+              }
+            } else {
+              newAttributeValue.value =
+                attribute.possibleValues[0].values[
+                  Math.floor(
+                    Math.random() * attribute.possibleValues[0].values.length -
+                      1,
+                  ) + 1
+                ];
+            }
           }
+          attributeValues.push(newAttributeValue);
           name = name.concat(
             attribute.title + ' ' + newAttributeValue.value + ' ',
           );
         });
+
         await this.createAd(
           name,
           randomUser,
@@ -106,6 +127,21 @@ export class SeederService {
           attributeValues,
         );
       }
+    });
+  }
+
+  private async seedAdsFromMock(users: UserModel[]): Promise<void> {
+    AdMock.forEach(async (ad) => {
+      const randomUser = users[Math.floor(Math.random() * users.length)];
+      const newAd = new this.adModel(ad);
+      const categories = await this.categoryModel.find().exec();
+      const category = categories.find(
+        (category) => category.identifier === ad.categoryId,
+      );
+      newAd.identifier = generateIdentifier();
+      newAd.category = new ObjectId(category.id);
+      newAd.user = randomUser;
+      await newAd.save();
     });
   }
 
@@ -122,6 +158,8 @@ export class SeederService {
     const randomPrice = Math.floor(Math.random() * 100000) + 1;
     const newAd = new this.adModel();
     newAd.name = name;
+    newAd.description =
+      name + ',\n ' + name + ',\n ' + name + ',\n' + name + ',\n ' + name;
     newAd.user = user;
     newAd.createdAt = createdAt;
     newAd.views = randomViews;

@@ -6,8 +6,8 @@ import { CountAllAdsVariables, CountAllAds } from '../types/CountAllAds';
 export const COUNT_ADS = gql`
   query CountAllAds(
     $queryString: String
-    $mainCategoryId: String
-    $categoryId: String
+    $mainCategoryIdentifier: String
+    $categoryIdentifier: String
     $inDescription: Boolean
     $location: LocationInput
     $currency: String!
@@ -15,8 +15,8 @@ export const COUNT_ADS = gql`
   ) {
     countAllAds(
       queryString: $queryString
-      mainCategoryId: $mainCategoryId
-      categoryId: $categoryId
+      mainCategoryIdentifier: $mainCategoryIdentifier
+      categoryIdentifier: $categoryIdentifier
       inDescription: $inDescription
       location: $location
       currency: $currency

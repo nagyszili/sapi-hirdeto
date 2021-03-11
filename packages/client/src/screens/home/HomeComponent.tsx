@@ -4,7 +4,6 @@ import { StyleSheet, View } from 'react-native';
 
 import { AllMainCategories_findAllMainCategories } from '../../apollo/types/AllMainCategories';
 import { CategoriesContainer } from '../../components/Categories/CategoriesContainer';
-import { ListAdsContainer } from '../../components/ListAds/ListAdsContainer';
 import { MainCategoryContainer } from '../../components/MainCategories/MainCategoryContainer';
 
 interface Props {
@@ -12,28 +11,24 @@ interface Props {
 }
 
 export const HomeComponent: React.FC<Props> = ({ mainCategories }) => {
-  const [mainCategoryId, setMainCategoryId] = useState('');
-  const [categoryId, setCategoryId] = useState('');
+  const [mainCategoryIdentifier, setMainCategoryIdentifier] = useState('');
+  const [, setCategoryIdentifier] = useState('');
 
   React.useEffect(() => {
-    setCategoryId('');
-  }, [mainCategoryId]);
+    setCategoryIdentifier('');
+  }, [mainCategoryIdentifier]);
   return (
     <View style={styles.container}>
       <MainCategoryContainer
         mainCategories={mainCategories}
-        setMainCategoryId={setMainCategoryId}
+        setMainCategoryIdentifier={setMainCategoryIdentifier}
       />
-      {mainCategoryId !== '' && (
+      {mainCategoryIdentifier !== '' && (
         <>
           <CategoriesContainer
-            mainCategoryId={mainCategoryId}
-            setCategoryId={setCategoryId}
+            mainCategoryIdentifier={mainCategoryIdentifier}
+            setCategoryIdentifier={setCategoryIdentifier}
           />
-          {/* <ListAdsContainer
-            categoryId={categoryId}
-            mainCategoryId={mainCategoryId}
-          /> */}
         </>
       )}
     </View>

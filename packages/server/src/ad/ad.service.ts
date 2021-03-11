@@ -13,61 +13,113 @@ import { AdUpdate } from './ad.update';
 import { UserService } from 'src/user/user.service';
 import { CategoryService } from 'src/category/category.service';
 import { QueryParameters } from 'src/util/graphql-util-types/QueryParameters';
-import { ATTRIBUTE_TYPES, CURRENCY, ATTRIBUTE_NAMES } from 'src/util/constants';
-import { Filter } from 'src/util/graphql-util-types/Filter';
-import { ExchangeRatesService } from 'src/exchange-rates/exchange-rates.service';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const ObjectId = require('mongoose').Types.ObjectId;
+import { ATTRIBUTE_TYPES, ERROR_CODES } from 'src/util/constants';
+import { AttributeValueModel } from 'src/attribute-value/attribute-value.schema';
+import { Ad } from './ad.type';
+import { AdQueryService } from './ad-query.builder';
+import { FileUpload } from 'graphql-upload';
+import { ImageUploader, IMAGE_UPLOADER } from 'src/uploader/image-uploader';
+import { AttributeValueInput } from 'src/attribute-value/attribute-value.input';
 
 @Injectable()
 export class AdService {
   constructor(
     @InjectModel(AdModel.name) private adModel: Model<AdModel>,
+    @InjectModel(AttributeValueModel.name)
+    private attributeValueModel: Model<AttributeValueModel>,
     @Inject(forwardRef(() => UserService))
     private userService: UserService,
     private categoryService: CategoryService,
+    private adQueryService: AdQueryService,
+    @Inject(IMAGE_UPLOADER)
+    private imageUploader: ImageUploader,
   ) {}
 
   async count(queryParameters: QueryParameters): Promise<number> {
-    const queryObject = await this.createQueryObject(queryParameters);
-    return this.adModel.countDocuments(queryObject);
+    const queryObject = await this.adQueryService.getBaseQuery(queryParameters);
+    const count: any[] = await this.adModel
+      .aggregate(queryObject)
+      .count('count');
+    if (!count || !count[0] || !count[0].count) {
+      throw new NotFoundException({
+        message: 'Count not found!',
+        code: ERROR_CODES.AD.NOT_FOUND_COUNT,
+      });
+    }
+    return count[0].count;
   }
 
-  async findAllAds(queryParameters: QueryParameters): Promise<AdModel[]> {
-    const queryObject = await this.createQueryObject(queryParameters);
-
-    const foods = await this.adModel
-      .find(queryObject)
-      .populate({
-        path: 'category',
-        populate: {
-          path: 'mainCategory',
-        },
-      })
-      .populate('user')
-      // .sort({ [queryParameters.sortField]: queryParameters.sortOrder })
-      .limit(queryParameters.perPage)
-      .skip(queryParameters.page * queryParameters.perPage)
-      .exec();
-
-    return foods;
+  async estimatedCount(): Promise<number> {
+    return this.adModel.estimatedDocumentCount();
   }
 
+  async findAllAds(queryParameters: QueryParameters): Promise<Ad[]> {
+    const queryObject = await this.adQueryService.getAdsQuery(queryParameters);
+    const ads = await this.adModel.aggregate(queryObject).exec();
+    if (!ads) {
+      throw new NotFoundException({
+        message: 'Ad not found!',
+        code: ERROR_CODES.AD.NOT_FOUND,
+      });
+    }
+    return ads;
+  }
   async findAdById(id: string): Promise<AdModel> {
     const ad = await this.adModel.findById(id).exec();
     if (!ad) {
       throw new NotFoundException({
         message: 'Ad not found!',
+        code: ERROR_CODES.AD.NOT_FOUND,
       });
     }
     return ad;
   }
 
+  async findAdByIdentifier(identifier: string): Promise<AdModel> {
+    const ad = await this.adModel
+      .findOne({ identifier })
+      .populate({
+        path: 'category',
+      })
+      .populate('user')
+      .exec();
+    if (!ad) {
+      throw new NotFoundException({
+        message: 'Ad not found!',
+        code: ERROR_CODES.AD.NOT_FOUND,
+      });
+    }
+    ++ad.views;
+    return ad.save();
+  }
+
   async createAd(adInput: AdInput, userId: string): Promise<AdModel> {
-    const createdAd = new this.adModel(adInput);
-    const user = await this.userService.findUserById(userId);
-    createdAd.user = user;
+    const createdAd = new this.adModel({
+      ...adInput,
+      images: [],
+    });
     createdAd.identifier = generateIdentifier();
+
+    await Promise.all(
+      adInput.images.map(async (imageInput, index) => {
+        const key = createdAd.id + '_' + index;
+        const link = await this.uploadImageStream(await imageInput.image, key);
+        createdAd.images.push(link);
+        if (imageInput.isThumbnail) {
+          createdAd.thumbnail = link;
+        }
+      }),
+    );
+
+    const user = await this.userService.findUserById(userId);
+    const category = await this.categoryService.findCategoryById(
+      adInput.categoryId,
+    );
+    createdAd.user = user;
+    createdAd.category = category;
+    createdAd.attributeValues = this.mapAttributeValueInputToAttributeValue(
+      adInput.attributeValues,
+    );
     return createdAd.save();
   }
 
@@ -77,113 +129,32 @@ export class AdService {
     return currentAd.save();
   }
 
-  async createQueryObject(queryParameters: QueryParameters) {
-    const categories = queryParameters.mainCategoryId
-      ? await this.categoryService.findCategoriesByMainCategoryId(
-          queryParameters.mainCategoryId,
-        )
-      : [];
-
-    return {
-      $and: [
-        queryParameters.categoryId
-          ? { category: new ObjectId(queryParameters.categoryId) }
-          : queryParameters.mainCategoryId
-          ? {
-              category: {
-                $in: categories.map((category) => new ObjectId(category.id)),
-              },
-            }
-          : {},
-        queryParameters.queryString
-          ? queryParameters.inDescription
-            ? {
-                description: {
-                  $regex: queryParameters.queryString,
-                  $options: 'xi',
-                },
-              }
-            : {
-                name: { $regex: queryParameters.queryString, $options: 'xi' },
-              }
-          : {},
-        queryParameters.filters && queryParameters.filters.length > 0
-          ? await this.createFilterObject(
-              queryParameters.filters,
-              queryParameters.currency,
-            )
-          : {},
-      ],
-    };
+  async uploadImageStream(
+    { createReadStream, filename, mimetype }: FileUpload,
+    key: string,
+  ): Promise<string> {
+    const filePath = key + '_' + filename;
+    const uploadStream = this.imageUploader.createUploadStream(
+      filePath,
+      mimetype,
+    );
+    createReadStream().pipe(uploadStream.writeStream);
+    return uploadStream.link;
   }
 
-  async createFilterObject(filters: Filter[], currencyInput: string) {
-    const exchangeRates = await ExchangeRatesService.getRates();
-
-    const currencyFilter =
-      currencyInput === CURRENCY.EURO
-        ? {
-            $cond: {
-              if: { $eq: ['$currency', CURRENCY.EURO] },
-              then: { $multiply: ['$price', 1] },
-              else: { $multiply: ['$price', exchangeRates.ronBased.rates.EUR] },
-            },
-          }
-        : {
-            $cond: {
-              if: { $eq: ['$currency', CURRENCY.LEI] },
-              then: { $multiply: ['$price', 1] },
-              else: { $multiply: ['$price', exchangeRates.eurBased.rates.RON] },
-            },
-          };
-
-    return {
-      $and: filters.map((filter) => {
-        switch (filter.type) {
-          case ATTRIBUTE_TYPES.RANGE: {
-            if (filter.name === ATTRIBUTE_NAMES.GENERAL.PRICE) {
-              return {
-                $expr: {
-                  $and: [
-                    { $gte: [currencyFilter, filter.from || 0] },
-                    { $lte: [currencyFilter, filter.to || Infinity] },
-                  ],
-                },
-              };
-            }
-
-            if (filter.from || filter.to) {
-              return {
-                attributeValues: {
-                  $elemMatch: {
-                    key: filter.name,
-                    $and: [
-                      { value: { $gte: filter.from || 0 } },
-                      { value: { $lte: filter.to || Infinity } },
-                    ],
-                  },
-                },
-              };
-            }
-
-            return {};
-          }
-          case ATTRIBUTE_TYPES.SELECT:
-          case ATTRIBUTE_TYPES.MULTI_SELECT:
-          case ATTRIBUTE_TYPES.CHECKBOX: {
-            return {
-              attributeValues: {
-                $elemMatch: {
-                  key: filter.name,
-                  value: {
-                    $in: filter.selectedAttributeValues,
-                  },
-                },
-              },
-            };
-          }
-        }
-      }),
-    };
+  mapAttributeValueInputToAttributeValue(
+    attributeValueInputs: AttributeValueInput[],
+  ) {
+    return attributeValueInputs.map((attributeValue) =>
+      attributeValue.type === ATTRIBUTE_TYPES.RANGE
+        ? new this.attributeValueModel({
+            key: attributeValue.key,
+            value: parseInt(attributeValue.value, 10),
+          })
+        : new this.attributeValueModel({
+            key: attributeValue.key,
+            value: attributeValue.value,
+          }),
+    );
   }
 }
