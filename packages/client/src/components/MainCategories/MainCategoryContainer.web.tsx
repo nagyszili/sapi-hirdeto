@@ -1,84 +1,72 @@
 import * as React from 'react';
+import { StyleSheet, View, FlatList } from 'react-native';
+
+import texts from '../../../assets/texts/texts.json';
+import { whiteColor } from '../../utils/theme/colors';
+import { maxContentWidth } from '../../utils/theme/layout';
+import { Text } from '../themed/Text';
+import { MainCategoryContainerProps } from './MainCategoryContainer.props';
 import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  Image,
-} from 'react-native';
+  MainCategoryItemProps,
+  MainCategoryItem,
+} from './MainCategoryItem/MainCategoryItem';
 
-import { AllMainCategories_findAllMainCategories } from '../../apollo/types/AllMainCategories';
-
-interface Props {
-  mainCategories: AllMainCategories_findAllMainCategories[];
-  setMainCategoryId: (mainCategoryId: string) => void;
-}
-
-interface MainCategory {
-  item: AllMainCategories_findAllMainCategories;
-  setMainCategoryId: (mainCategoryId: string) => void;
-}
-
-export const MainCategoryContainer: React.FC<Props> = ({
+export const MainCategoryContainer: React.FC<MainCategoryContainerProps> = ({
   mainCategories,
-  setMainCategoryId,
+  setMainCategoryIdentifier,
 }) => {
-  const renderItem = ({ item, setMainCategoryId }: MainCategory) => (
-    <Item item={item} setMainCategoryId={setMainCategoryId} />
+  const renderItem = ({
+    item,
+    setMainCategoryIdentifier,
+  }: MainCategoryItemProps) => (
+    <MainCategoryItem
+      item={item}
+      setMainCategoryIdentifier={setMainCategoryIdentifier}
+    />
   );
   return (
     <View style={styles.container}>
-      <FlatList
-        data={mainCategories}
-        renderItem={({ item }) => renderItem({ item, setMainCategoryId })}
-        keyExtractor={(item) => item.id}
-        horizontal
-      />
-      <View />
+      <Text style={styles.categoryTitle} semiBold black>
+        {texts['adCategories']}
+      </Text>
+      <View style={styles.content}>
+        <FlatList
+          contentContainerStyle={styles.list}
+          data={mainCategories}
+          renderItem={({ item }) =>
+            renderItem({ item, setMainCategoryIdentifier })
+          }
+          keyExtractor={(item) => item.id}
+          horizontal
+        />
+      </View>
     </View>
   );
 };
 
-const Item = ({ item, setMainCategoryId }: MainCategory) => (
-  <TouchableOpacity
-    activeOpacity={0.6}
-    onPress={() => {
-      setMainCategoryId(item.id);
-    }}
-  >
-    <View style={styles.category}>
-      <Image
-        style={styles.categoryImage}
-        source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
-      />
-      <Text style={styles.title}>{item.name}</Text>
-    </View>
-  </TouchableOpacity>
-);
-
 const styles = StyleSheet.create({
   container: {
-    margin: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  category: {
-    margin: 20,
-    alignItems: 'center',
-  },
-  categoryImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 100,
+    backgroundColor: whiteColor,
+    width: '100%',
     marginVertical: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  categoryName: {
-    fontSize: 16,
+  content: {
+    maxWidth: maxContentWidth,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  title: {
-    width: 150,
-    fontSize: 16,
-    textAlign: 'center',
+  list: {
+    flexGrow: 1,
+    flexShrink: 1,
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    paddingBottom: 45,
+  },
+  categoryTitle: {
+    fontSize: 28,
+    marginVertical: 45,
   },
 });

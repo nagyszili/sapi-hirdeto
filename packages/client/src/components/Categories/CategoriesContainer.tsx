@@ -1,20 +1,22 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { useCategoriesByMainCategoryId } from '../../apollo/category/useCategoriesByMainCategoryId';
+import { useCategoriesByMainCategoryIdentifier } from '../../apollo/category/useCategoriesByMainCategoryIdentifier';
 import { Fetching } from '../Fetching';
 import { CategoriesComponent } from './CategoriesComponent';
 
 interface Props {
-  mainCategoryId: string;
-  setCategoryId: (id: string) => void;
+  mainCategoryIdentifier: string;
+  setCategoryIdentifier: (id: string) => void;
 }
 
 export const CategoriesContainer: React.FC<Props> = ({
-  mainCategoryId,
-  setCategoryId,
+  mainCategoryIdentifier,
+  setCategoryIdentifier,
 }) => {
-  const { data: categories } = useCategoriesByMainCategoryId(mainCategoryId);
+  const { data: categories } = useCategoriesByMainCategoryIdentifier(
+    mainCategoryIdentifier,
+  );
 
   if (!categories) {
     return <Fetching />;
@@ -23,9 +25,9 @@ export const CategoriesContainer: React.FC<Props> = ({
   return (
     <View style={styles.container}>
       <CategoriesComponent
-        mainCategoryId={mainCategoryId}
-        categories={categories.findCategoriesByMainCategoryId}
-        setCategoryId={setCategoryId}
+        mainCategoryIdentifier={mainCategoryIdentifier}
+        categories={categories.findCategoriesByMainCategoryIdentifier}
+        setCategoryIdentifier={setCategoryIdentifier}
       />
     </View>
   );

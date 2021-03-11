@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { StyleSheet, View, SafeAreaView, Button } from 'react-native';
+import { StyleSheet, View, SafeAreaView } from 'react-native';
+
+import { HeaderContentComponent } from '../components/Header/HeaderContentComponent';
 
 export const ProfileScreen: React.FC<{}> = () => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Button onPress={() => {}} title="Login" />
-        <Button onPress={() => {}} title="Register" />
+        <HeaderContentComponent />
       </View>
     </SafeAreaView>
   );

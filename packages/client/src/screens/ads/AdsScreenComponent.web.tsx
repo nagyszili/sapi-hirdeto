@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
 
+import { FilterSortContainer } from '../../components/Filters/FilterSortContainer';
+import { Footer } from '../../components/Footer/Footer';
 import { ListAdsContainer } from '../../components/ListAds/ListAdsContainer';
 import { SearchBarComponent } from '../../components/SearchBar/SearchBarComponent';
+import { greyLightColor } from '../../utils/theme/colors';
 import { AdsComponentProps } from './AdsComponent.props';
 
 export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
@@ -17,7 +20,6 @@ export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
   selectedCategory,
   setSelectedCategory,
   filters,
-  setFilters,
 }) => {
   return (
     <SafeAreaView style={styles.container}>
@@ -25,7 +27,6 @@ export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
         <View style={styles.content}>
           <SearchBarComponent
             filters={filters}
-            setFilters={setFilters}
             search={search}
             searchString={searchString}
             searchInDescription={searchInDescription}
@@ -37,14 +38,26 @@ export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
             selectedCategory={selectedCategory}
             setSelectedCategory={setSelectedCategory}
           />
+          <FilterSortContainer
+            searchInDescription={searchInDescription}
+            setSearchInDescription={setSearchInDescription}
+            mainCategories={mainCategories}
+            selectedMainCategory={selectedMainCategory}
+            setSelectedMainCategory={setSelectedMainCategory}
+            categories={categories}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            filters={filters}
+          />
           <ListAdsContainer
-            filters={filters || []}
+            filters={filters}
             queryString={searchString}
-            categoryId={selectedCategory?.id}
-            mainCategoryId={selectedMainCategory}
+            categoryIdentifier={selectedCategory?.identifier}
+            mainCategoryIdentifier={selectedMainCategory}
             searchInDescription={searchInDescription}
           />
         </View>
+        <Footer />
       </ScrollView>
     </SafeAreaView>
   );
@@ -54,13 +67,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: greyLightColor,
   },
   scroll: {
     width: '100%',
   },
   content: {
     alignItems: 'center',
-    padding: 10,
+    marginBottom: 46,
   },
 });

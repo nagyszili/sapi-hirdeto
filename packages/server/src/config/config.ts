@@ -1,6 +1,5 @@
 import * as convict from 'convict';
 import * as yaml from 'js-yaml';
-import * as appRoot from 'app-root-path';
 import * as fs from 'fs';
 
 export const config = convict({
@@ -8,7 +7,7 @@ export const config = convict({
     port: {
       doc: 'The port to bind',
       format: 'port',
-      default: 3000,
+      default: 3001,
       env: 'BACKEND_PORT',
     },
   },
@@ -32,11 +31,29 @@ export const config = convict({
     default: false,
     env: 'RUN_SEEDERS',
   },
+  awsAccessKeyId: {
+    doc: 'AWS access key id',
+    format: String,
+    default: '',
+    env: 'AWS_ACCESS_KEY_ID',
+  },
+  awsSecretAccessKey: {
+    doc: 'AWS secret access key',
+    format: String,
+    default: '',
+    env: 'AWS_SECRET_ACCESS_KEY',
+  },
+  awsBucketName: {
+    doc: 'AWS bucket name',
+    format: String,
+    default: '',
+    env: 'AWS_BUCKET_NAME',
+  },
 });
 
 convict.addParser({ extension: ['yml', 'yaml'], parse: yaml.safeLoad });
 
-const envFilePath = `${appRoot}/packages/server/.env.yml`;
+const envFilePath = './.env.yml';
 if (fs.existsSync(envFilePath)) {
   config.loadFile(envFilePath);
 }

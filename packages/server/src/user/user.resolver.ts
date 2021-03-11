@@ -12,6 +12,11 @@ export class UserResolver {
   constructor(private userService: UserService) {}
 
   @Query(() => User)
+  async currentUser(@CurrentUser() user: User): Promise<User> {
+    return user;
+  }
+
+  @Query(() => User)
   async findUser(): Promise<UserModel> {
     return this.userService.getUser();
   }

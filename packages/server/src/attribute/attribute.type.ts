@@ -1,4 +1,5 @@
 import { ObjectType, Field } from '@nestjs/graphql';
+import { PossibleValues } from './possible-values/possible-values.type';
 
 @ObjectType()
 export class Attribute {
@@ -8,6 +9,9 @@ export class Attribute {
   @Field()
   type: string;
 
-  @Field(() => [String])
-  possibleValues: string[];
+  @Field(() => [PossibleValues])
+  possibleValues: PossibleValues[];
+
+  @Field({ nullable: true })
+  dependsBy?: string;
 }

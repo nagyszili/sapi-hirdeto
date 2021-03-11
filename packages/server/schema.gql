@@ -2,10 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type PossibleValues {
+  dependingKey: String
+  values: [String!]!
+}
+
 type Attribute {
   title: String!
   type: String!
-  possibleValues: [String!]!
+  possibleValues: [PossibleValues!]!
+  dependsBy: String
 }
 
 type MainCategory {
@@ -28,9 +34,9 @@ type AttributeValue {
 }
 
 type Location {
-  longitude: Float
-  latitude: Float
-  name: String
+  longitude: Float!
+  latitude: Float!
+  name: String!
   county: String!
 }
 
@@ -42,6 +48,8 @@ type Ad {
   price: Float!
   currency: String!
   description: String
+  thumbnail: String
+  numberOfImages: Int!
   images: [String!]
   createdAt: DateTime!
   updatedAt: DateTime
@@ -64,21 +72,43 @@ type User {
   favorites: [Ad!]
 }
 
+type AdListItem {
+  id: ID!
+  identifier: String!
+  name: String!
+  price: Float!
+  currency: String!
+  description: String
+  thumbnail: String
+  numberOfImages: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime
+  location: Location!
+  views: Int!
+  attributeValues: [AttributeValue!]
+}
+
 type AccessToken {
   access_token: String!
 }
 
 type Query {
+  currentUser: User!
   findUser: User!
   findUserById(id: String!): User!
   findAllUsers: [User!]!
   findAdById(id: String!): Ad!
-  findAllAds(page: Int, perPage: Int, sortField: String, sortOrder: String, queryString: String, inDescription: Boolean, categoryId: String, mainCategoryId: String, location: LocationInput, currency: String, filters: [Filter!]): [Ad!]!
-  countAllAds(page: Int, perPage: Int, sortField: String, sortOrder: String, queryString: String, inDescription: Boolean, categoryId: String, mainCategoryId: String, location: LocationInput, currency: String, filters: [Filter!]): Int!
+  findAdByIdentifier(identifier: String!): Ad!
+  findAllAds(page: Int, perPage: Int, sortField: String, sortOrder: Int, queryString: String, inDescription: Boolean, categoryIdentifier: String, mainCategoryIdentifier: String, location: LocationInput, currency: String!, filters: [Filter!]): [AdListItem!]!
+  countAllAds(page: Int, perPage: Int, sortField: String, sortOrder: Int, queryString: String, inDescription: Boolean, categoryIdentifier: String, mainCategoryIdentifier: String, location: LocationInput, currency: String!, filters: [Filter!]): Int!
+  estimatedCount: Int!
   findCategoryById(id: String!): Category!
+  findCategoryByIdentifier(identifier: String!): Category!
   findAllCategories: [Category!]!
   findCategoriesByMainCategoryId(id: String!): [Category!]!
+  findCategoriesByMainCategoryIdentifier(identifier: String!): [Category!]!
   findMainCategoryById(id: String!): MainCategory!
+  findMainCategoryByIdentifier(identifier: String!): MainCategory!
   findAllMainCategories: [MainCategory!]!
   countLocations: Int!
   allLocations: [Location!]!
@@ -107,12 +137,21 @@ type Mutation {
   updateCurrentUser(name: String, email: String, password: String, phoneNumber: String): User!
   updateUser(name: String, email: String, password: String, phoneNumber: String, id: String!): User!
   addAdToFavorites(adId: String!): User!
-  createAd(name: String!, price: Float!, currency: String!, description: String, images: [String!], location: LocationInput!, categoryId: String!, attributeValues: [AttributeValueInput!]): Ad!
-  updateAd(name: String, price: Float, description: String, images: [String!], location: String, category: String, attributeValues: [AttributeValueInput!], id: String!): Ad!
+  createAd(name: String!, price: Float!, currency: String!, description: String!, images: [AdImageInput!], location: LocationInput!, categoryId: String!, attributeValues: [AttributeValueInput!]): Ad!
+  updateAd(name: String, price: Float, currency: String, description: String, images: [AdImageInput!], location: String, category: String, attributeValues: [AttributeValueInput!], id: String!): Ad!
   login(email: String!, password: String!): AccessToken!
 }
+
+input AdImageInput {
+  isThumbnail: Boolean!
+  image: Upload!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input AttributeValueInput {
   key: String!
   value: String!
+  type: String!
 }

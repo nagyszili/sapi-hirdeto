@@ -1,38 +1,33 @@
 import * as React from 'react';
+import { StyleSheet, View, FlatList } from 'react-native';
+
+import { MainCategoryContainerProps } from './MainCategoryContainer.props';
 import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableOpacity,
-  FlatList,
-  Image,
-} from 'react-native';
+  MainCategoryItemProps,
+  MainCategoryItem,
+} from './MainCategoryItem/MainCategoryItem';
 
-import { AllMainCategories_findAllMainCategories } from '../../apollo/types/AllMainCategories';
-
-interface Props {
-  mainCategories: AllMainCategories_findAllMainCategories[];
-  setMainCategoryId: (mainCategoryId: string) => void;
-}
-
-interface MainCategory {
-  item: AllMainCategories_findAllMainCategories;
-  setMainCategoryId: (mainCategoryId: string) => void;
-}
-
-export const MainCategoryContainer: React.FC<Props> = ({
+export const MainCategoryContainer: React.FC<MainCategoryContainerProps> = ({
   mainCategories,
-  setMainCategoryId,
+  setMainCategoryIdentifier,
 }) => {
-  const renderItem = ({ item, setMainCategoryId }: MainCategory) => (
-    <Item item={item} setMainCategoryId={setMainCategoryId} />
+  const renderItem = ({
+    item,
+    setMainCategoryIdentifier,
+  }: MainCategoryItemProps) => (
+    <MainCategoryItem
+      item={item}
+      setMainCategoryIdentifier={setMainCategoryIdentifier}
+    />
   );
   return (
     <View style={styles.container}>
       <FlatList
         showsHorizontalScrollIndicator={false}
         data={mainCategories}
-        renderItem={({ item }) => renderItem({ item, setMainCategoryId })}
+        renderItem={({ item }) =>
+          renderItem({ item, setMainCategoryIdentifier })
+        }
         keyExtractor={(item) => item.id}
         horizontal
       />
@@ -41,45 +36,10 @@ export const MainCategoryContainer: React.FC<Props> = ({
   );
 };
 
-const Item = ({ item, setMainCategoryId }: MainCategory) => (
-  <TouchableOpacity
-    activeOpacity={0.6}
-    onPress={() => {
-      setMainCategoryId(item.id);
-    }}
-  >
-    <View style={styles.category}>
-      <Image
-        style={styles.categoryImage}
-        source={{ uri: 'https://reactnative.dev/img/tiny_logo.png' }}
-      />
-      <Text style={styles.title}>{item.name}</Text>
-    </View>
-  </TouchableOpacity>
-);
-
 const styles = StyleSheet.create({
   container: {
     marginVertical: 10,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  category: {
-    margin: 10,
-    alignItems: 'center',
-  },
-  categoryImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 100,
-    marginVertical: 15,
-  },
-  categoryName: {
-    fontSize: 16,
-  },
-  title: {
-    width: 150,
-    fontSize: 16,
-    textAlign: 'center',
   },
 });

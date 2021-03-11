@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MainCategoryModel } from './main-category.schema';
 import { MainCategoryInput } from './main-category.input';
+import { ERROR_CODES } from 'src/util/constants';
 
 @Injectable()
 export class MainCategoryService {
@@ -20,6 +21,22 @@ export class MainCategoryService {
     if (!mainCategory) {
       throw new NotFoundException({
         message: 'Main Category not found!',
+        code: ERROR_CODES.MAIN_CATEGORY.NOT_FOUND,
+      });
+    }
+    return mainCategory;
+  }
+
+  async findMainCategoryByIdentifier(
+    identifier: string,
+  ): Promise<MainCategoryModel> {
+    const mainCategory = await this.mainCategoryModel
+      .findOne({ identifier })
+      .exec();
+    if (!mainCategory) {
+      throw new NotFoundException({
+        message: 'Main Category not found!',
+        code: ERROR_CODES.MAIN_CATEGORY.NOT_FOUND,
       });
     }
     return mainCategory;

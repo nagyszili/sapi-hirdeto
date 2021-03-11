@@ -9,10 +9,10 @@
 
 export interface LocationsByName_findLocationsByName {
   __typename: "Location";
-  name: string | null;
+  name: string;
   county: string;
-  longitude: number | null;
-  latitude: number | null;
+  longitude: number;
+  latitude: number;
 }
 
 export interface LocationsByName {

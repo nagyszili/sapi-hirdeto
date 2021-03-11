@@ -9,46 +9,12 @@ import { LocationInput, Filter } from "./graphql-global-types";
 // GraphQL query operation: AllAds
 // ====================================================
 
-export interface AllAds_findAllAds_user_favorites {
-  __typename: "Ad";
-  id: string;
-}
-
-export interface AllAds_findAllAds_user {
-  __typename: "User";
-  id: string;
-  name: string;
-  email: string;
-  favorites: AllAds_findAllAds_user_favorites[] | null;
-}
-
 export interface AllAds_findAllAds_location {
   __typename: "Location";
-  name: string | null;
+  longitude: number;
+  latitude: number;
+  name: string;
   county: string;
-}
-
-export interface AllAds_findAllAds_category_attributes {
-  __typename: "Attribute";
-  title: string;
-  type: string;
-  possibleValues: string[];
-}
-
-export interface AllAds_findAllAds_category_mainCategory {
-  __typename: "MainCategory";
-  id: string;
-  identifier: string;
-  name: string;
-}
-
-export interface AllAds_findAllAds_category {
-  __typename: "Category";
-  id: string;
-  identifier: string;
-  name: string;
-  attributes: AllAds_findAllAds_category_attributes[];
-  mainCategory: AllAds_findAllAds_category_mainCategory;
 }
 
 export interface AllAds_findAllAds_attributeValues {
@@ -58,20 +24,19 @@ export interface AllAds_findAllAds_attributeValues {
 }
 
 export interface AllAds_findAllAds {
-  __typename: "Ad";
+  __typename: "AdListItem";
   id: string;
   identifier: string;
   name: string;
-  currency: string;
-  user: AllAds_findAllAds_user;
   price: number;
+  currency: string;
   description: string | null;
-  images: string[] | null;
   createdAt: any;
   updatedAt: any | null;
+  thumbnail: string | null;
+  numberOfImages: number;
   location: AllAds_findAllAds_location;
   views: number;
-  category: AllAds_findAllAds_category;
   attributeValues: AllAds_findAllAds_attributeValues[] | null;
 }
 
@@ -83,10 +48,10 @@ export interface AllAdsVariables {
   page?: number | null;
   perPage?: number | null;
   sortField?: string | null;
-  sortOrder?: string | null;
+  sortOrder?: number | null;
   queryString?: string | null;
-  mainCategoryId?: string | null;
-  categoryId?: string | null;
+  mainCategoryIdentifier?: string | null;
+  categoryIdentifier?: string | null;
   inDescription?: boolean | null;
   location?: LocationInput | null;
   currency: string;

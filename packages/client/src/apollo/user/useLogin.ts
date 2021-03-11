@@ -1,11 +1,5 @@
 import { gql } from '@apollo/client';
 
-export const IS_USER_LOGGED_IN = gql`
-  query LoggedInQuery {
-    isLoggedIn @client
-  }
-`;
-
 export const LOGIN_USER = gql`
   mutation LoginUserMutation($email: String!, $password: String!) {
     login(email: $email, password: $password) {

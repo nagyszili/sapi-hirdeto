@@ -17,7 +17,6 @@ export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
   selectedCategory,
   setSelectedCategory,
   filters,
-  setFilters,
 }) => {
   return (
     <SafeAreaView style={styles.container}>
@@ -25,7 +24,6 @@ export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
         <View style={styles.searchBar}>
           <SearchBarComponent
             filters={filters}
-            setFilters={setFilters}
             search={search}
             searchString={searchString}
             searchInDescription={searchInDescription}
@@ -40,10 +38,10 @@ export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
         </View>
         <View style={styles.listAds}>
           <ListAdsContainer
-            filters={filters || []}
+            filters={filters}
             queryString={searchString}
-            categoryId={selectedCategory?.id}
-            mainCategoryId={selectedMainCategory}
+            categoryIdentifier={selectedCategory?.identifier}
+            mainCategoryIdentifier={selectedMainCategory}
             searchInDescription={searchInDescription}
           />
         </View>

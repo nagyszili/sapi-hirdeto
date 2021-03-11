@@ -13,8 +13,8 @@ export class QueryParameters {
   @Field(() => String, { nullable: true })
   sortField?: string;
 
-  @Field(() => String, { nullable: true })
-  sortOrder?: string;
+  @Field(() => Int, { nullable: true })
+  sortOrder?: number;
 
   @Field(() => String, { nullable: true })
   queryString?: string;
@@ -23,16 +23,16 @@ export class QueryParameters {
   inDescription?: boolean;
 
   @Field(() => String, { nullable: true })
-  categoryId?: string;
+  categoryIdentifier?: string;
 
   @Field(() => String, { nullable: true })
-  mainCategoryId?: string;
+  mainCategoryIdentifier?: string;
 
   @Field(() => LocationInput, { nullable: true })
   location?: LocationInput;
 
-  @Field(() => String, { nullable: true })
-  currency?: string;
+  @Field(() => String)
+  currency: string;
 
   @Field(() => [Filter], { nullable: true })
   filters?: Filter[];

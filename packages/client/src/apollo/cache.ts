@@ -2,7 +2,12 @@ import { InMemoryCache } from '@apollo/client';
 import { offsetLimitPagination } from '@apollo/client/utilities';
 import { Platform } from 'react-native';
 
-import { isLoggedInVar, currencyVar } from './reactiveVariables';
+import {
+  uiStateVar,
+  isLoggedInVar,
+  currencyVar,
+  sortTypeVar,
+} from './reactiveVariables';
 
 export const cache = new InMemoryCache({
   typePolicies: {
@@ -12,9 +17,11 @@ export const cache = new InMemoryCache({
           Platform.OS === 'web'
             ? offsetLimitPagination([
                 'queryString',
-                'mainCategoryId',
-                'categoryId',
+                'mainCategoryIdentifier',
+                'categoryIdentifier',
                 'inDescription',
+                'sortField',
+                'sortOrder',
                 'location',
                 'currency',
                 'filters',
@@ -24,8 +31,8 @@ export const cache = new InMemoryCache({
             : {
                 keyArgs: [
                   'queryString',
-                  'mainCategoryId',
-                  'categoryId',
+                  'mainCategoryIdentifier',
+                  'categoryIdentifier',
                   'inDescription',
                 ],
                 merge(existing = [], incoming: any[], { readField }) {
@@ -41,6 +48,11 @@ export const cache = new InMemoryCache({
                   return merged;
                 },
               },
+        uiState: {
+          read() {
+            return uiStateVar();
+          },
+        },
         isLoggedIn: {
           read() {
             return isLoggedInVar();
@@ -49,6 +61,11 @@ export const cache = new InMemoryCache({
         currency: {
           read() {
             return currencyVar();
+          },
+        },
+        sortType: {
+          read() {
+            return sortTypeVar();
           },
         },
       },

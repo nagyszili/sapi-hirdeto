@@ -2,31 +2,51 @@ import { MainCategoryInput } from 'src/main-category/main-category.input';
 
 export const MainCategoryMock: MainCategoryInput[] = [
   {
-    identifier: 'auto-masini-moto-ambarcatiuni',
-    name: 'Auto, moto si ambarcatiuni',
+    identifier: 'ingatlan',
+    name: 'Ingatlanok',
   },
   {
-    identifier: 'imobiliare',
-    name: 'Imobiliare',
+    identifier: 'jarmuvek',
+    name: 'Járművek',
   },
   {
-    identifier: 'locuri-de-munca',
-    name: 'Locuri de munca',
+    identifier: 'sport-muveszet',
+    name: 'Sport, művészet',
   },
   {
-    identifier: 'electronice-electrocasnice',
-    name: 'Electronice si electrocasnice',
+    identifier: 'elektronika',
+    name: 'Elektronikai cikkek',
   },
   {
-    identifier: 'moda-frumusete',
-    name: 'Moda si frumusete',
+    identifier: 'haztartas-kert',
+    name: 'Háztartás, kert',
   },
   {
-    identifier: 'casa-gradina',
-    name: 'Casa si gradina',
+    identifier: 'divat-ruha',
+    name: 'Divat, ruházat',
   },
   {
-    identifier: 'mama-si-copilul',
-    name: 'Mama si copilul',
+    identifier: 'kabanna',
+    name: 'Kabannák',
+  },
+  {
+    identifier: 'allatok',
+    name: 'Állatok',
+  },
+  {
+    identifier: 'munkahely',
+    name: 'Munkahely',
+  },
+  {
+    identifier: 'mezogazdasag',
+    name: 'Mező-gazdaság',
+  },
+  {
+    identifier: 'baba-mama',
+    name: 'Baba-mama',
+  },
+  {
+    identifier: 'felszereles-szolgaltatas',
+    name: 'Felszerelés, szolgáltatás',
   },
 ];

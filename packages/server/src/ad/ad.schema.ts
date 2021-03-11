@@ -29,6 +29,9 @@ export class AdModel extends Document {
   description: string;
 
   @Prop()
+  thumbnail: string;
+
+  @Prop()
   images: string[];
 
   @Prop({ type: Date })
@@ -46,7 +49,7 @@ export class AdModel extends Document {
   @Prop(LocationSchema)
   location: LocationModel;
 
-  @Prop()
+  @Prop({ default: 0 })
   views: number;
 
   @Prop({

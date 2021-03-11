@@ -22,10 +22,12 @@ export class UserModel extends Document {
   })
   loginType: string;
 
-  @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: AdModel.name,
-  })
+  @Prop([
+    {
+      type: MongooseSchema.Types.ObjectId,
+      ref: AdModel.name,
+    },
+  ])
   favorites: AdModel[];
 }
 

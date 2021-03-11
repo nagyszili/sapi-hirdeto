@@ -2,13 +2,13 @@ import { ObjectType, Field, Float } from '@nestjs/graphql';
 
 @ObjectType()
 export class Location {
-  @Field(() => Float, { nullable: true })
+  @Field(() => Float)
   longitude: number;
 
-  @Field(() => Float, { nullable: true })
+  @Field(() => Float)
   latitude: number;
 
-  @Field({ nullable: true })
+  @Field()
   name: string;
 
   @Field()
