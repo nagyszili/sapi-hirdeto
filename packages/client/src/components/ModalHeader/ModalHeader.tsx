@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useRef } from 'react';
-import { StyleSheet, View, Pressable } from 'react-native';
+import { StyleSheet, View, Pressable, Platform } from 'react-native';
 import { useHover } from 'react-native-web-hooks';
 
 import { Icon } from '../../utils/icons';
@@ -22,18 +22,22 @@ export const ModalHeader: React.FC<ModalHeaderProps> = ({ title, close }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.button}>
-        <Pressable
-          onPress={close}
-          style={[styles.close, isHovered && styles.hover]}
-          ref={ref}
-        >
-          <Icon name="close" size={22} color={greyMediumColor} />
-        </Pressable>
-      </View>
-      <Text style={styles.title} bold black>
-        {title}
-      </Text>
+      {Platform.OS === 'web' && (
+        <>
+          <View style={styles.button}>
+            <Pressable
+              onPress={close}
+              style={[styles.close, isHovered && styles.hover]}
+              ref={ref}
+            >
+              <Icon name="close" size={22} color={greyMediumColor} />
+            </Pressable>
+          </View>
+          <Text style={styles.title} bold black>
+            {title}
+          </Text>
+        </>
+      )}
     </View>
   );
 };

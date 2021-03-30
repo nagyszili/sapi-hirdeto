@@ -3,10 +3,10 @@ import { SafeAreaView, View, StyleSheet, ScrollView } from 'react-native';
 
 import { FilterSortContainer } from '../../components/Filters/FilterSortContainer';
 import { Footer } from '../../components/Footer/Footer';
-import { ListAdsContainer } from '../../components/ListAds/ListAdsContainer';
 import { SearchBarComponent } from '../../components/SearchBar/SearchBarComponent';
 import { greyLightColor } from '../../utils/theme/colors';
 import { AdsComponentProps } from './AdsComponent.props';
+import { ListAdsContainer } from './ListAds/ListAdsContainer';
 
 export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
   searchString,
@@ -25,19 +25,7 @@ export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scroll}>
         <View style={styles.content}>
-          <SearchBarComponent
-            filters={filters}
-            search={search}
-            searchString={searchString}
-            searchInDescription={searchInDescription}
-            setSearchInDescription={setSearchInDescription}
-            mainCategories={mainCategories}
-            selectedMainCategory={selectedMainCategory}
-            setSelectedMainCategory={setSelectedMainCategory}
-            categories={categories}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-          />
+          <SearchBarComponent search={search} searchString={searchString} />
           <FilterSortContainer
             searchInDescription={searchInDescription}
             setSearchInDescription={setSearchInDescription}

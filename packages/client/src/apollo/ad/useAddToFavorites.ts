@@ -10,11 +10,14 @@ export const ADD_TO_FAVORITES = gql`
   mutation AddToFavorites($adId: String!) {
     addAdToFavorites(adId: $adId) {
       id
+      favorites {
+        id
+      }
     }
   }
 `;
 
-export const useAddToFavorites = (_onCompleted?: () => void) =>
+export const useAddToFavorites = () =>
   useMutation<AddToFavorites, AddToFavoritesVariables>(ADD_TO_FAVORITES, {
     onError: (error: ApolloError) => {
       if (error.graphQLErrors[0]?.extensions?.exception.status === 401) {
@@ -22,8 +25,5 @@ export const useAddToFavorites = (_onCompleted?: () => void) =>
       } else {
         alert('Something went wrong!');
       }
-    },
-    onCompleted: () => {
-      _onCompleted && _onCompleted();
     },
   });

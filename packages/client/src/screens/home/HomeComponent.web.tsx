@@ -5,42 +5,35 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 
 import texts from '../../../assets/texts/texts.json';
 import { AllMainCategories_findAllMainCategories } from '../../apollo/types/AllMainCategories';
-import { CategoriesContainer } from '../../components/Categories/CategoriesContainer';
 import { CheckBoxComponent } from '../../components/CheckboxComponent';
 import { Footer } from '../../components/Footer/Footer';
-import { ListAdsContainer } from '../../components/ListAds/ListAdsContainer';
 import { MainCategoryContainer } from '../../components/MainCategories/MainCategoryContainer';
 import { SearchBarComponent } from '../../components/SearchBar/SearchBarComponent';
 import { maxContentWidth } from '../../utils/theme/layout';
+import { ListAdsContainer } from '../ads/ListAds/ListAdsContainer';
 interface Props {
   mainCategories: AllMainCategories_findAllMainCategories[];
 }
 
 export const HomeComponent: React.FC<Props> = ({ mainCategories }) => {
-  const [mainCategoryIdentifier, setMainCategoryIdentifier] = useState('');
-  const [categoryIdentifier, setCategoryIdentifier] = useState('');
   const navigation = useNavigation();
   const [searchInDescription, setSearchInDescription] = useState(false);
 
-  React.useEffect(() => {
-    setCategoryIdentifier('');
-  }, [mainCategoryIdentifier]);
+  const setMainCategoryIdentifier = (mainCategoryIdentifier: string) =>
+    navigation.navigate('AdsScreen', {
+      mainCategoryIdentifier,
+    });
 
   const search = (queryString: string) => {
     navigation.navigate('AdsScreen', {
       query: queryString || undefined,
       inDescription: searchInDescription || undefined,
-      categoryIdentifier,
     });
   };
   return (
     <ScrollView>
       <View style={styles.container}>
-        <SearchBarComponent
-          search={search}
-          searchInDescription={searchInDescription}
-          setSearchInDescription={setSearchInDescription}
-        />
+        <SearchBarComponent search={search} />
         <View style={styles.searchInDesc}>
           <CheckBoxComponent
             title={texts['searchInDescription']}
@@ -53,13 +46,6 @@ export const HomeComponent: React.FC<Props> = ({ mainCategories }) => {
           mainCategories={mainCategories}
           setMainCategoryIdentifier={setMainCategoryIdentifier}
         />
-        {mainCategoryIdentifier !== '' && (
-          <CategoriesContainer
-            mainCategoryIdentifier={mainCategoryIdentifier}
-            setCategoryIdentifier={setCategoryIdentifier}
-          />
-        )}
-
         <View style={styles.list}>
           <ListAdsContainer />
         </View>

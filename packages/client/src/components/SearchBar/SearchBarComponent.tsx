@@ -1,28 +1,14 @@
 import * as React from 'react';
 import { useState } from 'react';
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  Pressable,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, View, TextInput, Pressable } from 'react-native';
 
 import texts from '../../../assets/texts/texts.json';
-import { Text } from '../../components/themed/Text';
 import { Icon } from '../../utils/icons';
-import { CheckBoxComponent } from '../CheckboxComponent';
-import { CategoryFilter } from '../Filters/CategoryFilter';
 import { SearchBarComponentProps } from './SearchBarComponent.props';
 
 export const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
   searchString,
   search,
-  setSearchInDescription,
-  searchInDescription,
-  mainCategories,
-  selectedMainCategory,
-  setSelectedMainCategory,
 }) => {
   const [queryString, setQueryString] = useState(searchString || '');
 
@@ -36,7 +22,10 @@ export const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
             style={styles.input}
             value={queryString}
             onChangeText={onChangeSearch}
-            placeholder={texts['search']}
+            placeholder={texts['searchBetweenAds']}
+            placeholderTextColor="rgba(88, 87, 87, 0.75)"
+            onSubmitEditing={() => search(queryString)}
+            returnKeyType="search"
           />
           {queryString !== '' && (
             <Pressable
@@ -48,30 +37,6 @@ export const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
             </Pressable>
           )}
         </View>
-        <Pressable
-          style={styles.searchButton}
-          onPress={() => {
-            search(queryString);
-          }}
-        >
-          <Text style={styles.searchText}>{texts['search']}</Text>
-        </Pressable>
-      </View>
-      <View style={styles.filters}>
-        <ScrollView style={styles.filters} horizontal>
-          {mainCategories && setSelectedMainCategory && (
-            <CategoryFilter
-              categories={mainCategories}
-              selectedCategory={selectedMainCategory}
-              setSelectedCategory={setSelectedMainCategory}
-            />
-          )}
-          <CheckBoxComponent
-            title={texts['searchInDescription']}
-            selected={searchInDescription}
-            onSelect={() => setSearchInDescription(!searchInDescription)}
-          />
-        </ScrollView>
       </View>
     </View>
   );
@@ -79,8 +44,7 @@ export const SearchBarComponent: React.FC<SearchBarComponentProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   searchRow: {
@@ -90,41 +54,18 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     flexDirection: 'row',
-    padding: 10,
+    alignItems: 'center',
+    paddingHorizontal: 10,
     backgroundColor: 'white',
-    marginVertical: 5,
-    marginHorizontal: 10,
-    minWidth: 260,
-    height: 50,
-    borderColor: 'gray',
-    borderWidth: 1.5,
-    borderStyle: 'solid',
+    height: 60,
+    width: '100%',
     borderRadius: 6,
-    shadowColor: '#9E9E9E',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 1.25,
-    shadowRadius: 3.84,
-    elevation: 4,
   },
   input: {
     flex: 1,
-    fontSize: 16,
+    fontSize: 15,
     marginHorizontal: 10,
-  },
-  searchButton: {
-    height: '80%',
-    width: '20%',
-    backgroundColor: '#546E7A',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  searchText: {
-    color: 'white',
-    fontSize: 18,
+    height: '100%',
   },
   filters: {
     flexDirection: 'row',

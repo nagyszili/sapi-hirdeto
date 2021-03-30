@@ -30,7 +30,7 @@ export const CategoriesComponent: React.FC<Props> = ({
     categories.map((category) => ({
       name: category.name,
       identifier: category.identifier,
-    })),
+    }))
   );
 
   return (

@@ -76,6 +76,7 @@ export const LoginComponent: React.FC<Props> = ({
           <TextInput
             ref={passwordRef}
             secureTextEntry
+            onSubmitEditing={login}
             errorMessage={passwordErrorMessage}
           />
         </View>
@@ -144,6 +145,7 @@ export const LoginComponent: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 50,
     alignItems: 'flex-start',
     marginBottom: 20,

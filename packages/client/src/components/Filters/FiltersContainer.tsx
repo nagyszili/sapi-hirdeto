@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
+import attributeLabels from '../../../assets/texts/attributes.json';
 import {
   CategoriesByMainCategoryIdentifier_findCategoriesByMainCategoryIdentifier,
   CategoriesByMainCategoryIdentifier_findCategoriesByMainCategoryIdentifier_attributes,
@@ -20,14 +21,17 @@ export const FiltersContainer: React.FC<Props> = ({
   filters,
   selectedCategory,
 }) => {
+  const getAttributeLabel = (title: string) =>
+    attributeLabels[title as keyof typeof attributeLabels];
+
   const getElements = (
-    attribute: CategoriesByMainCategoryIdentifier_findCategoriesByMainCategoryIdentifier_attributes,
+    attribute: CategoriesByMainCategoryIdentifier_findCategoriesByMainCategoryIdentifier_attributes
   ) => {
     if (!attribute.dependsBy) {
       return attribute.possibleValues[0].values;
     }
     const filter = filters?.find(
-      (filter) => attribute.dependsBy && filter.name === attribute.dependsBy,
+      (filter) => attribute.dependsBy && filter.name === attribute.dependsBy
     );
     let values: string[] = [];
 
@@ -37,7 +41,7 @@ export const FiltersContainer: React.FC<Props> = ({
           if (selectedAttributeValue === possibleValue.dependingKey) {
             values = possibleValue.values;
           }
-        }),
+        })
       );
     }
 
@@ -48,31 +52,33 @@ export const FiltersContainer: React.FC<Props> = ({
     <View key={selectedCategory.identifier} style={styles.container}>
       <View style={styles.filters}>
         {selectedCategory.attributes &&
-          selectedCategory.attributes.map((attribute, key) =>
-            attribute.type === ATTRIBUTE_TYPES.RANGE ? (
-              <RangeFilter
-                key={key}
-                filters={filters}
-                title={attribute.title}
-              />
-            ) : attribute.type === ATTRIBUTE_TYPES.MULTI_SELECT ? (
-              <MultiSelectFilter
-                elements={getElements(attribute)}
-                filters={filters}
-                title={attribute.title}
-                key={key}
-              />
-            ) : attribute.type === ATTRIBUTE_TYPES.SELECT ? (
-              <SelectFilter
-                elements={attribute.possibleValues[0].values}
-                filters={filters}
-                title={attribute.title}
-                key={key}
-              />
-            ) : attribute.type === ATTRIBUTE_TYPES.CHECKBOX ? (
-              <View key={key} />
-            ) : null,
-          )}
+          selectedCategory.attributes.map((attribute, key) => (
+            <View key={key} style={[styles.filter, { zIndex: 98 - key }]}>
+              {attribute.type === ATTRIBUTE_TYPES.RANGE ? (
+                <RangeFilter
+                  label={getAttributeLabel(attribute.title)}
+                  filters={filters}
+                  title={attribute.title}
+                />
+              ) : attribute.type === ATTRIBUTE_TYPES.MULTI_SELECT ? (
+                <MultiSelectFilter
+                  label={getAttributeLabel(attribute.title)}
+                  elements={getElements(attribute)}
+                  filters={filters}
+                  title={attribute.title}
+                />
+              ) : attribute.type === ATTRIBUTE_TYPES.SELECT ? (
+                <SelectFilter
+                  label={getAttributeLabel(attribute.title)}
+                  elements={attribute.possibleValues[0].values}
+                  filters={filters}
+                  title={attribute.title}
+                />
+              ) : attribute.type === ATTRIBUTE_TYPES.CHECKBOX ? (
+                <View key={key} />
+              ) : null}
+            </View>
+          ))}
       </View>
     </View>
   );
@@ -88,5 +94,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     maxWidth: 1200,
+  },
+  filter: {
+    marginVertical: 8,
+    marginRight: 16,
+    width: 270,
   },
 });

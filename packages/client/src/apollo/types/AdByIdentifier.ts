@@ -17,6 +17,8 @@ export interface AdByIdentifier_findAdByIdentifier_user {
 
 export interface AdByIdentifier_findAdByIdentifier_location {
   __typename: "Location";
+  longitude: number;
+  latitude: number;
   name: string;
   county: string;
 }

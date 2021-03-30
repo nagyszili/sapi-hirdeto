@@ -19,7 +19,38 @@ import { LocationModule } from './location/locations.module';
     LocationModule,
     SeederModule,
     CategoryModule,
-    GraphQLModule.forRoot({ autoSchemaFile: 'schema.gql' }),
+    GraphQLModule.forRoot({
+      autoSchemaFile: 'schema.gql',
+      plugins: [
+        {
+          requestDidStart(): any {
+            return {
+              // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+              didEncounterErrors(requestContext): any {
+                console.log(requestContext.errors);
+              },
+              // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+              willSendResponse(requestContext): any {
+                if (config.get('debugMode')) {
+                  console.log(
+                    ' === REQUEST ===\n',
+                    requestContext.request.query,
+                  );
+                  console.log(
+                    ' === VARIABLES ===\n',
+                    requestContext.request.variables,
+                  );
+                  console.log(
+                    ' === RESPONSE ===\n',
+                    JSON.stringify(requestContext.response.data, null, '  '),
+                  );
+                }
+              },
+            };
+          },
+        },
+      ],
+    }),
     MongooseModule.forRoot(config.get('db.url'), {
       useCreateIndex: true,
     }),

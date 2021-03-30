@@ -11,11 +11,8 @@ export const modelToObject = (
   return { ...model.toObject({ getters: true }), ...additionalAttribute };
 };
 
-export const mapModelsToObject = (
-  models: Document[],
-  additionalAttribute?: Record<string, unknown>,
-): any => {
-  return models.map((doc) => modelToObject(doc, additionalAttribute));
+export const mapModelsToObject = (models: Document[]): any => {
+  return models.map((doc) => modelToObject(doc));
 };
 
 export const mapObjectsToAds = (ads: any[]): AdListItem[] => {

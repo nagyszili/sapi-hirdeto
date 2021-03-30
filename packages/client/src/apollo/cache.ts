@@ -34,6 +34,11 @@ export const cache = new InMemoryCache({
                   'mainCategoryIdentifier',
                   'categoryIdentifier',
                   'inDescription',
+                  'sortField',
+                  'sortOrder',
+                  'location',
+                  'currency',
+                  'filters',
                 ],
                 merge(existing = [], incoming: any[], { readField }) {
                   const newAds = incoming.filter(
@@ -48,6 +53,21 @@ export const cache = new InMemoryCache({
                   return merged;
                 },
               },
+        findAdsByUser: {
+          keyArgs: false,
+          merge(existing = [], incoming: any[], { readField }) {
+            const newAds = incoming.filter(
+              (ad) =>
+                !existing.some(
+                  (existingAd: any) =>
+                    readField({ fieldName: 'id', from: existingAd }) ===
+                    readField({ fieldName: 'id', from: ad }),
+                ),
+            );
+            const merged = [...existing, ...newAds];
+            return merged;
+          },
+        },
         uiState: {
           read() {
             return uiStateVar();
@@ -67,6 +87,13 @@ export const cache = new InMemoryCache({
           read() {
             return sortTypeVar();
           },
+        },
+      },
+    },
+    User: {
+      fields: {
+        favorites: {
+          merge: false,
         },
       },
     },

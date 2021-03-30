@@ -20,6 +20,9 @@ import { AdQueryService } from './ad-query.builder';
 import { FileUpload } from 'graphql-upload';
 import { ImageUploader, IMAGE_UPLOADER } from 'src/uploader/image-uploader';
 import { AttributeValueInput } from 'src/attribute-value/attribute-value.input';
+import { PagingArguments } from 'src/util/graphql-util-types/PagingArguments';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const ObjectId = require('mongoose').Types.ObjectId;
 
 @Injectable()
 export class AdService {
@@ -93,13 +96,27 @@ export class AdService {
     return ad.save();
   }
 
+  async findAdsByUser(
+    userId: string,
+    paging: PagingArguments,
+  ): Promise<AdModel[]> {
+    return this.adModel
+      .find({ user: new ObjectId(userId) })
+      .limit(paging.perPage)
+      .skip(paging.page * paging.perPage)
+      .populate({
+        path: 'category',
+      })
+      .populate('user')
+      .exec();
+  }
+
   async createAd(adInput: AdInput, userId: string): Promise<AdModel> {
     const createdAd = new this.adModel({
       ...adInput,
       images: [],
     });
     createdAd.identifier = generateIdentifier();
-
     await Promise.all(
       adInput.images.map(async (imageInput, index) => {
         const key = createdAd.id + '_' + index;

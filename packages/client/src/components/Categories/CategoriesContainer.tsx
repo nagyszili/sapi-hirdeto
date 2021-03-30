@@ -15,7 +15,7 @@ export const CategoriesContainer: React.FC<Props> = ({
   setCategoryIdentifier,
 }) => {
   const { data: categories } = useCategoriesByMainCategoryIdentifier(
-    mainCategoryIdentifier,
+    mainCategoryIdentifier
   );
 
   if (!categories) {

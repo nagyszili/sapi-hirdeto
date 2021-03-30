@@ -16,24 +16,37 @@ import { useTextInput } from './useTextInput';
 
 export const TextInput: React.FC<TextInputProps> = forwardRef(
   (
-    { placeholder, secureTextEntry, maxLength, errorMessage, isNumberInput },
-    ref,
+    {
+      initialValue,
+      secureTextEntry,
+      errorMessage,
+      isNumberInput,
+      containerStyle,
+      rowStyle,
+      ...props
+    },
+    ref
   ) => {
     const thisRef = useRef(null);
     const isFocused = useFocus(thisRef);
     const isHovered = useHover(thisRef);
     const [secure, setSecure] = useState(secureTextEntry);
-    const { value, error, onChangeText } = useTextInput(ref, errorMessage);
+    const { value, error, onChangeText } = useTextInput(
+      ref,
+      errorMessage,
+      initialValue
+    );
 
     const onChange = (text: string) => {
       onChangeText(isNumberInput ? text.replace(/[^0-9]/g, '') : text);
     };
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, containerStyle]}>
         <View
           style={[
             styles.row,
+            rowStyle,
             {
               borderColor: error
                 ? Color.errorColor
@@ -46,12 +59,11 @@ export const TextInput: React.FC<TextInputProps> = forwardRef(
           ]}
         >
           <DefaultInput
+            {...props}
             ref={thisRef}
             style={styles.textInput}
-            placeholder={placeholder}
             value={value}
             secureTextEntry={secure}
-            maxLength={maxLength}
             onChangeText={onChange}
           />
           {secureTextEntry && (
@@ -73,7 +85,7 @@ export const TextInput: React.FC<TextInputProps> = forwardRef(
         </View>
       </View>
     );
-  },
+  }
 );
 
 const styles = StyleSheet.create({

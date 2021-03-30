@@ -99,6 +99,7 @@ type Query {
   findAllUsers: [User!]!
   findAdById(id: String!): Ad!
   findAdByIdentifier(identifier: String!): Ad!
+  findAdsByUser(page: Int, perPage: Int): [Ad!]!
   findAllAds(page: Int, perPage: Int, sortField: String, sortOrder: Int, queryString: String, inDescription: Boolean, categoryIdentifier: String, mainCategoryIdentifier: String, location: LocationInput, currency: String!, filters: [Filter!]): [AdListItem!]!
   countAllAds(page: Int, perPage: Int, sortField: String, sortOrder: Int, queryString: String, inDescription: Boolean, categoryIdentifier: String, mainCategoryIdentifier: String, location: LocationInput, currency: String!, filters: [Filter!]): Int!
   estimatedCount: Int!
@@ -133,13 +134,13 @@ input Filter {
 }
 
 type Mutation {
+  login(email: String!, password: String!): AccessToken!
   createUser(email: String!, password: String!): User!
   updateCurrentUser(name: String, email: String, password: String, phoneNumber: String): User!
   updateUser(name: String, email: String, password: String, phoneNumber: String, id: String!): User!
   addAdToFavorites(adId: String!): User!
   createAd(name: String!, price: Float!, currency: String!, description: String!, images: [AdImageInput!], location: LocationInput!, categoryId: String!, attributeValues: [AttributeValueInput!]): Ad!
   updateAd(name: String, price: Float, currency: String, description: String, images: [AdImageInput!], location: String, category: String, attributeValues: [AttributeValueInput!], id: String!): Ad!
-  login(email: String!, password: String!): AccessToken!
 }
 
 input AdImageInput {

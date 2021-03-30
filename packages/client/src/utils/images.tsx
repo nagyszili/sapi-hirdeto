@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleProp, Image, ImageStyle } from 'react-native';
 
+import activeImageUpload from '../../assets/images/active-image-upload.png';
 import agriculture from '../../assets/images/agriculture.png';
 import appStore from '../../assets/images/appStore.png';
 import child from '../../assets/images/child.png';
@@ -8,6 +9,7 @@ import electronics from '../../assets/images/electronics.png';
 import google from '../../assets/images/googleIcon.png';
 import house from '../../assets/images/house.png';
 import household from '../../assets/images/household.png';
+import imageUpload from '../../assets/images/image-upload.png';
 import piacter from '../../assets/images/piacter.png';
 import pig from '../../assets/images/pig.png';
 import playStore from '../../assets/images/playStore.png';
@@ -25,6 +27,10 @@ interface Props {
 }
 
 const images = (style?: StyleProp<ImageStyle>) => ({
+  'active-image-upload': () => (
+    <Image source={activeImageUpload} style={style} />
+  ),
+  'image-upload': () => <Image source={imageUpload} style={style} />,
   playStore: () => <Image source={playStore} style={style} />,
   appStore: () => <Image source={appStore} style={style} />,
   piacter: () => <Image source={piacter} style={style} />,

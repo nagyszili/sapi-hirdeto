@@ -11,6 +11,26 @@ export const CURRENT_USER = gql`
       phoneNumber
       favorites {
         id
+        identifier
+        name
+        price
+        currency
+        description
+        createdAt
+        updatedAt
+        thumbnail
+        numberOfImages
+        location {
+          longitude
+          latitude
+          name
+          county
+        }
+        views
+        attributeValues {
+          key
+          value
+        }
       }
     }
   }

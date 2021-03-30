@@ -7,9 +7,15 @@
 // GraphQL mutation operation: AddToFavorites
 // ====================================================
 
+export interface AddToFavorites_addAdToFavorites_favorites {
+  __typename: "Ad";
+  id: string;
+}
+
 export interface AddToFavorites_addAdToFavorites {
   __typename: "User";
   id: string;
+  favorites: AddToFavorites_addAdToFavorites_favorites[] | null;
 }
 
 export interface AddToFavorites {

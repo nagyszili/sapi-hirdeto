@@ -1,6 +1,7 @@
+import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, Platform } from 'react-native';
 
 import { useCreateAd } from '../../apollo/ad/useCreateAd';
 import { useCategoriesByMainCategoryIdentifier } from '../../apollo/category/useCategoriesByMainCategoryIdentifier';
@@ -11,38 +12,37 @@ import {
   AdImageInput,
 } from '../../apollo/types/graphql-global-types';
 import { setLoading } from '../../apollo/ui/uiMutations';
+import { useCurrentUser } from '../../apollo/user/useCurrentUser';
+import { useUpdateCurrentUser } from '../../apollo/user/useUpdateCurrentUser';
 import { Fetching } from '../../components/Fetching';
+import { Element } from '../../components/Filters/Select/SelectInput.props';
 import { greyLightColor } from '../../utils/theme/colors';
 import { CreateAdComponent } from './CreateAdComponent/CreateAdComponent';
 
-export interface Currency {
-  name: string;
-  identifier: string;
-  id: number;
-}
-
-const currencies: Currency[] = [
-  { name: 'lei', identifier: 'lei', id: 0 },
-  { name: 'EURO', identifier: 'euro', id: 1 },
+const currencies: Element[] = [
+  { label: 'lei', value: 'lei' },
+  { label: '€', value: 'euro' },
 ];
 
 export const CreateAdScreen: React.FC<{}> = () => {
+  const navigation = useNavigation();
+  const { data: user } = useCurrentUser();
+  const [updateCurrentUser] = useUpdateCurrentUser();
   const { data: mainCategories, loading } = useAllMainCategories();
   const [createAd] = useCreateAd();
 
-  // const [title, setTitle] = useState('');
-  // const [description, setDescription] = useState('');
-  // const [price, setPrice] = useState('');
   const titleRef = useRef<any>();
   const descriptionRef = useRef<any>();
   const priceRef = useRef<any>();
+  const userNameRef = useRef<any>();
+  const phoneNumberRef = useRef<any>();
 
   const [categoryIdentifier, setCategoryIdentifier] = useState('');
   const [mainCategoryIdentifier, setMainCategoryIdentifier] = useState('');
   const [images, setImages] = useState<AdImageInput[]>([]);
-  const [currency, setCurrency] = useState(currencies[0].name);
+  const [currency, setCurrency] = useState(currencies[0].value);
   const { data: categories } = useCategoriesByMainCategoryIdentifier(
-    mainCategoryIdentifier,
+    mainCategoryIdentifier
   );
 
   const [selectedCounty, setSelectedCounty] = useState('');
@@ -63,36 +63,68 @@ export const CreateAdScreen: React.FC<{}> = () => {
   }
 
   const selectedCategory = categories?.findCategoriesByMainCategoryIdentifier.find(
-    (cat) => cat.identifier === categoryIdentifier,
+    (cat) => cat.identifier === categoryIdentifier
   );
+
+  const clearForm = () => {
+    titleRef.current.clearValue();
+    descriptionRef.current.clearValue();
+    priceRef.current.clearValue();
+    setMainCategoryIdentifier('');
+    setImages([]);
+    setCurrency(currencies[0].value);
+    setSelectedCounty('');
+    setSelectedLocation(undefined);
+  };
 
   const _createAd = async () => {
     const title = titleRef.current.getValue();
     const description = descriptionRef.current.getValue();
     const price = priceRef.current.getValue();
+    const userName = userNameRef.current.getValue();
+    const phoneNumber = phoneNumberRef.current.getValue();
 
     if (
+      userName !== '' &&
+      phoneNumber !== '' &&
       title !== '' &&
+      title.length > 12 &&
       selectedCategory?.id &&
       parseInt(price, 10) > 0 &&
+      description.length > 60 &&
+      description.length < 9000 &&
       selectedLocation
     ) {
       setLoading(true);
-      const result = await createAd({
-        variables: {
-          name: title,
-          categoryId: selectedCategory.id,
-          price: parseInt(price, 10),
-          location: selectedLocation,
-          images,
-          currency,
-          description,
-          attributeValues: attributes,
-        },
-      });
-      if (result.data) {
-        setLoading(false);
-      } else if (result.errors) {
+      try {
+        const result = await createAd({
+          variables: {
+            name: title,
+            categoryId: selectedCategory.id,
+            price: parseInt(price, 10),
+            location: selectedLocation,
+            images,
+            currency,
+            description,
+            attributeValues: attributes.filter((attribute) => attribute.value),
+          },
+        });
+
+        const userResult = await updateCurrentUser({
+          variables: { name: userName, phoneNumber },
+        });
+
+        if (result && userResult) {
+          setLoading(false);
+          clearForm();
+          if (Platform.OS === 'web') {
+            navigation.navigate('HomeScreen');
+          } else {
+            navigation.navigate('Main', { screen: 'Home' });
+          }
+        }
+      } catch (error) {
+        console.error(error);
         setLoading(false);
         alert('Error');
       }
@@ -106,6 +138,9 @@ export const CreateAdScreen: React.FC<{}> = () => {
         titleRef={titleRef}
         descriptionRef={descriptionRef}
         priceRef={priceRef}
+        userNameRef={userNameRef}
+        phoneNumberRef={phoneNumberRef}
+        user={user?.currentUser}
         currencies={currencies}
         currency={currency}
         setCurrency={setCurrency}
@@ -122,8 +157,10 @@ export const CreateAdScreen: React.FC<{}> = () => {
         setSelectedCounty={setSelectedCounty}
         attributes={attributes}
         setAttributes={setAttributes}
+        selectedLocation={selectedLocation}
         setSelectedLocation={setSelectedLocation}
         createAd={_createAd}
+        images={images}
         setImages={setImages}
       />
     </SafeAreaView>

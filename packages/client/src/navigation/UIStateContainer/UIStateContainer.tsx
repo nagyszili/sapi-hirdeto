@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Dimensions } from 'react-native';
 
+import { whiteColor } from '../../utils/theme/colors';
 import { UIStateComponent } from '../UIStateComponent/UIStateComponent';
 
 export const UIStateContainer: React.FC<{}> = () => {
@@ -20,6 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   safeContainer: {
+    backgroundColor: whiteColor,
     maxHeight: Dimensions.get('window').height - 44,
     flex: 1,
     width: '100%',

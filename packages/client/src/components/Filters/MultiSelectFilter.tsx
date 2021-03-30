@@ -1,51 +1,64 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 
+import texts from '../../../assets/texts/texts.json';
 import { Filter } from '../../apollo/types/graphql-global-types';
 import { getFiltersAfterRemove, addMultiSelectFilter } from '../../utils';
-import { MultiSelect } from './MultiSelect';
+import { Element } from '../Filters/Select/SelectInput.props';
+import { MultiSelect } from './MultiSelect/MultiSelect';
 
 interface Props {
   elements: string[];
   filters?: Filter[];
   title: string;
+  label?: string;
 }
 
 export const MultiSelectFilter: React.FC<Props> = ({
   elements,
   filters,
   title,
+  label,
 }) => {
   const navigation = useNavigation();
   const filter = filters && filters.find((filter) => filter.name === title);
+  const selectedFilters = () =>
+    filter?.selectedAttributeValues?.map((attribute) => ({
+      value: attribute,
+      label: attribute,
+    }));
 
-  const allElements = [{ label: 'All', value: '' }].concat(
+  const allElements: Element[] = [{ label: texts['all'], value: '' }].concat(
     elements.map((element) => ({
       label: element,
       value: element,
-      selected:
-        filter?.selectedAttributeValues?.some(
-          (selectedAttributeValue) => selectedAttributeValue === element,
-        ) || undefined,
-    })),
+    }))
   );
 
-  const setSelectedElements = (selectedElements: string[]) => {
-    const isAll = selectedElements.some((element) => element === '');
+  const setSelectedElements = (selectedElements: Element[]) => {
+    const isAll = selectedElements.some((element) => element.value === '');
     if (selectedElements.length === 0 || isAll) {
       navigation.setParams({
         filters: getFiltersAfterRemove(title, filters),
       });
     } else {
       navigation.setParams({
-        filters: addMultiSelectFilter(title, selectedElements, filters, filter),
+        filters: addMultiSelectFilter(
+          title,
+          selectedElements.map((element) => element.value),
+          filters,
+          filter
+        ),
       });
     }
   };
 
   return (
     <MultiSelect
+      label={label}
       elements={allElements}
+      selectedElements={selectedFilters() || []}
+      placeholder={allElements[0].label}
       setSelectedElements={setSelectedElements}
     />
   );

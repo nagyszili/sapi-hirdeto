@@ -10,7 +10,7 @@ export const formatCreatedDateToString = (createdAt: Date) =>
     ? 'Ma'
     : isYesterday(createdAt)
     ? 'Tegnap'
-    : ` ${createdAt.getFullYear()}. ${
+    : `${createdAt.getFullYear()}. ${
         months[createdAt.getMonth() as keyof typeof months]
       } ${createdAt.getDate()}.`;
 

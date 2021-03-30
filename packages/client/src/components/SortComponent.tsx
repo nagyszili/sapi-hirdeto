@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { View } from 'react-native';
 
 import texts from '../../assets/texts/texts.json';
 import { updateSortType } from '../apollo/sort/updateSortType';
 import { useSortType } from '../apollo/sort/useSortType';
-import { Select } from './Filters/Select';
+import { SelectInput } from './Filters/Select/SelectInput';
 
 const sortBy = () => ({
   new: () => updateSortType('createdAt', -1),
@@ -14,9 +15,9 @@ const sortBy = () => ({
 type SortType = keyof ReturnType<typeof sortBy>;
 
 const elements = [
-  { name: texts['new'], identifier: 'new', id: 0 },
-  { name: texts['ascendingByPrice'], identifier: 'ascendingByPrice', id: 1 },
-  { name: texts['descendingByPrice'], identifier: 'descendingByPrice', id: 2 },
+  { label: texts['new'], value: 'new' },
+  { label: texts['ascendingByPrice'], value: 'ascendingByPrice' },
+  { label: texts['descendingByPrice'], value: 'descendingByPrice' },
 ];
 
 export const SortComponent: React.FC<{}> = () => {
@@ -36,10 +37,13 @@ export const SortComponent: React.FC<{}> = () => {
       : '';
 
   return (
-    <Select
-      elements={elements}
-      setSelectedElement={setSelectedElement}
-      selectedElement={getSelectedElement()}
-    />
+    <View style={{ zIndex: 100 }}>
+      <SelectInput
+        label={texts['sort']}
+        elements={elements}
+        setSelectedElement={setSelectedElement}
+        selectedElement={getSelectedElement()}
+      />
+    </View>
   );
 };

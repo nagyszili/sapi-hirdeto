@@ -1,40 +1,23 @@
 import * as React from 'react';
 import { SafeAreaView, View, StyleSheet } from 'react-native';
 
-import { ListAdsContainer } from '../../components/ListAds/ListAdsContainer';
 import { SearchBarComponent } from '../../components/SearchBar/SearchBarComponent';
 import { AdsComponentProps } from './AdsComponent.props';
+import { ListAdsContainer } from './ListAds/ListAdsContainer';
 
 export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
   searchString,
   search,
   searchInDescription,
-  setSearchInDescription,
-  mainCategories,
   selectedMainCategory,
-  setSelectedMainCategory,
-  categories,
   selectedCategory,
-  setSelectedCategory,
   filters,
 }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <View style={styles.searchBar}>
-          <SearchBarComponent
-            filters={filters}
-            search={search}
-            searchString={searchString}
-            searchInDescription={searchInDescription}
-            setSearchInDescription={setSearchInDescription}
-            mainCategories={mainCategories}
-            selectedMainCategory={selectedMainCategory}
-            setSelectedMainCategory={setSelectedMainCategory}
-            categories={categories}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-          />
+          <SearchBarComponent search={search} searchString={searchString} />
         </View>
         <View style={styles.listAds}>
           <ListAdsContainer
@@ -52,19 +35,14 @@ export const AdsScreenComponent: React.FC<AdsComponentProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: '100%',
-    alignItems: 'stretch',
-    backgroundColor: 'white',
+    flex: 1,
   },
   content: {
     flex: 1,
     alignItems: 'center',
   },
   searchBar: {
-    flex: 0.2,
-    width: '100%',
-    alignItems: 'center',
+    padding: 8,
   },
   listAds: {
     flex: 1,
