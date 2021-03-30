@@ -28,12 +28,12 @@ export const AdsScreen: React.FC<{}> = () => {
     navigation.setParams({ inDescription: inDescription || undefined });
 
   const { data: categories } = useCategoriesByMainCategoryIdentifier(
-    route?.params?.mainCategoryIdentifier || '',
+    route?.params?.mainCategoryIdentifier || ''
   );
 
   const getSelectedCategory = () =>
     categories?.findCategoriesByMainCategoryIdentifier.find(
-      (cat) => cat.identifier === route?.params?.categoryIdentifier,
+      (cat) => cat.identifier === route?.params?.categoryIdentifier
     );
 
   return (

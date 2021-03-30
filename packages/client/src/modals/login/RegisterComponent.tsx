@@ -138,6 +138,7 @@ export const RegisterComponent: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#FFFFFF',
     paddingHorizontal: 50,
     alignItems: 'flex-start',
     marginBottom: 20,

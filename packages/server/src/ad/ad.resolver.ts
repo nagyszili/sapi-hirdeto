@@ -8,6 +8,7 @@ import { CurrentUser } from 'src/util/decorators';
 import { User } from 'src/user/user.type';
 import { QueryParameters } from 'src/util/graphql-util-types/QueryParameters';
 import { AdListItem } from './ad-list-item.type';
+import { PagingArguments } from 'src/util/graphql-util-types/PagingArguments';
 
 @Resolver()
 export class AdResolver {
@@ -23,6 +24,17 @@ export class AdResolver {
     @Args('identifier') identifier: string,
   ): Promise<Ad> {
     return modelToObject(await this.adService.findAdByIdentifier(identifier));
+  }
+
+  @Query(() => [Ad])
+  async findAdsByUser(
+    @CurrentUser() user: User,
+    @Args() paging: PagingArguments,
+  ): Promise<Ad[]> {
+    return (await this.adService.findAdsByUser(user.id, paging)).map((ad) => ({
+      ...modelToObject(ad),
+      numberOfImages: ad.images.length,
+    }));
   }
 
   @Query(() => [AdListItem])

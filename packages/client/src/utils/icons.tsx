@@ -26,6 +26,9 @@ const icons = (size: number, color: string, style: StyleProp<TextStyle>) => ({
   'my-profile': () => (
     <IcoMoon name="ic24-user" size={size} color={color} style={style} />
   ),
+  delete: () => (
+    <IcoMoon name="ic24-delete" size={size} color={color} style={style} />
+  ),
   tab: () => (
     <Ionicons name="ios-code" size={size} color={color} style={style} />
   ),
@@ -103,6 +106,12 @@ const icons = (size: number, color: string, style: StyleProp<TextStyle>) => ({
   ),
   phone: () => (
     <IcoMoon name="ic24-phone" size={size} color={color} style={style} />
+  ),
+  sort: () => (
+    <IcoMoon name="ic24-sort" size={size} color={color} style={style} />
+  ),
+  file: () => (
+    <IcoMoon name="ic24-file" size={size} color={color} style={style} />
   ),
 });
 

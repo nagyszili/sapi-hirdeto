@@ -26,6 +26,8 @@ export const AD_BY_IDENTIFIER = gql`
       images
       thumbnail
       location {
+        longitude
+        latitude
         name
         county
       }

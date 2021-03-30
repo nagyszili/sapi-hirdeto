@@ -1,20 +1,27 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
+import { View, StyleSheet } from 'react-native';
 
+import { HomeHeader } from '../components/Header/HomeHeader';
+import { Text } from '../components/themed/Text';
 import useColorScheme from '../hooks/useColorScheme';
-import { ProfileScreen } from '../screens/ProfileScreen';
-import { AdDetailsScreen } from '../screens/ad-details/AdDetailsScreen';
 import { AdsScreen } from '../screens/ads/AdsScreen';
 import { CreateAdScreen } from '../screens/create-ad/CreateAdScreen';
+import { FavoritesScreen } from '../screens/favorites/FavoritesScreen';
 import { HomeScreen } from '../screens/home/HomeScreen';
+import { MyAdsScreen } from '../screens/my-ads/MyAdsScreen';
+import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { Icon } from '../utils/icons';
+import { blackColor, whiteColor, primaryColor } from '../utils/theme/colors';
 import Colors from '../utils/theme/themes';
 import {
   BottomTabParamList,
   HomeParamList,
   ProfileParamList,
   CreateAdParamList,
+  FavoritesParamList,
+  MyAdsParamList,
 } from './types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -26,29 +33,89 @@ export default function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Home"
       tabBarOptions={{
+        style: {
+          paddingVertical: 0,
+          backgroundColor: whiteColor,
+        },
+        tabStyle: {
+          padding: 5,
+        },
         activeTintColor: Colors[colorScheme].tint,
-        showLabel: false,
+        showLabel: true,
       }}
     >
       <BottomTab.Screen
         name="Home"
         component={HomeNavigator}
         options={{
-          tabBarIcon: ({ color }) => <Icon name="home" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon name="home" color={focused ? primaryColor : blackColor} />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text style={focused ? styles.activeLabel : styles.label}>
+              Főoldal
+            </Text>
+          ),
+        }}
+      />
+      <BottomTab.Screen
+        name="Favorites"
+        component={FavoritesNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              name="star-empty"
+              color={focused ? primaryColor : blackColor}
+            />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text style={focused ? styles.activeLabel : styles.label}>
+              Kedvencek
+            </Text>
+          ),
         }}
       />
       <BottomTab.Screen
         name="CreateAd"
         component={CreateAdNavigator}
         options={{
-          tabBarIcon: ({ color }) => <Icon name="plus-circle" color={color} />,
+          tabBarIcon: () => (
+            <View style={styles.createAdIconActive}>
+              <Icon name="plus" size={28} color={whiteColor} />
+            </View>
+          ),
+          tabBarLabel: () => <View />,
+        }}
+      />
+      <BottomTab.Screen
+        name="MyAds"
+        component={MyAdsNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <Icon name="file" color={focused ? primaryColor : blackColor} />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text style={focused ? styles.activeLabel : styles.label}>
+              Hirdetéseim
+            </Text>
+          ),
         }}
       />
       <BottomTab.Screen
         name="Profile"
         component={ProfileNavigator}
         options={{
-          tabBarIcon: ({ color }) => <Icon name="my-profile" color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon
+              name="my-profile"
+              color={focused ? primaryColor : blackColor}
+            />
+          ),
+          tabBarLabel: ({ focused }) => (
+            <Text style={focused ? styles.activeLabel : styles.label}>
+              Profil
+            </Text>
+          ),
         }}
       />
     </BottomTab.Navigator>
@@ -63,19 +130,13 @@ function HomeNavigator() {
       <HomeStack.Screen
         name="Home"
         component={HomeScreen}
-        options={{ headerTitle: 'Home' }}
+        options={{ header: () => <HomeHeader /> }}
       />
       <HomeStack.Screen
         name="AdsScreen"
         component={AdsScreen}
-        options={{ headerBackTitle: 'Back', title: 'Ads' }}
-      />
-      <HomeStack.Screen
-        name="AdDetailsScreen"
-        component={AdDetailsScreen}
         options={{
-          headerBackTitle: 'Back',
-          headerTitle: 'AdDetailsScreen',
+          header: () => <HomeHeader />,
         }}
       />
     </HomeStack.Navigator>
@@ -90,7 +151,7 @@ function ProfileNavigator() {
       <ProfileStack.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profile' }}
+        options={{ headerTitle: 'Profil' }}
       />
     </ProfileStack.Navigator>
   );
@@ -104,8 +165,52 @@ function CreateAdNavigator() {
       <CreateAdStack.Screen
         name="CreateAd"
         component={CreateAdScreen}
-        options={{ headerTitle: 'Create Ad' }}
+        options={{ headerShown: false }}
       />
     </CreateAdStack.Navigator>
   );
 }
+
+const FavoritesStack = createStackNavigator<FavoritesParamList>();
+
+function FavoritesNavigator() {
+  return (
+    <FavoritesStack.Navigator>
+      <FavoritesStack.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{ headerTitle: 'Kedvencek' }}
+      />
+    </FavoritesStack.Navigator>
+  );
+}
+
+const MyAdsStack = createStackNavigator<MyAdsParamList>();
+
+function MyAdsNavigator() {
+  return (
+    <MyAdsStack.Navigator>
+      <MyAdsStack.Screen
+        name="MyAds"
+        component={MyAdsScreen}
+        options={{ headerTitle: 'Sajat hirdeteseim' }}
+      />
+    </MyAdsStack.Navigator>
+  );
+}
+
+const styles = StyleSheet.create({
+  label: {
+    fontSize: 11,
+    color: blackColor,
+  },
+  activeLabel: {
+    fontSize: 11,
+    color: primaryColor,
+  },
+  createAdIconActive: {
+    borderRadius: 100,
+    backgroundColor: primaryColor,
+    padding: 5,
+  },
+});

@@ -4,6 +4,7 @@ export const greyMediumColor = '#969696';
 export const greyColor = '#E4E4E4';
 export const greyLightColor = '#F7F7F7';
 export const whiteColor = '#FFFFFF';
+export const greyTextColor = '#545454';
 
 // export const primaryColor = '#E00B0B';
 // export const primaryDarkColor = '#B90505';

@@ -1,17 +1,18 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
 
 import texts from '../../../assets/texts/texts.json';
 import { useAllCounties } from '../../apollo/locations/useAllCounties';
 import { useLocationsByCounty } from '../../apollo/locations/useLocationsByCounty';
 import { LocationInput } from '../../apollo/types/graphql-global-types';
-import { Text } from '../../components/themed/Text';
 import { Fetching } from '.././Fetching';
+import { Element } from '../Filters/Select/SelectInput.props';
+import { SelectInput } from './Select/SelectInput';
 
 interface Props {
   selectedCounty: string;
   setSelectedCounty: React.Dispatch<React.SetStateAction<string>>;
+  selectedLocation?: LocationInput;
   setSelectedLocation: React.Dispatch<
     React.SetStateAction<LocationInput | undefined>
   >;
@@ -20,6 +21,7 @@ interface Props {
 export const LocationFilter: React.FC<Props> = ({
   selectedCounty,
   setSelectedCounty,
+  selectedLocation,
   setSelectedLocation,
 }) => {
   const { data: counties, loading } = useAllCounties();
@@ -29,78 +31,68 @@ export const LocationFilter: React.FC<Props> = ({
     return <Fetching />;
   }
 
-  const selectCounties = counties.allCounties.map((county) => ({
-    label: county,
-    value: county,
-  }));
+  const selectCounties = [{ label: texts['select'], value: '' }].concat(
+    counties.allCounties.map((county) => ({
+      label: county,
+      value: county,
+    }))
+  );
 
-  const selectLocations =
-    locations &&
-    locations.findLocationsByCounty.map((location) => ({
-      label: location.name,
-      value: location,
-    }));
+  const getLocations = () => {
+    let selectLocations: Element[] | undefined = [
+      { label: texts['select'], value: {} },
+    ];
+
+    if (locations) {
+      selectLocations = selectLocations.concat(
+        locations.findLocationsByCounty.map((location) => ({
+          label: location.name,
+          value: {
+            name: location.name,
+            county: location.county,
+            longitude: location.longitude,
+            latitude: location.latitude,
+          },
+        }))
+      );
+    }
+
+    return selectLocations;
+  };
 
   return (
     <View style={styles.container}>
-      <DropDownPicker
-        placeholder={texts['selectCounty']}
-        placeholderStyle={styles.placeholderStyle}
-        items={selectCounties}
-        containerStyle={styles.containerStyle}
-        itemStyle={{
-          justifyContent: 'flex-start',
-        }}
-        onChangeItem={(item) => {
-          setSelectedCounty(item.value);
-        }}
-        searchable
-        searchablePlaceholder={texts['searchForACounty']}
-        searchablePlaceholderTextColor="gray"
-        searchableError={() => <Text>{texts['notFound']}</Text>}
-      />
-
-      {selectLocations && (
-        <DropDownPicker
-          key={selectedCounty}
-          placeholder={texts['searchForALocation']}
-          placeholderStyle={styles.placeholderStyle}
-          items={selectLocations}
-          containerStyle={styles.containerStyle}
-          itemStyle={{
-            justifyContent: 'flex-start',
-          }}
-          onChangeItem={(item) => {
-            setSelectedLocation({
-              name: item.value.name,
-              county: item.value.county,
-              longitude: item.value.longitude,
-              latitude: item.value.latitude,
-            });
-          }}
-          searchable
-          searchablePlaceholder={texts['searchForALocation']}
-          searchablePlaceholderTextColor="grey"
-          searchableError={() => <Text>{texts['notFound']}</Text>}
+      <View style={[styles.row, { zIndex: 100 }]}>
+        <SelectInput
+          label={texts['county']}
+          isSearchable
+          elements={selectCounties}
+          selectedElement={selectedCounty}
+          setSelectedElement={(value) => setSelectedCounty(value)}
         />
-      )}
+      </View>
+      <View style={[styles.row, { zIndex: 99 }]}>
+        <SelectInput
+          label={texts['town']}
+          isSearchable
+          elements={getLocations()}
+          selectedElement={selectedLocation}
+          setSelectedElement={setSelectedLocation}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    zIndex: 10,
+    zIndex: 100,
   },
-  containerStyle: {
-    height: 50,
-    margin: 5,
-    width: 200,
+  row: {
+    marginBottom: 24,
   },
-  placeholderStyle: {
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: 'black',
+  label: {
+    fontSize: 15,
+    marginBottom: 7,
   },
 });

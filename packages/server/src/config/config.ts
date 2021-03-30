@@ -7,7 +7,7 @@ export const config = convict({
     port: {
       doc: 'The port to bind',
       format: 'port',
-      default: 3001,
+      default: 3000,
       env: 'BACKEND_PORT',
     },
   },
@@ -48,6 +48,12 @@ export const config = convict({
     format: String,
     default: '',
     env: 'AWS_BUCKET_NAME',
+  },
+  debugMode: {
+    doc: 'If this value is true, the logger is turned on.',
+    format: Boolean,
+    default: false,
+    env: 'DEBUG_MODE',
   },
 });
 

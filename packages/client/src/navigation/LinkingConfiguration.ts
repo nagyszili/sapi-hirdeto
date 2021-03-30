@@ -34,6 +34,6 @@ const config = {
 };
 
 export const linking = {
-  prefixes: ['http://localhost:19006/, piacter://'],
+  prefixes: ['http://localhost:19006/, client://'],
   config,
 };

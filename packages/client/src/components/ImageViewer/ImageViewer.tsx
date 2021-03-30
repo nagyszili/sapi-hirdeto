@@ -4,7 +4,7 @@ import ImgsViewer from 'react-images-viewer';
 import { View, StyleSheet, Pressable, Image } from 'react-native';
 
 import { Icon } from '../../utils/icons';
-import { whiteColor } from '../../utils/theme/colors';
+import * as Color from '../../utils/theme/colors';
 
 interface Props {
   images: string[];
@@ -32,12 +32,12 @@ export const ImageViewer: React.FC<Props> = ({ images }) => {
 
   const onLeftClick = () =>
     setCurrentImage((oldValue) =>
-      oldValue === 0 ? images.length - 1 : --oldValue,
+      oldValue === 0 ? images.length - 1 : --oldValue
     );
 
   const onRightClick = () =>
     setCurrentImage((oldValue) =>
-      oldValue === images.length - 1 ? 0 : ++oldValue,
+      oldValue === images.length - 1 ? 0 : ++oldValue
     );
   return (
     <View style={styles.container}>
@@ -47,11 +47,11 @@ export const ImageViewer: React.FC<Props> = ({ images }) => {
           source={{ uri: images[currentImage] }}
         />
         <Pressable style={styles.leftArrow} onPress={onLeftClick}>
-          <Icon name="left" color={whiteColor} size={32} />
+          <Icon name="left" color={Color.whiteColor} size={32} />
         </Pressable>
 
         <Pressable style={styles.rightArrow} onPress={onRightClick}>
-          <Icon name="right" color={whiteColor} size={32} />
+          <Icon name="right" color={Color.whiteColor} size={32} />
         </Pressable>
       </Pressable>
 
@@ -78,7 +78,7 @@ export const ImageViewer: React.FC<Props> = ({ images }) => {
             onPress={() => setCurrentImage(key)}
             style={[
               styles.smallImageContainer,
-              currentImage === key && { borderColor: '#9219EE' },
+              currentImage === key && { borderColor: Color.primaryColor },
             ]}
           >
             <Image

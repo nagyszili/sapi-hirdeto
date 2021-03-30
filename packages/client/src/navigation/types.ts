@@ -1,6 +1,7 @@
 import { RouteProp } from '@react-navigation/native';
 
 import { LocationInput, Filter } from '../apollo/types/graphql-global-types';
+import { Element } from '../components/Filters/Select/SelectInput.props';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -20,12 +21,22 @@ export type RootStackParamList = {
     identifier: string;
   };
   NotFound: undefined;
+  FullScreenSelect: {
+    elements: Element[];
+    selectedElement?: any;
+    setSelectedElement: (element: any) => void;
+    placeholder?: string;
+    label?: string;
+    isSearchable?: boolean;
+  };
 };
 
 export type BottomTabParamList = {
   Home: undefined;
-  Profile: undefined;
+  Favorites: undefined;
   CreateAd: undefined;
+  MyAds: undefined;
+  Profile: undefined;
 };
 
 export type HomeParamList = {
@@ -42,9 +53,6 @@ export type HomeParamList = {
     location?: LocationInput | null;
     filters?: Filter[] | null;
   };
-  AdDetailsScreen: {
-    identifier: string;
-  };
 };
 
 export type ProfileParamList = {
@@ -55,9 +63,22 @@ export type CreateAdParamList = {
   CreateAd: undefined;
 };
 
+export type FavoritesParamList = {
+  Favorites: undefined;
+};
+
+export type MyAdsParamList = {
+  MyAds: undefined;
+};
+
 export type AdsScreenRouteProp = RouteProp<RootStackParamList, 'AdsScreen'>;
 
 export type AdDetailsScreenRouteProp = RouteProp<
   RootStackParamList,
   'AdDetailsScreen'
+>;
+
+export type FullScreenSelectRouteProp = RouteProp<
+  RootStackParamList,
+  'FullScreenSelect'
 >;

@@ -1,93 +1,27 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { useState } from 'react';
-import { View, StyleSheet, Pressable, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, ScrollView } from 'react-native';
 
 import profilePic from '../../../assets/images/defaultProfilePicture.png';
 import texts from '../../../assets/texts/texts.json';
-import { useAddToFavorites } from '../../apollo/ad/useAddToFavorites';
-import { AdByIdentifier_findAdByIdentifier_attributeValues } from '../../apollo/types/AdByIdentifier';
-import { Filter } from '../../apollo/types/graphql-global-types';
+import { AdAttributeTable } from '../../components/AdAttributeTable/AdAttributeTable';
+import { AddFavoriteButton } from '../../components/Buttons/AddFavoriteButton';
 import { Button } from '../../components/Buttons/Button';
 import { Footer } from '../../components/Footer/Footer';
 import { ImageViewer } from '../../components/ImageViewer/ImageViewer';
 import { HoverText } from '../../components/themed/HoverText';
 import { Text } from '../../components/themed/Text';
-import {
-  formatCreatedDateToString,
-  formatPriceToString,
-  attributeName,
-} from '../../utils';
-import { ATTRIBUTE_TYPES } from '../../utils/constants';
+import { formatCreatedDateToString, formatPriceToString } from '../../utils';
 import { Icon } from '../../utils/icons';
-import { ImageComponent } from '../../utils/images';
-import {
-  whiteColor,
-  blackColor,
-  greyLightColor,
-} from '../../utils/theme/colors';
+import * as Color from '../../utils/theme/colors';
 import { maxContentWidth } from '../../utils/theme/layout';
 import { AdDetailsComponentProps } from './AdDetailsComponent.props';
 
 export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
   ad,
-  favorite,
+  user,
 }) => {
   const navigation = useNavigation();
-
-  const [addToFavorites] = useAddToFavorites(() =>
-    setIsFavorite((oldValue) => !oldValue),
-  );
-  const [isFavorite, setIsFavorite] = useState(favorite);
-
-  const getFilter = (
-    attribute: AdByIdentifier_findAdByIdentifier_attributeValues,
-  ) => {
-    const attr = ad.category.attributes.find(
-      (_attr) => _attr.title === attribute.key,
-    );
-    if (attr && attr.type !== ATTRIBUTE_TYPES.RANGE) {
-      const filter: Filter = {
-        type: attr.type,
-        name: attr.title,
-        selectedAttributeValues: [attribute.value],
-      };
-      return [filter];
-    }
-  };
-
-  const renderAttributesTable = () => {
-    const attributes = ad.attributeValues?.map((attr, index) => (
-      <View
-        key={index}
-        style={[
-          styles.attributeRow,
-          { backgroundColor: index % 2 === 0 ? greyLightColor : whiteColor },
-        ]}
-      >
-        <Text style={styles.attributeLabe}>{attributeName(attr.key)}</Text>
-        <View>
-          <HoverText
-            disabled={!getFilter(attr)}
-            disableHover={!getFilter(attr)}
-            onPress={() =>
-              navigation.navigate('AdsScreen', {
-                categoryIdentifier: ad.category.identifier,
-                mainCategoryIdentifier: ad.category.mainCategory.identifier,
-                filters: getFilter(attr),
-              })
-            }
-            style={styles.attributeValue}
-            semiBold
-          >
-            {attr.value}
-          </HoverText>
-        </View>
-      </View>
-    ));
-
-    return <View style={styles.attributesTable}>{attributes}</View>;
-  };
 
   return (
     <ScrollView
@@ -192,7 +126,7 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
               <Text large black semiBold>
                 {texts['attributes']}
               </Text>
-              {renderAttributesTable()}
+              <AdAttributeTable ad={ad} />
             </View>
           </View>
           <View style={styles.sideContainer}>
@@ -200,19 +134,7 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
               <Text style={styles.favText} black large>
                 {texts['markAsFavorite']}
               </Text>
-              <Pressable
-                style={styles.starIcon}
-                onPress={() => addToFavorites({ variables: { adId: ad.id } })}
-              >
-                {isFavorite ? (
-                  <ImageComponent
-                    name="star-filled"
-                    style={styles.starFilled}
-                  />
-                ) : (
-                  <Icon name="star-empty" size={24} color={blackColor} />
-                )}
-              </Pressable>
+              <AddFavoriteButton adId={ad.id} user={user} />
             </View>
             <View style={styles.userContainer}>
               <Text large black>
@@ -239,7 +161,7 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
                   <Icon
                     size={26}
                     style={styles.whatsappIcon}
-                    color={whiteColor}
+                    color={Color.whiteColor}
                     name="whatsapp"
                   />
                   <Text white style={styles.whatsappText}>
@@ -247,12 +169,12 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
                   </Text>
                 </Button>
                 <Icon
-                  color={blackColor}
+                  color={Color.blackColor}
                   name="phone"
                   style={styles.whatsappIcon}
                 />
                 <Text small black>
-                  {ad.user.phoneNumber || '0748-357-242'}
+                  {ad.user.phoneNumber}
                 </Text>
               </View>
             </View>
@@ -312,7 +234,7 @@ const styles = StyleSheet.create({
   },
   descriptionContainer: {
     width: '100%',
-    backgroundColor: whiteColor,
+    backgroundColor: Color.whiteColor,
     borderRadius: 6,
     padding: 26,
   },
@@ -322,13 +244,13 @@ const styles = StyleSheet.create({
   descriptionText: {
     fontSize: 15,
     lineHeight: 22,
-    color: '#545454',
+    color: Color.greyTextColor,
     marginTop: 12,
     marginBottom: 30,
   },
 
   userContainer: {
-    backgroundColor: whiteColor,
+    backgroundColor: Color.whiteColor,
     borderRadius: 6,
     paddingLeft: 26,
     paddingTop: 22,
@@ -337,7 +259,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   imageContainer: {
-    backgroundColor: whiteColor,
+    backgroundColor: Color.whiteColor,
     borderRadius: 6,
     padding: 23,
     marginBottom: 24,
@@ -347,7 +269,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: 6,
-    backgroundColor: whiteColor,
+    backgroundColor: Color.whiteColor,
     width: '100%',
     minHeight: 55,
     paddingHorizontal: 23,
@@ -356,7 +278,7 @@ const styles = StyleSheet.create({
   },
   locationContainer: {
     borderRadius: 6,
-    backgroundColor: whiteColor,
+    backgroundColor: Color.whiteColor,
     paddingLeft: 26,
     paddingTop: 23,
     paddingBottom: 34,
@@ -449,12 +371,12 @@ const styles = StyleSheet.create({
     width: '35%',
     fontSize: 15,
     lineHeight: 22,
-    color: '#545454',
+    color: Color.greyTextColor,
   },
   attributeValue: {
     fontSize: 15,
     lineHeight: 22,
-    color: blackColor,
+    color: Color.blackColor,
   },
   starIcon: {
     justifyContent: 'center',

@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import texts from '../../../assets/texts/texts.json';
 import { showLoginModal } from '../../apollo/ui/modalMutations';
 import { ImageComponent } from '../../utils/images';
-import { greyColor, whiteColor } from '../../utils/theme/colors';
+import * as Color from '../../utils/theme/colors';
 import { maxContentWidth } from '../../utils/theme/layout';
 import { HoverText } from '../themed/HoverText';
 import { Text } from '../themed/Text';
@@ -112,9 +112,10 @@ export const Footer: React.FC<{}> = () => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: whiteColor,
+    backgroundColor: Color.whiteColor,
     justifyContent: 'center',
     alignItems: 'center',
+    zIndex: 1,
   },
   content: {
     width: '100%',
@@ -140,7 +141,7 @@ const styles = StyleSheet.create({
     maxWidth: 300,
     fontSize: 15,
     lineHeight: 22,
-    color: '#545454',
+    color: Color.greyTextColor,
   },
   column: {
     marginHorizontal: 36,
@@ -165,7 +166,7 @@ const styles = StyleSheet.create({
   line: {
     width: '100%',
     height: 1,
-    backgroundColor: greyColor,
+    backgroundColor: Color.greyColor,
     marginVertical: 20,
   },
   bottomBar: {
