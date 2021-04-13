@@ -13,7 +13,7 @@ export const useRegisterWithEmailAndPassword = () => {
 
   const registerWithEmailAndPassword = async (
     email: string,
-    password: string,
+    password: string
   ) => {
     onLoading();
     try {

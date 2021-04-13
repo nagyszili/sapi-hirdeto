@@ -4,10 +4,10 @@ import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthResolver } from './auth.resolver';
-import { JwtStrategy } from './jwt.strategy';
 import { config } from 'src/config/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModel, UserSchema } from 'src/user/user.schema';
+import { RoleBasedJwtStrategy } from './strategies/role-based-jwt.strategy';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { UserModel, UserSchema } from 'src/user/user.schema';
       secret: config.get('jwtSecret'),
     }),
   ],
-  providers: [AuthService, AuthResolver, JwtStrategy],
+  providers: [AuthService, AuthResolver, RoleBasedJwtStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}

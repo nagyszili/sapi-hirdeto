@@ -19,7 +19,7 @@ interface Props {
 const IcoMoon = createIconSetFromIcoMoon(
   require('../../assets/icons/selection.json'),
   'IcoMoon',
-  'icomoon.ttf',
+  'icomoon.ttf'
 );
 
 const icons = (size: number, color: string, style: StyleProp<TextStyle>) => ({

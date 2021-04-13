@@ -7,7 +7,7 @@
   "searchForACounty": "Megye keresése",
   "notFound": "Nincs találat",
   "searchForALocation": "Település keresése",
-  "projectName": "Piactér",
+  "projectName": "Sapi-Hirdető",
   "logout": "Kijelentkezés",
   "newAd": "Új hirdetés",
   "signIn": "Bejelentkezés",
@@ -31,7 +31,7 @@
   "googleLogin": "Google belépés",
   "dontHaveAnAccount": "Nincsen fiókod?",
   "register": "Regisztrálj!",
-  "acceptTerms": "A regisztrációval automatikusan elfogadod a Piactér",
+  "acceptTerms": "A regisztrációval automatikusan elfogadod a Sapi-Hirdető",
   "termsAndConditions": "Felhasználási Feltételeit.",
   "facebookRegistration": "Facebook regisztráció",
   "googleRegistration": "Google regisztráció",
@@ -50,8 +50,8 @@
   "contact": "Kapcsolat",
   "faq": "GYIK",
   "mobileApps": "Mobilalkalmazásaink",
-  "original": "© 2021 Piactér. Minden jog fenntartva.",
-  "contactEmail": "info@piacter.ro",
+  "original": "© 2021 Sapi-Hirdető. Minden jog fenntartva.",
+  "contactEmail": "info@sapihirdeto.ro",
   "contactPhone": "074-332-9375",
   "contactAddress": "Strada Kossuth Lajos 11, Miercurea Ciuc 530003",
   "footerDescription": "You might remember the Dell computer commercials in which a youth reports this exciting news to his friends.",
@@ -94,5 +94,8 @@
   "name": "Név",
   "fullName": "Teljes név",
   "phoneNumber": "Telefonszám",
-  "addPhotos": "Képek hozzáadása"
+  "addPhotos": "Képek hozzáadása",
+  "favorites": "Kedvencek",
+  "myAdsBottomLabel": "Hirdetéseim",
+  "profile": "Profil"
 }

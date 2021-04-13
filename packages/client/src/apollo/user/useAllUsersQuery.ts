@@ -9,6 +9,7 @@ export const FIND_ALL_USER = gql`
       name
       email
       phoneNumber
+      role
     }
   }
 `;

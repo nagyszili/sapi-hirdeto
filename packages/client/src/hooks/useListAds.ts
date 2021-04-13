@@ -13,7 +13,7 @@ export const useListAds = (
   queryString?: string,
   inDescription?: boolean,
   filters?: Filter[],
-  page?: number,
+  page?: number
 ) => {
   const { data: currency } = useActiveCurrency();
   const { data: sort } = useSortType();
@@ -34,7 +34,7 @@ export const useListAds = (
     filters,
   });
 
-  const { data: numberOfAds } = useCountAds({
+  const { data: numberOfAds, loading: loadingCount } = useCountAds({
     categoryIdentifier:
       categoryIdentifier === 'all' ? null : categoryIdentifier,
     mainCategoryIdentifier,
@@ -74,6 +74,7 @@ export const useListAds = (
   return {
     ads: ads?.findAllAds,
     numberOfAds: numberOfAds?.countAllAds,
+    loadingCount,
     loadingAds,
     fetchMoreAds,
     refetchAds,

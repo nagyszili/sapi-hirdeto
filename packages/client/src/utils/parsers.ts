@@ -12,7 +12,7 @@ export const parseFilters = (filters: string) => {
     if (urlFilter) {
       const nameValue = urlFilter.split('_');
       const isInParsedFilters = parsedFilters.some(
-        (parsedFilter) => parsedFilter.name === nameValue[1],
+        (parsedFilter) => parsedFilter.name === nameValue[1]
       );
       if (nameValue.length > 1 && nameValue[0] === ATTRIBUTE_TYPES.RANGE) {
         const fromValue = nameValue[2].split('=');
@@ -53,7 +53,7 @@ export const parseFilters = (filters: string) => {
 
         if (
           parsedFilters.some(
-            (parsedFilter) => parsedFilter.name === fromValue[0],
+            (parsedFilter) => parsedFilter.name === fromValue[0]
           )
         ) {
           parsedFilters = parsedFilters.map((parsedFilter) =>
@@ -64,7 +64,7 @@ export const parseFilters = (filters: string) => {
                     ? [...parsedFilter.selectedAttributeValues, fromValue[1]]
                     : [fromValue[1]],
                 }
-              : parsedFilter,
+              : parsedFilter
           );
         } else {
           const pathFilter: Filter = {

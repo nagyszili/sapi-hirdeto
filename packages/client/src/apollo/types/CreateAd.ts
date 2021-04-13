@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AdImageInput, LocationInput, AttributeValueInput } from "./graphql-global-types";
+import { ImageInput, LocationInput, AttributeValueInput } from "./graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: CreateAd
@@ -25,7 +25,7 @@ export interface CreateAdVariables {
   price: number;
   currency: string;
   description: string;
-  images?: AdImageInput[] | null;
+  images?: ImageInput[] | null;
   location: LocationInput;
   categoryId: string;
   attributeValues?: AttributeValueInput[] | null;

@@ -3,16 +3,19 @@ import { useState } from 'react';
 import ImgsViewer from 'react-images-viewer';
 import { View, StyleSheet, Pressable, Image } from 'react-native';
 
+import { AdByIdentifier_findAdByIdentifier_images } from '../../apollo/types/AdByIdentifier';
 import { Icon } from '../../utils/icons';
 import * as Color from '../../utils/theme/colors';
 
 interface Props {
-  images: string[];
+  images: AdByIdentifier_findAdByIdentifier_images[];
 }
 
 export const ImageViewer: React.FC<Props> = ({ images }) => {
   const [currentImage, setCurrentImage] = useState(0);
-  const fullImages = images.map((img) => ({ src: img }));
+  const fullImages = [...images]
+    .sort((a, b) => a.priority - b.priority)
+    .map((img) => ({ src: img.url }));
 
   const [isFullImageVisible, setIsFullImageVisible] = useState(false);
   const [currentFullImage, setCurrentFullImage] = useState(0);
@@ -44,7 +47,7 @@ export const ImageViewer: React.FC<Props> = ({ images }) => {
       <Pressable onPress={openImgsViewer}>
         <Image
           style={styles.largeImage}
-          source={{ uri: images[currentImage] }}
+          source={{ uri: fullImages[currentImage].src }}
         />
         <Pressable style={styles.leftArrow} onPress={onLeftClick}>
           <Icon name="left" color={Color.whiteColor} size={32} />
@@ -72,7 +75,7 @@ export const ImageViewer: React.FC<Props> = ({ images }) => {
       />
 
       <View style={styles.gallery}>
-        {images.map((image, key) => (
+        {fullImages.map((image, key) => (
           <Pressable
             key={key}
             onPress={() => setCurrentImage(key)}
@@ -82,7 +85,7 @@ export const ImageViewer: React.FC<Props> = ({ images }) => {
             ]}
           >
             <Image
-              source={{ uri: image }}
+              source={{ uri: image.src }}
               style={styles.smallImage}
               resizeMethod="resize"
               resizeMode="cover"

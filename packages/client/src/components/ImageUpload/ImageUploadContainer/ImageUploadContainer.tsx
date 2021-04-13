@@ -5,7 +5,7 @@ import { StyleSheet, View, Pressable, Platform, FlatList } from 'react-native';
 import * as mime from 'react-native-mime-types';
 
 import texts from '../../../../assets/texts/texts.json';
-import { AdImageInput } from '../../../apollo/types/graphql-global-types';
+import { ImageInput } from '../../../apollo/types/graphql-global-types';
 import { Icon } from '../../../utils/icons';
 import * as Color from '../../../utils/theme/colors';
 import { Text } from '../../themed/Text';
@@ -41,14 +41,17 @@ export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
       : null;
   };
 
-  const uploadImage = async (uri: string) => {
+  const uploadImage = (uri: string) => {
     const image = generateRNFile(uri, `${Date.now()}`);
     if (image) {
-      setImages((oldValue) =>
-        oldValue.length === 0
-          ? [{ isThumbnail: true, image }]
-          : [...oldValue, { isThumbnail: false, image }]
-      );
+      setImages((oldValue) => [
+        ...oldValue,
+        {
+          isThumbnail: oldValue.length === 0,
+          image,
+          priority: oldValue.length + 1,
+        },
+      ]);
     } else {
       alert('Invalid file selected');
     }
@@ -73,7 +76,7 @@ export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
         )
     );
 
-  const renderItem = (item: AdImageInput, index: number) => {
+  const renderItem = (item: ImageInput, index: number) => {
     return (
       <PreviewImage
         isThumbnail={index === 0}

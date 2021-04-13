@@ -3,7 +3,7 @@ import { UserService } from './user.service';
 import { User } from './user.type';
 import { UserModel } from './user.schema';
 import { UserInput } from './user.input';
-import { CurrentUser } from './../util/decorators';
+import { ManagerRole, UserRole, CurrentUser } from './../util/decorators';
 import { UserUpdate } from './user.update';
 import { modelToObject } from 'src/util/mappers';
 
@@ -12,8 +12,15 @@ export class UserResolver {
   constructor(private userService: UserService) {}
 
   @Query(() => User)
+  @UserRole()
   async currentUser(@CurrentUser() user: User): Promise<User> {
-    return user;
+    return {
+      ...user,
+      favorites: user.favorites.map((ad) => ({
+        ...ad,
+        numberOfImages: ad.images.length,
+      })),
+    };
   }
 
   @Query(() => User)
@@ -26,6 +33,7 @@ export class UserResolver {
     return modelToObject(await this.userService.findUserById(id));
   }
 
+  @UserRole()
   @Query(() => [User])
   async findAllUsers(): Promise<User[]> {
     return (await this.userService.findAllUsers()).map((user) =>
@@ -39,6 +47,7 @@ export class UserResolver {
     return modelToObject(createdUser);
   }
 
+  @UserRole()
   @Mutation(() => User)
   async updateCurrentUser(
     @CurrentUser() currentUser: User,
@@ -49,6 +58,7 @@ export class UserResolver {
     );
   }
 
+  @ManagerRole()
   @Mutation(() => User)
   async updateUser(
     @Args('id') id: string,
@@ -57,6 +67,7 @@ export class UserResolver {
     return modelToObject(await this.userService.updateUser(id, user));
   }
 
+  @UserRole()
   @Mutation(() => User)
   async addAdToFavorites(
     @Args('adId') adId: string,

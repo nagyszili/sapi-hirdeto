@@ -8,9 +8,21 @@ export const AdMock = [
     description:
       'Eladó egy szép szecessziós házban egy teljesen felújított, kicsi közös előtérrel két lakássá osztott 4. emeleti lakás. A felújítás során létrehoztak egy nappali + 2 hálószobás, 2 fürdőszobás, valamint egy garzonlakást. A hálószobákban és a garzonban is egy-egy galériázott rész növeli a hasznos térkihasználást. Belmagasság 380 cm. Ebben a felállásban a lakás kitűnően tudja mind a hosszútávú lakáskiadást, mind két generáció együtt- és különélését szolgálni. A lakás csendes, világos, a lift és a bejárat között egy zárható ajtó teszi még biztonságosabbá. Központi elhelyezkedésének köszönhetően könnyedén elérhető az összes fontos fővárosi hivatal, felsőoktatási intézmény, színház és még sok minden más. A lakásnak egy tulajdonosa van, per- és tehermentes, azonnal birtokba vehető. További részletek személyesen, hívjon bizalommal!',
     images: [
-      'https://img.jofogas.hu/hdimages/Nagypolgari_lakas__szep__szecesszios_hazban_az_Astorianal_179671832713263.jpg',
-      'https://img.jofogas.hu/hdimages/Nagypolgari_lakas__szep__szecesszios_hazban_az_Astorianal_173231832713264.jpg',
-      'https://img.jofogas.hu/hdimages/Nagypolgari_lakas__szep__szecesszios_hazban_az_Astorianal_174321832713366.jpg',
+      {
+        priority: 1,
+        url:
+          'https://img.jofogas.hu/hdimages/Nagypolgari_lakas__szep__szecesszios_hazban_az_Astorianal_179671832713263.jpg',
+      },
+      {
+        priority: 2,
+        url:
+          'https://img.jofogas.hu/hdimages/Nagypolgari_lakas__szep__szecesszios_hazban_az_Astorianal_173231832713264.jpg',
+      },
+      {
+        priority: 3,
+        url:
+          'https://img.jofogas.hu/hdimages/Nagypolgari_lakas__szep__szecesszios_hazban_az_Astorianal_174321832713366.jpg',
+      },
     ],
     thumbnail:
       'https://img.jofogas.hu/hdimages/Nagypolgari_lakas__szep__szecesszios_hazban_az_Astorianal_179671832713263.jpg',
@@ -47,9 +59,21 @@ export const AdMock = [
     description:
       'Eladó egy újszerű, 77E expós Canon 1DX II dobozával, összes gyári tartozékával, plusz extra tartozékkal(plusz akku, 1db 128Gb Sandisk Pro Cfast, 1db 64Gb Transcend Cfast, valamint 1db Cfast kártya olvasó).',
     images: [
-      'https://img.jofogas.hu/hdimages/Elado_egy_ujszeru_Canon_1DX_II_sok_extraval_498201896703787.jpg',
-      'https://img.jofogas.hu/hdimages/Elado_egy_ujszeru_Canon_1DX_II_sok_extraval_508731896703859.jpg',
-      'https://img.jofogas.hu/hdimages/Elado_egy_ujszeru_Canon_1DX_II_sok_extraval_507781896703597.jpg',
+      {
+        priority: 1,
+        url:
+          'https://img.jofogas.hu/hdimages/Elado_egy_ujszeru_Canon_1DX_II_sok_extraval_498201896703787.jpg',
+      },
+      {
+        priority: 2,
+        url:
+          'https://img.jofogas.hu/hdimages/Elado_egy_ujszeru_Canon_1DX_II_sok_extraval_508731896703859.jpg',
+      },
+      {
+        priority: 3,
+        url:
+          'https://img.jofogas.hu/hdimages/Elado_egy_ujszeru_Canon_1DX_II_sok_extraval_507781896703597.jpg',
+      },
     ],
     thumbnail:
       'https://img.jofogas.hu/hdimages/Elado_egy_ujszeru_Canon_1DX_II_sok_extraval_498201896703787.jpg',
@@ -82,9 +106,21 @@ export const AdMock = [
     description:
       '46.573 KM Futás! Performance! Limitált Kiadás! 2017 Modellév! Teljesen újszerű műszaki, esztétikai és szerkezeti állapotú autó. Kopásmentes minden porcikáján újszerű utastér. Km futása garantált, akár hivatalos szakszervizben is átvizsgáltatható. Jelenleg frissen szervizelve, új gumikkal. Fényezése karcmentes, nincsenek horpadások, ajtórányitások. Matrix LED Fényszórók, Panoráma Tető, Bose HIFI, Nagy Navigáció, Nappa Sport Bőr Belső, 4 Zónás Klíma, Sávelhagyás Figyelmeztető, STB. Csere - Beszámtítás Lehetséges! Azonnal Elvihető, Tehermentes! Összes gyári dokumentációval, 3 db indítókulccsal, kódkártyával. Köszönjük, hogy megtekintette hirdetésünket! Folyamatosan bővülő, válogatott, kevés km-t futott, többségében gyári fényezésű készlettel várjuk ügyfeleinket. Állapotfelmérés és értékegyeztetés után gépjárművét készpénzért megvásároljuk, akár hitellel terhelt jármű esetén is. Autóink időpont egyeztetés alapján hétvégén is megtekinthetők. Biztosítás megkötése, Eredetiségvizsgálat továbbá Okmányirodai ügyintézés helyben megvárható! Autóink előzetes egyeztetés alapján szervizben átvizsgáltathatók.',
     images: [
-      'https://img.jofogas.hu/hdimages/AUDI_RS6_Avant_4_0_V8_TFSI_Performance_quattro____689121866236094.jpg',
-      'https://img.jofogas.hu/hdimages/AUDI_RS6_Avant_4_0_V8_TFSI_Performance_quattro____706721866236095.jpg',
-      'https://img.jofogas.hu/hdimages/AUDI_RS6_Avant_4_0_V8_TFSI_Performance_quattro____721801866236290.jpg',
+      {
+        priority: 1,
+        url:
+          'https://img.jofogas.hu/hdimages/AUDI_RS6_Avant_4_0_V8_TFSI_Performance_quattro____689121866236094.jpg',
+      },
+      {
+        priority: 2,
+        url:
+          'https://img.jofogas.hu/hdimages/AUDI_RS6_Avant_4_0_V8_TFSI_Performance_quattro____706721866236095.jpg',
+      },
+      {
+        priority: 3,
+        url:
+          'https://img.jofogas.hu/hdimages/AUDI_RS6_Avant_4_0_V8_TFSI_Performance_quattro____721801866236290.jpg',
+      },
     ],
     thumbnail:
       'https://img.jofogas.hu/hdimages/AUDI_RS6_Avant_4_0_V8_TFSI_Performance_quattro____689121866236094.jpg',
@@ -146,8 +182,16 @@ export const AdMock = [
     description:
       'Bontatlan Új iphone 12 Pro Max 256GB 1 év hivatalos Apple garancia Deák Térnél Azonnal Átvehető Minden Szín',
     images: [
-      'https://img.jofogas.hu/hdimages/Bontatlan_Uj_iphone_12_Pro_Max_256GB_Azonnal_Atveheto_Deak_Minden_Szin_961901847251477.jpg',
-      'https://frankfurt.apollo.olxcdn.com/v1/files/t7deuluxlgqc3-RO/image;s=1000x700',
+      {
+        priority: 1,
+        url:
+          'https://img.jofogas.hu/hdimages/Bontatlan_Uj_iphone_12_Pro_Max_256GB_Azonnal_Atveheto_Deak_Minden_Szin_961901847251477.jpg',
+      },
+      {
+        priority: 2,
+        url:
+          'https://frankfurt.apollo.olxcdn.com/v1/files/t7deuluxlgqc3-RO/image;s=1000x700',
+      },
     ],
     thumbnail:
       'https://img.jofogas.hu/hdimages/Bontatlan_Uj_iphone_12_Pro_Max_256GB_Azonnal_Atveheto_Deak_Minden_Szin_961901847251477.jpg',
@@ -176,9 +220,21 @@ export const AdMock = [
     description:
       'A telken a közművek közül csatorna vezetékes víz és villany megtalálható, a gáz a telekhatáron. Ha gyorsan szeretne saját házat ez az Öné lehet és az átírást követően azonnal hozzákezdhet az építkezéshez!',
     images: [
-      'https://img.jofogas.hu/hdimages/Epitesi_telek_engedelyezesi_tervekkel_elado__348331890402273.jpg',
-      'https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6Im5nY2N3MHd2MmR0bS1BUk8iLCJ3IjpbeyJmbiI6Im8xemN3cmR4dDZ4bi1BUk8iLCJzIjoiMTQiLCJwIjoiMTAsLTEwIiwiYSI6IjAifV19.zfdihCgVeR5v6ek7XMVu-nOKBsHPExNxVUBtaFsZFFU/image;s=1280x1024;q=80',
-      'https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6Im5nY2N3MHd2MmR0bS1BUk8iLCJ3IjpbeyJmbiI6Im8xemN3cmR4dDZ4bi1BUk8iLCJzIjoiMTQiLCJwIjoiMTAsLTEwIiwiYSI6IjAifV19.zfdihCgVeR5v6ek7XMVu-nOKBsHPExNxVUBtaFsZFFU/image;s=1280x1024;q=80',
+      {
+        priority: 1,
+        url:
+          'https://img.jofogas.hu/hdimages/Epitesi_telek_engedelyezesi_tervekkel_elado__348331890402273.jpg',
+      },
+      {
+        priority: 2,
+        url:
+          'https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6Im5nY2N3MHd2MmR0bS1BUk8iLCJ3IjpbeyJmbiI6Im8xemN3cmR4dDZ4bi1BUk8iLCJzIjoiMTQiLCJwIjoiMTAsLTEwIiwiYSI6IjAifV19.zfdihCgVeR5v6ek7XMVu-nOKBsHPExNxVUBtaFsZFFU/image;s=1280x1024;q=80',
+      },
+      {
+        priority: 3,
+        url:
+          'https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6Im5nY2N3MHd2MmR0bS1BUk8iLCJ3IjpbeyJmbiI6Im8xemN3cmR4dDZ4bi1BUk8iLCJzIjoiMTQiLCJwIjoiMTAsLTEwIiwiYSI6IjAifV19.zfdihCgVeR5v6ek7XMVu-nOKBsHPExNxVUBtaFsZFFU/image;s=1280x1024;q=80',
+      },
     ],
     thumbnail:
       'https://img.jofogas.hu/hdimages/Epitesi_telek_engedelyezesi_tervekkel_elado__348331890402273.jpg',
@@ -207,8 +263,16 @@ export const AdMock = [
     description:
       'Lg (OLED55B8PLA) 139 cm, Ultra HD 4K Cinema HDR 10 Pro, Webos 4.0 Smart LED TV, inteligens Alpha7 processorral, Dolby Atmos térhangzás, 3840 x 2160 pixel, Dimming-Active Depth Enhance, digitális tunerek DVB-T, DVB-C, DVB-S, Dolby Digital, Wifi, DLNA támogatás, PVR támogatás, Böngésző, beépített Wi-Fi, HDMI 4 db, USB 3 db, magyar menü.',
     images: [
-      'https://img.jofogas.hu/hdimages/Lg__OLED65B9PLA__165_cm__Ultra_HD_4K_Cinema_HDR_10_Pro__OLED_TV_501191899289695.jpg',
-      'https://frankfurt.apollo.olxcdn.com/v1/files/f1gt0xkdl28i1-RO/image;s=1000x700',
+      {
+        priority: 1,
+        url:
+          'https://img.jofogas.hu/hdimages/Lg__OLED65B9PLA__165_cm__Ultra_HD_4K_Cinema_HDR_10_Pro__OLED_TV_501191899289695.jpg',
+      },
+      {
+        priority: 2,
+        url:
+          'https://frankfurt.apollo.olxcdn.com/v1/files/f1gt0xkdl28i1-RO/image;s=1000x700',
+      },
     ],
     thumbnail:
       'https://img.jofogas.hu/hdimages/Lg__OLED65B9PLA__165_cm__Ultra_HD_4K_Cinema_HDR_10_Pro__OLED_TV_501191899289695.jpg',

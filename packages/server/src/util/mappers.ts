@@ -24,7 +24,7 @@ export const mapObjectsToAds = (ads: any[]): AdListItem[] => {
     currency: ad.currency,
     description: ad.description,
     images: ad.images,
-    numberOfImages: ad.images.length,
+    numberOfImages: ad.images?.length || 0,
     createdAt: ad.createdAt,
     updatedAt: ad.updatedAt,
     location: ad.location,
@@ -50,6 +50,7 @@ export const mapObjectToUser = (user: any): User => {
     name: user.name,
     email: user.email,
     phoneNumber: user.phoneNumber,
+    role: user.role,
     favorites: user.favorites,
   };
 };

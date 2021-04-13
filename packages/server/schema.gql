@@ -40,6 +40,11 @@ type Location {
   county: String!
 }
 
+type Image {
+  priority: Int!
+  url: String!
+}
+
 type Ad {
   id: ID!
   identifier: String!
@@ -50,7 +55,7 @@ type Ad {
   description: String
   thumbnail: String
   numberOfImages: Int!
-  images: [String!]
+  images: [Image!]
   createdAt: DateTime!
   updatedAt: DateTime
   location: Location!
@@ -69,6 +74,7 @@ type User {
   name: String!
   email: String!
   phoneNumber: String
+  role: String!
   favorites: [Ad!]
 }
 
@@ -136,14 +142,15 @@ input Filter {
 type Mutation {
   login(email: String!, password: String!): AccessToken!
   createUser(email: String!, password: String!): User!
-  updateCurrentUser(name: String, email: String, password: String, phoneNumber: String): User!
-  updateUser(name: String, email: String, password: String, phoneNumber: String, id: String!): User!
+  updateCurrentUser(name: String, email: String, password: String, phoneNumber: String, role: String): User!
+  updateUser(name: String, email: String, password: String, phoneNumber: String, role: String, id: String!): User!
   addAdToFavorites(adId: String!): User!
-  createAd(name: String!, price: Float!, currency: String!, description: String!, images: [AdImageInput!], location: LocationInput!, categoryId: String!, attributeValues: [AttributeValueInput!]): Ad!
-  updateAd(name: String, price: Float, currency: String, description: String, images: [AdImageInput!], location: String, category: String, attributeValues: [AttributeValueInput!], id: String!): Ad!
+  createAd(name: String!, price: Float!, currency: String!, description: String!, images: [ImageInput!], location: LocationInput!, categoryId: String!, attributeValues: [AttributeValueInput!]): Ad!
+  updateAd(name: String, price: Float, currency: String, description: String, images: [ImageInput!], location: String, category: String, attributeValues: [AttributeValueInput!], id: String!): Ad!
 }
 
-input AdImageInput {
+input ImageInput {
+  priority: Int!
   isThumbnail: Boolean!
   image: Upload!
 }

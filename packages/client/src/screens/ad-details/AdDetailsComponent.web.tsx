@@ -22,6 +22,9 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
   user,
 }) => {
   const navigation = useNavigation();
+  React.useEffect(() => {
+    navigation.setOptions({ title: ad.name });
+  });
 
   return (
     <ScrollView

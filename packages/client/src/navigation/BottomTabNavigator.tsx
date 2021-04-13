@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 
+import texts from '../../assets/texts/texts.json';
 import { HomeHeader } from '../components/Header/HomeHeader';
 import { Text } from '../components/themed/Text';
 import useColorScheme from '../hooks/useColorScheme';
@@ -13,7 +14,7 @@ import { HomeScreen } from '../screens/home/HomeScreen';
 import { MyAdsScreen } from '../screens/my-ads/MyAdsScreen';
 import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { Icon } from '../utils/icons';
-import { blackColor, whiteColor, primaryColor } from '../utils/theme/colors';
+import { blackColor, whiteColor, secondaryColor } from '../utils/theme/colors';
 import Colors from '../utils/theme/themes';
 import {
   BottomTabParamList,
@@ -49,11 +50,11 @@ export default function BottomTabNavigator() {
         component={HomeNavigator}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Icon name="home" color={focused ? primaryColor : blackColor} />
+            <Icon name="home" color={focused ? secondaryColor : blackColor} />
           ),
           tabBarLabel: ({ focused }) => (
             <Text style={focused ? styles.activeLabel : styles.label}>
-              Főoldal
+              {texts['mainPage']}
             </Text>
           ),
         }}
@@ -65,12 +66,12 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ focused }) => (
             <Icon
               name="star-empty"
-              color={focused ? primaryColor : blackColor}
+              color={focused ? secondaryColor : blackColor}
             />
           ),
           tabBarLabel: ({ focused }) => (
             <Text style={focused ? styles.activeLabel : styles.label}>
-              Kedvencek
+              {texts['favorites']}
             </Text>
           ),
         }}
@@ -92,11 +93,11 @@ export default function BottomTabNavigator() {
         component={MyAdsNavigator}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Icon name="file" color={focused ? primaryColor : blackColor} />
+            <Icon name="file" color={focused ? secondaryColor : blackColor} />
           ),
           tabBarLabel: ({ focused }) => (
             <Text style={focused ? styles.activeLabel : styles.label}>
-              Hirdetéseim
+              {texts['myAdsBottomLabel']}
             </Text>
           ),
         }}
@@ -108,12 +109,12 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ focused }) => (
             <Icon
               name="my-profile"
-              color={focused ? primaryColor : blackColor}
+              color={focused ? secondaryColor : blackColor}
             />
           ),
           tabBarLabel: ({ focused }) => (
             <Text style={focused ? styles.activeLabel : styles.label}>
-              Profil
+              {texts['profile']}
             </Text>
           ),
         }}
@@ -151,7 +152,7 @@ function ProfileNavigator() {
       <ProfileStack.Screen
         name="Profile"
         component={ProfileScreen}
-        options={{ headerTitle: 'Profil' }}
+        options={{ headerTitle: texts['profile'] }}
       />
     </ProfileStack.Navigator>
   );
@@ -179,7 +180,7 @@ function FavoritesNavigator() {
       <FavoritesStack.Screen
         name="Favorites"
         component={FavoritesScreen}
-        options={{ headerTitle: 'Kedvencek' }}
+        options={{ headerTitle: texts['favorites'] }}
       />
     </FavoritesStack.Navigator>
   );
@@ -193,7 +194,7 @@ function MyAdsNavigator() {
       <MyAdsStack.Screen
         name="MyAds"
         component={MyAdsScreen}
-        options={{ headerTitle: 'Sajat hirdeteseim' }}
+        options={{ headerTitle: texts['myAds'] }}
       />
     </MyAdsStack.Navigator>
   );
@@ -206,11 +207,11 @@ const styles = StyleSheet.create({
   },
   activeLabel: {
     fontSize: 11,
-    color: primaryColor,
+    color: secondaryColor,
   },
   createAdIconActive: {
     borderRadius: 100,
-    backgroundColor: primaryColor,
+    backgroundColor: secondaryColor,
     padding: 5,
   },
 });

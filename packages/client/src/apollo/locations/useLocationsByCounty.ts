@@ -19,5 +19,5 @@ export const FIND_LOCATIONS_BY_COUNTY = gql`
 export const useLocationsByCounty = (variables: LocationsByCountyVariables) =>
   useQuery<LocationsByCounty, LocationsByCountyVariables>(
     FIND_LOCATIONS_BY_COUNTY,
-    { variables },
+    { variables }
   );

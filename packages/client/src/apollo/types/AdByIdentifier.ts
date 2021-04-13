@@ -15,6 +15,12 @@ export interface AdByIdentifier_findAdByIdentifier_user {
   phoneNumber: string | null;
 }
 
+export interface AdByIdentifier_findAdByIdentifier_images {
+  __typename: "Image";
+  priority: number;
+  url: string;
+}
+
 export interface AdByIdentifier_findAdByIdentifier_location {
   __typename: "Location";
   longitude: number;
@@ -70,7 +76,7 @@ export interface AdByIdentifier_findAdByIdentifier {
   createdAt: any;
   updatedAt: any | null;
   views: number;
-  images: string[] | null;
+  images: AdByIdentifier_findAdByIdentifier_images[] | null;
   thumbnail: string | null;
   location: AdByIdentifier_findAdByIdentifier_location;
   category: AdByIdentifier_findAdByIdentifier_category;

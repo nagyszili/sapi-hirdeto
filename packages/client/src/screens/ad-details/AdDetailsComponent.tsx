@@ -39,16 +39,20 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
   const [, setIsHeaderVisible] = useState<boolean>(true);
 
   const scrollViewReference = useRef<ScrollView>(
-    null,
+    null
   ) as React.MutableRefObject<ScrollView>;
 
   const notchSizes = useSafeAreaInsets();
 
   const [isVisible, setIsVisible] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const images = ad.images?.map((image) => ({ url: image }));
+  const images = ad.images
+    ? [...ad.images]
+        .sort((a, b) => a.priority - b.priority)
+        .map((image) => ({ url: image.url }))
+    : [];
 
-  const carouselItems: any = ad.images?.map((image) => image);
+  const carouselItems: any = images.map((image) => image.url);
 
   const renderItem = ({ item }: any) => {
     return (
@@ -123,6 +127,8 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
             enablePreload
             swipeDownThreshold={100}
             onSwipeDown={() => setIsVisible(false)}
+            onLongPress={() => {}}
+            saveToLocalByLongPress={false}
           />
         </Modal>
 
