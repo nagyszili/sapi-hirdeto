@@ -21,6 +21,8 @@ import { FileUpload } from 'graphql-upload';
 import { ImageUploader, IMAGE_UPLOADER } from 'src/uploader/image-uploader';
 import { AttributeValueInput } from 'src/attribute-value/attribute-value.input';
 import { PagingArguments } from 'src/util/graphql-util-types/PagingArguments';
+import * as Sharp from 'sharp';
+import { ImageModel } from './image/image.schema';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -30,6 +32,8 @@ export class AdService {
     @InjectModel(AdModel.name) private adModel: Model<AdModel>,
     @InjectModel(AttributeValueModel.name)
     private attributeValueModel: Model<AttributeValueModel>,
+    @InjectModel(ImageModel.name)
+    private imageModel: Model<ImageModel>,
     @Inject(forwardRef(() => UserService))
     private userService: UserService,
     private categoryService: CategoryService,
@@ -40,9 +44,7 @@ export class AdService {
 
   async count(queryParameters: QueryParameters): Promise<number> {
     const queryObject = await this.adQueryService.getBaseQuery(queryParameters);
-    const count: any[] = await this.adModel
-      .aggregate(queryObject)
-      .count('count');
+    const count = await this.adModel.aggregate(queryObject).count('count');
     if (!count || !count[0] || !count[0].count) {
       throw new NotFoundException({
         message: 'Count not found!',
@@ -118,12 +120,24 @@ export class AdService {
     });
     createdAd.identifier = generateIdentifier();
     await Promise.all(
-      adInput.images.map(async (imageInput, index) => {
-        const key = createdAd.id + '_' + index;
-        const link = await this.uploadImageStream(await imageInput.image, key);
-        createdAd.images.push(link);
+      adInput.images.map(async (imageInput) => {
+        const name = `${createdAd.id}_${generateIdentifier()}`;
+        const image = new this.imageModel();
+        image.priority = imageInput.priority;
+        image.url = await this.uploadImage(
+          await imageInput.image,
+          'hdimages',
+          name,
+          { width: 1080 },
+        );
+        createdAd.images.push(image);
         if (imageInput.isThumbnail) {
-          createdAd.thumbnail = link;
+          createdAd.thumbnail = await this.uploadImage(
+            await imageInput.image,
+            'images',
+            name,
+            { width: 400 },
+          );
         }
       }),
     );
@@ -146,16 +160,26 @@ export class AdService {
     return currentAd.save();
   }
 
-  async uploadImageStream(
+  async uploadImage(
     { createReadStream, filename, mimetype }: FileUpload,
+    folder: string,
     key: string,
+    resize?: { width?: number; height?: number },
   ): Promise<string> {
-    const filePath = key + '_' + filename;
+    const filePath = `${folder}/${key}_${filename}`;
     const uploadStream = this.imageUploader.createUploadStream(
       filePath,
       mimetype,
     );
-    createReadStream().pipe(uploadStream.writeStream);
+
+    const transform = Sharp().resize(resize);
+
+    createReadStream()
+      .pipe(transform)
+      .on('error', (e) => {
+        console.error(e);
+      })
+      .pipe(uploadStream.writeStream);
     return uploadStream.link;
   }
 

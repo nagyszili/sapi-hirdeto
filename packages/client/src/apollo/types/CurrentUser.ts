@@ -44,6 +44,7 @@ export interface CurrentUser_currentUser {
   name: string;
   email: string;
   phoneNumber: string | null;
+  role: string;
   favorites: CurrentUser_currentUser_favorites[] | null;
 }
 

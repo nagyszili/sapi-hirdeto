@@ -4,7 +4,7 @@ import { AdInput } from './ad.input';
 import { AdService } from './ad.service';
 import { modelToObject, mapObjectsToAds } from 'src/util/mappers';
 import { AdUpdate } from './ad.update';
-import { CurrentUser } from 'src/util/decorators';
+import { UserRole, CurrentUser } from 'src/util/decorators';
 import { User } from 'src/user/user.type';
 import { QueryParameters } from 'src/util/graphql-util-types/QueryParameters';
 import { AdListItem } from './ad-list-item.type';
@@ -26,6 +26,7 @@ export class AdResolver {
     return modelToObject(await this.adService.findAdByIdentifier(identifier));
   }
 
+  @UserRole()
   @Query(() => [Ad])
   async findAdsByUser(
     @CurrentUser() user: User,
@@ -57,6 +58,7 @@ export class AdResolver {
     return this.adService.estimatedCount();
   }
 
+  @UserRole()
   @Mutation(() => Ad)
   async createAd(
     @Args() adInput: AdInput,
@@ -65,6 +67,7 @@ export class AdResolver {
     return modelToObject(await this.adService.createAd(adInput, user.id));
   }
 
+  @UserRole()
   @Mutation(() => Ad)
   async updateAd(
     @Args('id') id: string,

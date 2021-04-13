@@ -17,5 +17,5 @@ export const UPDATE_CURRENT_USER = gql`
 
 export const useUpdateCurrentUser = () =>
   useMutation<UpdateCurrentUser, UpdateCurrentUserVariables>(
-    UPDATE_CURRENT_USER,
+    UPDATE_CURRENT_USER
   );

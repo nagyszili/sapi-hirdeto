@@ -8,6 +8,7 @@ import {
 import { UserModel } from 'src/user/user.schema';
 import { CURRENCY } from 'src/util/constants';
 import { LocationModel, LocationSchema } from 'src/location/locations.schema';
+import { ImageModel, ImageSchema } from './image/image.schema';
 
 @Schema({ timestamps: true })
 export class AdModel extends Document {
@@ -31,8 +32,8 @@ export class AdModel extends Document {
   @Prop()
   thumbnail: string;
 
-  @Prop()
-  images: string[];
+  @Prop([ImageSchema])
+  images: ImageModel[];
 
   @Prop({ type: Date })
   createdAt: Date;

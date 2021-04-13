@@ -12,6 +12,7 @@ import {
 import { AdQueryService } from './ad-query.builder';
 import { AwsService } from 'src/uploader/aws/aws.service';
 import { IMAGE_UPLOADER } from 'src/uploader/image-uploader';
+import { ImageModel, ImageSchema } from './image/image.schema';
 
 @Module({
   imports: [
@@ -24,7 +25,12 @@ import { IMAGE_UPLOADER } from 'src/uploader/image-uploader';
       {
         name: AttributeValueModel.name,
         schema: AttributeValueSchema,
-        collection: 'AttributeValue',
+      },
+    ]),
+    MongooseModule.forFeature([
+      {
+        name: ImageModel.name,
+        schema: ImageSchema,
       },
     ]),
   ],

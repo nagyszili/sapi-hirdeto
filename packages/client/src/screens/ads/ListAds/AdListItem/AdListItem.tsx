@@ -6,6 +6,7 @@ import texts from '../../../../../assets/texts/texts.json';
 import { useActiveCurrency } from '../../../../apollo/filters/useActiveCurrency';
 import { AddFavoriteButton } from '../../../../components/Buttons/AddFavoriteButton';
 import { Text } from '../../../../components/themed/Text';
+import { ImageComponent } from '../../../../utils/images';
 import {
   formatPriceToString,
   formatCreatedDateToString,
@@ -36,16 +37,18 @@ export const AdListItem: React.FC<AdListItemProps> = ({
       }
     >
       <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          resizeMethod="resize"
-          resizeMode="cover"
-          source={{
-            uri:
-              item.thumbnail ||
-              'https://frankfurt.apollo.olxcdn.com/v1/files/tjjoqx5q0d2w3-RO/image;s=1000x700',
-          }}
-        />
+        {item.thumbnail ? (
+          <Image
+            style={styles.image}
+            resizeMethod="resize"
+            resizeMode="cover"
+            source={{
+              uri: item.thumbnail,
+            }}
+          />
+        ) : (
+          <ImageComponent name="placeholder" />
+        )}
       </View>
       <View style={styles.content}>
         <Pressable

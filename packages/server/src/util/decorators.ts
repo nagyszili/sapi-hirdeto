@@ -1,5 +1,14 @@
-import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import {
+  createParamDecorator,
+  ExecutionContext,
+  UseGuards,
+  applyDecorators,
+  SetMetadata,
+} from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
+import { ROLES } from './constants';
+import { RoleJwtAuthGuard } from 'src/auth/guard/role-jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
 
 export const CurrentUser = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
@@ -7,3 +16,15 @@ export const CurrentUser = createParamDecorator(
     return ctx.getContext().req.user;
   },
 );
+
+export const UserRole = () =>
+  applyDecorators(
+    UseGuards(RoleJwtAuthGuard, RolesGuard),
+    SetMetadata('roles', [ROLES.USER, ROLES.MANAGER]),
+  );
+
+export const ManagerRole = () =>
+  applyDecorators(
+    UseGuards(RoleJwtAuthGuard, RolesGuard),
+    SetMetadata('roles', [ROLES.MANAGER]),
+  );

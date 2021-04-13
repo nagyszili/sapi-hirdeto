@@ -15,6 +15,9 @@ export class User {
   @Field({ nullable: true })
   phoneNumber?: string;
 
+  @Field()
+  role: string;
+
   @Field(() => [Ad], { nullable: true })
   favorites?: Ad[];
 }

@@ -1,6 +1,6 @@
-import { AdImageInput } from '../../../apollo/types/graphql-global-types';
+import { ImageInput } from '../../../apollo/types/graphql-global-types';
 
 export interface ImageUploadContainerProps {
-  setImages: React.Dispatch<React.SetStateAction<AdImageInput[]>>;
-  images: AdImageInput[];
+  setImages: React.Dispatch<React.SetStateAction<ImageInput[]>>;
+  images: ImageInput[];
 }

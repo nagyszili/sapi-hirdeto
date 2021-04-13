@@ -1,3 +1,8 @@
+import {
+  PossibleModalParams,
+  ModalButtonTypes,
+  ModalName,
+} from '../../modals/types';
 /* tslint:disable */
 /* eslint-disable */
 // @generated
@@ -8,27 +13,24 @@
 // ====================================================
 
 export interface UIStateQuery_uiState_activeModal {
-  __typename: "Modal";
-  name: string;
-  params: any | null;
+  name: ModalName;
+  params: PossibleModalParams;
 }
 
 export interface UIStateQuery_uiState_activeAlert_buttons {
-  __typename: "AlertButton";
   text: string;
-  onPress: any | null;
-  type: string;
+  onPress?: () => void;
+  type: ModalButtonTypes;
 }
 
 export interface UIStateQuery_uiState_activeAlert {
-  __typename: "Alert";
   title: string;
   message: string;
-  buttons: (UIStateQuery_uiState_activeAlert_buttons | null)[] | null;
+  buttons?: UIStateQuery_uiState_activeAlert_buttons[];
+  cancelButton?: UIStateQuery_uiState_activeAlert_buttons;
 }
 
 export interface UIStateQuery_uiState {
-  __typename: "UIState";
   activeModal: UIStateQuery_uiState_activeModal;
   activeAlert: UIStateQuery_uiState_activeAlert | null;
   isLoading: boolean;

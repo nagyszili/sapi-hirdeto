@@ -62,11 +62,14 @@ export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
   const addImages = (files: any) =>
     Object.values(files).forEach((file: any) => {
       if (file && file.type.match('image.*')) {
-        setImages((oldValue) =>
-          oldValue.length === 0
-            ? [{ isThumbnail: true, image: file }]
-            : [...oldValue, { isThumbnail: false, image: file }]
-        );
+        setImages((oldValue) => [
+          ...oldValue,
+          {
+            isThumbnail: oldValue.length === 0,
+            image: file,
+            priority: oldValue.length + 1,
+          },
+        ]);
       }
     });
 

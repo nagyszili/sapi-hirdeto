@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { LOGIN_TYPES } from 'src/util/constants';
+import { ROLES, LOGIN_TYPES } from 'src/util/constants';
 import { AdModel } from 'src/ad/ad.schema';
 
 @Schema()
@@ -16,6 +16,9 @@ export class UserModel extends Document {
 
   @Prop()
   phoneNumber: string;
+
+  @Prop({ default: ROLES.USER, enum: [ROLES.USER, ROLES.MANAGER] })
+  role: string;
 
   @Prop({
     enum: [LOGIN_TYPES.PASSWORD, LOGIN_TYPES.GOOGLE, LOGIN_TYPES.FACEBOOK],

@@ -13,6 +13,7 @@ export interface AllUsers_findAllUsers {
   name: string;
   email: string;
   phoneNumber: string | null;
+  role: string;
 }
 
 export interface AllUsers {

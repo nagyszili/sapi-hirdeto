@@ -1,7 +1,7 @@
 import { ArgsType, Field } from '@nestjs/graphql';
 import { AttributeValueInput } from 'src/attribute-value/attribute-value.input';
 import { MinLength, MaxLength, ArrayMaxSize } from 'class-validator';
-import { AdImageInput } from './ad-image.input';
+import { ImageInput } from './image/image.input';
 
 @ArgsType()
 export class AdUpdate {
@@ -22,8 +22,8 @@ export class AdUpdate {
   description?: string;
 
   @ArrayMaxSize(8)
-  @Field(() => [AdImageInput], { nullable: true })
-  images: AdImageInput[];
+  @Field(() => [ImageInput], { nullable: true })
+  images: ImageInput[];
 
   @Field({ nullable: true })
   location?: string;

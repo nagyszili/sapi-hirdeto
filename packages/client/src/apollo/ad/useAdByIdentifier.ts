@@ -23,7 +23,10 @@ export const AD_BY_IDENTIFIER = gql`
       createdAt
       updatedAt
       views
-      images
+      images {
+        priority
+        url
+      }
       thumbnail
       location {
         longitude

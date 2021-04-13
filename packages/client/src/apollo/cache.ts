@@ -46,8 +46,8 @@ export const cache = new InMemoryCache({
                       !existing.some(
                         (existingAd: any) =>
                           readField({ fieldName: 'id', from: existingAd }) ===
-                          readField({ fieldName: 'id', from: ad }),
-                      ),
+                          readField({ fieldName: 'id', from: ad })
+                      )
                   );
                   const merged = [...existing, ...newAds];
                   return merged;
@@ -61,8 +61,8 @@ export const cache = new InMemoryCache({
                 !existing.some(
                   (existingAd: any) =>
                     readField({ fieldName: 'id', from: existingAd }) ===
-                    readField({ fieldName: 'id', from: ad }),
-                ),
+                    readField({ fieldName: 'id', from: ad })
+                )
             );
             const merged = [...existing, ...newAds];
             return merged;

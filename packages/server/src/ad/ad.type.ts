@@ -3,6 +3,7 @@ import { User } from 'src/user/user.type';
 import { Category } from 'src/category/category.type';
 import { AttributeValue } from 'src/attribute-value/attribute-value.type';
 import { Location } from './../location/location.type';
+import { Image } from './image/image.type';
 
 @ObjectType()
 export class Ad {
@@ -33,8 +34,8 @@ export class Ad {
   @Field(() => Int)
   numberOfImages: number;
 
-  @Field(() => [String], { nullable: true })
-  images?: string[];
+  @Field(() => [Image], { nullable: true })
+  images?: Image[];
 
   @Field()
   createdAt: Date;

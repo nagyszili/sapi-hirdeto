@@ -60,7 +60,7 @@ export const addRangeFilter = (
   from: string,
   to: string,
   filters?: Filter[],
-  filter?: Filter,
+  filter?: Filter
 ) =>
   filter && filters
     ? filters.map((oldFilter) =>
@@ -71,7 +71,7 @@ export const addRangeFilter = (
               from: parseInt(from, 10),
               to: parseInt(to, 10),
             }
-          : oldFilter,
+          : oldFilter
       )
     : filters
     ? [
@@ -96,7 +96,7 @@ export const addMultiSelectFilter = (
   title: string,
   selectedElements: string[],
   filters?: Filter[],
-  filter?: Filter,
+  filter?: Filter
 ) =>
   filter && filters
     ? filters.map((oldFilter) =>
@@ -105,7 +105,7 @@ export const addMultiSelectFilter = (
               ...oldFilter,
               selectedAttributeValues: selectedElements,
             }
-          : oldFilter,
+          : oldFilter
       )
     : filters
     ? [
@@ -128,13 +128,13 @@ export const addSelectFilter = (
   title: string,
   element: string,
   filters?: Filter[],
-  filter?: Filter,
+  filter?: Filter
 ) =>
   filters && filter
     ? filters.map((oldFilter) =>
         oldFilter.name === title
           ? { ...oldFilter, selectedAttributeValues: [element] }
-          : oldFilter,
+          : oldFilter
       )
     : filters
     ? [

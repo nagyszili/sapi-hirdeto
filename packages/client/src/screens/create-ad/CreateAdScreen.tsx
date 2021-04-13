@@ -9,7 +9,7 @@ import { useAllMainCategories } from '../../apollo/main-category/useAllMainCateg
 import {
   LocationInput,
   AttributeValueInput,
-  AdImageInput,
+  ImageInput,
 } from '../../apollo/types/graphql-global-types';
 import { setLoading } from '../../apollo/ui/uiMutations';
 import { useCurrentUser } from '../../apollo/user/useCurrentUser';
@@ -39,7 +39,7 @@ export const CreateAdScreen: React.FC<{}> = () => {
 
   const [categoryIdentifier, setCategoryIdentifier] = useState('');
   const [mainCategoryIdentifier, setMainCategoryIdentifier] = useState('');
-  const [images, setImages] = useState<AdImageInput[]>([]);
+  const [images, setImages] = useState<ImageInput[]>([]);
   const [currency, setCurrency] = useState(currencies[0].value);
   const { data: categories } = useCategoriesByMainCategoryIdentifier(
     mainCategoryIdentifier

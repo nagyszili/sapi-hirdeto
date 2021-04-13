@@ -1,5 +1,5 @@
 import { ArgsType, Field } from '@nestjs/graphql';
-import { IsEmail, IsPhoneNumber } from 'class-validator';
+import { IsEmail, IsPhoneNumber, IsOptional } from 'class-validator';
 
 @ArgsType()
 export class UserUpdate {
@@ -7,6 +7,7 @@ export class UserUpdate {
   name?: string;
 
   @IsEmail()
+  @IsOptional()
   @Field({ nullable: true })
   email?: string;
 
@@ -16,4 +17,7 @@ export class UserUpdate {
   @IsPhoneNumber('RO')
   @Field({ nullable: true })
   phoneNumber?: string;
+
+  @Field({ nullable: true })
+  role?: string;
 }

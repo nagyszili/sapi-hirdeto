@@ -28,7 +28,7 @@ type ModalsMap = (props: ModalCommonProps) => ModalsObject;
 
 type ModalsObject = {
   [name in ModalName]: (
-    params: any,
+    params: any
   ) => React.ReactElement<ModalCommonProps> | null;
 };
 
@@ -119,7 +119,7 @@ export const UIStateComponent: React.FC<Props> = ({
             )}
             <ModalHeader title={title} close={_hideModal} />
             {modals({ setTitle, hideModal })[activeModal.name](
-              activeModal.params,
+              activeModal.params
             )}
           </SafeAreaView>
         </KeyboardAvoidingView>

@@ -9,6 +9,7 @@ export const CURRENT_USER = gql`
       name
       email
       phoneNumber
+      role
       favorites {
         id
         identifier

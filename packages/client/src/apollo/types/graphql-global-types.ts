@@ -7,11 +7,6 @@
 // START Enums and Input Objects
 //==============================================================
 
-export interface AdImageInput {
-  isThumbnail: boolean;
-  image: any;
-}
-
 export interface AttributeValueInput {
   key: string;
   value: string;
@@ -24,6 +19,12 @@ export interface Filter {
   from?: number | null;
   to?: number | null;
   selectedAttributeValues?: string[] | null;
+}
+
+export interface ImageInput {
+  priority: number;
+  isThumbnail: boolean;
+  image: any;
 }
 
 export interface LocationInput {

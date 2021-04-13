@@ -12,6 +12,7 @@ import household from '../../assets/images/household.png';
 import imageUpload from '../../assets/images/image-upload.png';
 import piacter from '../../assets/images/piacter.png';
 import pig from '../../assets/images/pig.png';
+import placeholderImage from '../../assets/images/placeholderImage.png';
 import playStore from '../../assets/images/playStore.png';
 import realEstate from '../../assets/images/real-estate.png';
 import shopping from '../../assets/images/shopping.png';
@@ -19,6 +20,7 @@ import sport from '../../assets/images/sport.png';
 import starFilled from '../../assets/images/star-filled.png';
 import tools from '../../assets/images/tools.png';
 import vehicle from '../../assets/images/vehicle.png';
+import whiteLogo from '../../assets/images/whiteLogo.png';
 import work from '../../assets/images/work.png';
 
 interface Props {
@@ -30,7 +32,9 @@ const images = (style?: StyleProp<ImageStyle>) => ({
   'active-image-upload': () => (
     <Image source={activeImageUpload} style={style} />
   ),
+  placeholder: () => <Image source={placeholderImage} style={style} />,
   'image-upload': () => <Image source={imageUpload} style={style} />,
+  'white-logo': () => <Image source={whiteLogo} style={style} />,
   playStore: () => <Image source={playStore} style={style} />,
   appStore: () => <Image source={appStore} style={style} />,
   piacter: () => <Image source={piacter} style={style} />,

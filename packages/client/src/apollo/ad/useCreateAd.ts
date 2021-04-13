@@ -8,7 +8,7 @@ export const CREATE_AD = gql`
     $price: Float!
     $currency: String!
     $description: String!
-    $images: [AdImageInput!]
+    $images: [ImageInput!]
     $location: LocationInput!
     $categoryId: String!
     $attributeValues: [AttributeValueInput!]

@@ -4,7 +4,7 @@ import { CurrentUser_currentUser } from '../../../apollo/types/CurrentUser';
 import {
   AttributeValueInput,
   LocationInput,
-  AdImageInput,
+  ImageInput,
 } from '../../../apollo/types/graphql-global-types';
 import { Element } from '../../../components/Filters/Select/SelectInput.props';
 
@@ -33,7 +33,7 @@ export interface CreateAdComponentProps {
   setSelectedLocation: React.Dispatch<
     React.SetStateAction<LocationInput | undefined>
   >;
-  images: AdImageInput[];
-  setImages: React.Dispatch<React.SetStateAction<AdImageInput[]>>;
+  images: ImageInput[];
+  setImages: React.Dispatch<React.SetStateAction<ImageInput[]>>;
   createAd: () => Promise<void>;
 }

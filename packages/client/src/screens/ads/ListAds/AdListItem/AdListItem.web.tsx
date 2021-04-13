@@ -11,6 +11,7 @@ import { AddFavoriteButton } from '../../../../components/Buttons/AddFavoriteBut
 import { Button } from '../../../../components/Buttons/Button';
 import { Text } from '../../../../components/themed/Text';
 import { Icon } from '../../../../utils/icons';
+import { ImageComponent } from '../../../../utils/images';
 import {
   formatPriceToString,
   formatCreatedDateToString,
@@ -37,14 +38,21 @@ export const AdListItem: React.FC<AdListItemProps> = ({ item, user }) => {
       style={[styles.container, isHovered && styles.hover]}
     >
       <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={{
-            uri:
-              item.thumbnail ||
-              'https://frankfurt.apollo.olxcdn.com/v1/files/tjjoqx5q0d2w3-RO/image;s=1000x700',
-          }}
-        />
+        {item.thumbnail ? (
+          <Image
+            style={styles.image}
+            source={{
+              uri: item.thumbnail,
+            }}
+          />
+        ) : (
+          <View style={styles.placeholderImage}>
+            <ImageComponent
+              name="placeholder"
+              style={{ height: 80, width: 80 }}
+            />
+          </View>
+        )}
         <LinearGradient
           colors={[Color.secondaryColor, Color.primaryColor]}
           start={{ x: 0, y: 0 }}
@@ -210,5 +218,13 @@ const styles = StyleSheet.create({
   button: {
     width: 100,
     marginLeft: 24,
+  },
+  placeholderImage: {
+    width: 262,
+    height: 200,
+    borderRadius: 6,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f7f7f736',
   },
 });
