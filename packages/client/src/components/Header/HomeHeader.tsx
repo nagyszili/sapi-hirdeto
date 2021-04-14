@@ -8,7 +8,7 @@ import { secondaryColor, primaryColor } from '../../utils/theme/colors';
 export const HomeHeader: React.FC<{}> = () => {
   return (
     <LinearGradient
-      colors={[secondaryColor, primaryColor]}
+      colors={[primaryColor, secondaryColor]}
       style={styles.container}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}

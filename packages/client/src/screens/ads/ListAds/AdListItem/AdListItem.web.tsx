@@ -54,7 +54,7 @@ export const AdListItem: React.FC<AdListItemProps> = ({ item, user }) => {
           </View>
         )}
         <LinearGradient
-          colors={[Color.secondaryColor, Color.primaryColor]}
+          colors={[Color.primaryColor, Color.secondaryColor]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.imageIconContainer}

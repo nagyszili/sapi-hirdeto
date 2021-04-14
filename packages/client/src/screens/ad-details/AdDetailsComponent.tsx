@@ -39,7 +39,7 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
   const [, setIsHeaderVisible] = useState<boolean>(true);
 
   const scrollViewReference = useRef<ScrollView>(
-    null
+    null,
   ) as React.MutableRefObject<ScrollView>;
 
   const notchSizes = useSafeAreaInsets();
@@ -133,7 +133,7 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
         </Modal>
 
         <LinearGradient
-          colors={[Color.secondaryColor, Color.primaryColor]}
+          colors={[Color.primaryColor, Color.secondaryColor]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >

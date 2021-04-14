@@ -8,14 +8,14 @@ export const greyTextColor = '#545454';
 
 // export const primaryColor = '#E00B0B';
 // export const primaryDarkColor = '#B90505';
-export const primaryColor = '#1AD5CE';
-export const primaryDarkColor = '#00c1b8';
+export const primaryColor = '#256e43';
+export const primaryDarkColor = '#00421b';
 export const primarySoftColor = '#E74A4A';
 export const primarySofterColor = '#EE7373';
-export const primaryLightColor = '#F8AFAF';
+export const primaryLightColor = '#559d6e';
 export const primaryLighterColor = '#FEEAEA';
 
-export const secondaryColor = '#0091DF';
+export const secondaryColor = '#7cac92';
 
 export const successColor = '#00B517';
 export const errorColor = '#E00B0B';
