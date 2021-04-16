@@ -4,8 +4,8 @@
     "app.js.map": "/sapi-hirdeto/static/js/app.ee2958d1.chunk.js.map",
     "runtime~app.js": "/sapi-hirdeto/static/js/runtime~app.6500c2d4.js",
     "runtime~app.js.map": "/sapi-hirdeto/static/js/runtime~app.6500c2d4.js.map",
-    "static/js/2.5113c5da.chunk.js": "/sapi-hirdeto/static/js/2.5113c5da.chunk.js",
-    "static/js/2.5113c5da.chunk.js.map": "/sapi-hirdeto/static/js/2.5113c5da.chunk.js.map",
+    "static/js/2.03d2e39f.chunk.js": "/sapi-hirdeto/static/js/2.03d2e39f.chunk.js",
+    "static/js/2.03d2e39f.chunk.js.map": "/sapi-hirdeto/static/js/2.03d2e39f.chunk.js.map",
     "fonts/AntDesign.ttf": "/sapi-hirdeto/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/sapi-hirdeto/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/sapi-hirdeto/./fonts/Feather.ttf",
@@ -23,13 +23,14 @@
     "fonts/SimpleLineIcons.ttf": "/sapi-hirdeto/./fonts/SimpleLineIcons.ttf",
     "fonts/SpaceMono-Regular.ttf": "/sapi-hirdeto/./fonts/SpaceMono-Regular.ttf",
     "fonts/icomoon.ttf": "/sapi-hirdeto/./fonts/icomoon.ttf",
+    "_redirects": "/sapi-hirdeto/_redirects",
     "favicon-16.png": "/sapi-hirdeto/favicon-16.png",
     "favicon-32.png": "/sapi-hirdeto/favicon-32.png",
     "favicon.ico": "/sapi-hirdeto/favicon.ico",
     "index.html": "/sapi-hirdeto/index.html",
     "manifest.json": "/sapi-hirdeto/manifest.json",
     "serve.json": "/sapi-hirdeto/serve.json",
-    "static/js/2.5113c5da.chunk.js.LICENSE.txt": "/sapi-hirdeto/static/js/2.5113c5da.chunk.js.LICENSE.txt",
+    "static/js/2.03d2e39f.chunk.js.LICENSE.txt": "/sapi-hirdeto/static/js/2.03d2e39f.chunk.js.LICENSE.txt",
     "static/media/active-image-upload.png": "/sapi-hirdeto/static/media/active-image-upload.6a52b0c6.png",
     "static/media/agriculture.png": "/sapi-hirdeto/static/media/agriculture.1d08836b.png",
     "static/media/appStore.png": "/sapi-hirdeto/static/media/appStore.964d535f.png",
@@ -58,7 +59,7 @@
   },
   "entrypoints": [
     "static/js/runtime~app.6500c2d4.js",
-    "static/js/2.5113c5da.chunk.js",
+    "static/js/2.03d2e39f.chunk.js",
     "static/js/app.ee2958d1.chunk.js"
   ]
 }
