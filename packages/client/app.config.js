@@ -8,7 +8,7 @@ export default {
     scheme: 'client',
     privacy: 'hidden',
     orientation: 'portrait',
-    primaryColor: '#E00B0B',
+    primaryColor: '#256e43',
     icon: './assets/images/icon.png',
     splash: {
       image: './assets/images/splash.png',
@@ -30,14 +30,14 @@ export default {
       softwareKeyboardLayoutMode: 'pan',
       adaptiveIcon: {
         foregroundImage: './assets/images/adaptive-icon.png',
-        backgroundColor: '#E00B0B',
+        backgroundColor: '#256e43',
       },
     },
     web: {
       favicon: './assets/images/favicon.png',
     },
     facebookAppId: '1393460914380377',
-    facebookDisplayName: 'Piactér.ro',
+    facebookDisplayName: 'Sapi-Hirdető',
     facebookScheme: 'fb1393460914380377',
     facebookAutoInitEnabled: true,
     extra: {

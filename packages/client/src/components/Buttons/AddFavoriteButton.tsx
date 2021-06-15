@@ -11,7 +11,7 @@ import {
 } from '../../apollo/reactiveVariables';
 import { CurrentUser_currentUser } from '../../apollo/types/CurrentUser';
 import { Icon } from '../../utils/icons';
-import { blackColor, primaryColor } from '../../utils/theme/colors';
+import * as Color from '../../utils/theme/colors';
 
 interface Props {
   user?: CurrentUser_currentUser;
@@ -53,9 +53,9 @@ export const AddFavoriteButton: React.FC<Props> = ({ user, adId, style }) => {
   return (
     <Pressable style={[styles.starIcon, style]} onPress={onPress}>
       {favorite ? (
-        <Icon name="star-empty" size={24} color={primaryColor} />
+        <Icon name="star-empty" size={24} color={Color.primaryLightColor} />
       ) : (
-        <Icon name="star-empty" size={24} color={blackColor} />
+        <Icon name="star-empty" size={24} color={Color.blackColor} />
       )}
     </Pressable>
   );

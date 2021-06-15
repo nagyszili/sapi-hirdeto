@@ -9,11 +9,7 @@ import {
 } from 'react-native';
 import { useHover } from 'react-native-web-hooks';
 
-import {
-  primaryColor,
-  primaryDarkColor,
-  whiteColor,
-} from '../../utils/theme/colors';
+import * as Color from '../../utils/theme/colors';
 import { Text } from '../themed/Text';
 
 interface Props {
@@ -59,17 +55,17 @@ const styles = StyleSheet.create({
     height: 38,
     flexDirection: 'row',
     borderRadius: 6,
-    backgroundColor: primaryColor,
+    backgroundColor: Color.primaryColor,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 8,
   },
   hover: {
-    backgroundColor: primaryDarkColor,
+    backgroundColor: Color.primaryLightColor,
   },
   text: {
     lineHeight: 22,
-    color: whiteColor,
+    color: Color.whiteColor,
   },
 });

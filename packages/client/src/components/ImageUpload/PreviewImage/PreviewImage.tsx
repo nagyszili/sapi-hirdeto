@@ -22,7 +22,7 @@ export const PreviewImage: React.FC<PreviewImageProps> = ({
       />
       <View style={styles.buttonRow}>
         <Pressable style={[styles.smallButtonContainer]} onPress={rotate}>
-          <Icon name="rotate" color={Color.primaryDarkColor} size={18} />
+          <Icon name="rotate" color={Color.primarySoftColor} size={18} />
         </Pressable>
         <Pressable style={[styles.smallButtonContainer]} onPress={setThumbnail}>
           <View style={styles.thumbnailSelector} />
@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   thumbnail: {
-    borderColor: Color.primaryDarkColor,
+    borderColor: Color.primarySoftColor,
     borderWidth: 2,
   },
   thumbnailSelector: {
     width: 14,
     height: 14,
     borderRadius: 3,
-    borderColor: Color.primaryDarkColor,
+    borderColor: Color.primarySoftColor,
     borderWidth: 2,
   },
   smallButtonContainer: {
