@@ -13,9 +13,16 @@ export interface AdByIdentifier_findAdByIdentifier_user {
   name: string;
   email: string;
   phoneNumber: string | null;
+  profilePictureUrl: string | null;
 }
 
 export interface AdByIdentifier_findAdByIdentifier_images {
+  __typename: "Image";
+  priority: number;
+  url: string;
+}
+
+export interface AdByIdentifier_findAdByIdentifier_thumbnail {
   __typename: "Image";
   priority: number;
   url: string;
@@ -69,15 +76,18 @@ export interface AdByIdentifier_findAdByIdentifier {
   id: string;
   identifier: string;
   name: string;
+  status: string;
   user: AdByIdentifier_findAdByIdentifier_user;
   price: number;
   currency: string;
+  negotiable: boolean;
   description: string | null;
   createdAt: any;
   updatedAt: any | null;
+  actualizedAt: any;
   views: number;
   images: AdByIdentifier_findAdByIdentifier_images[] | null;
-  thumbnail: string | null;
+  thumbnail: AdByIdentifier_findAdByIdentifier_thumbnail | null;
   location: AdByIdentifier_findAdByIdentifier_location;
   category: AdByIdentifier_findAdByIdentifier_category;
   attributeValues: AdByIdentifier_findAdByIdentifier_attributeValues[] | null;
@@ -88,5 +98,6 @@ export interface AdByIdentifier {
 }
 
 export interface AdByIdentifierVariables {
+  userId?: string | null;
   identifier: string;
 }

@@ -19,6 +19,7 @@ export interface CategoriesByMainCategoryIdentifier_findCategoriesByMainCategory
   type: string;
   possibleValues: CategoriesByMainCategoryIdentifier_findCategoriesByMainCategoryIdentifier_attributes_possibleValues[];
   dependsBy: string | null;
+  required: boolean;
 }
 
 export interface CategoriesByMainCategoryIdentifier_findCategoriesByMainCategoryIdentifier_mainCategory {

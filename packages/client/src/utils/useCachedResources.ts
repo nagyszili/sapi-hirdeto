@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -26,9 +26,23 @@ export default function useCachedResources() {
       try {
         SplashScreen.preventAutoHideAsync();
         cacheImages([require('../../assets/images/googleIcon.png')]);
+        cacheImages([require('../../assets/images/agriculture.png')]);
+        cacheImages([require('../../assets/images/child.png')]);
+        cacheImages([require('../../assets/images/house.png')]);
+        cacheImages([require('../../assets/images/electronics.png')]);
+        cacheImages([require('../../assets/images/household.png')]);
+        cacheImages([require('../../assets/images/pig.png')]);
+        cacheImages([require('../../assets/images/real-estate.png')]);
+        cacheImages([require('../../assets/images/shopping.png')]);
+        cacheImages([require('../../assets/images/sport.png')]);
+        cacheImages([require('../../assets/images/tools.png')]);
+        cacheImages([require('../../assets/images/vehicle.png')]);
+        cacheImages([require('../../assets/images/work.png')]);
+        cacheImages([require('../../assets/images/whiteLogo.png')]);
+
         await Font.loadAsync({
           ...Ionicons.font,
-
+          ...MaterialIcons.font,
           IcoMoon: require('../../assets/icons/icomoon.ttf'),
 
           'space-mono': require('../../assets/fonts/SpaceMono-Regular.ttf'),

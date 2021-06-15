@@ -8,11 +8,11 @@ import {
 } from 'react-native';
 import { useFocus, useHover } from 'react-native-web-hooks';
 
+import { useTextInput } from '../../hooks/useTextInput';
 import { Icon } from '../../utils/icons';
 import * as Color from '../../utils/theme/colors';
-import { Text } from '../themed/Text';
+import { InputError } from '../InputError';
 import { TextInputProps } from './TextInput.props';
-import { useTextInput } from './useTextInput';
 
 export const TextInput: React.FC<TextInputProps> = forwardRef(
   (
@@ -42,7 +42,7 @@ export const TextInput: React.FC<TextInputProps> = forwardRef(
     };
 
     return (
-      <View style={[styles.container, containerStyle]}>
+      <View style={containerStyle}>
         <View
           style={[
             styles.row,
@@ -80,44 +80,30 @@ export const TextInput: React.FC<TextInputProps> = forwardRef(
             </Pressable>
           )}
         </View>
-        <View style={[styles.errorContainer, !error && { display: 'none' }]}>
-          <Text style={[styles.error]}>{error}</Text>
-        </View>
+        <InputError error={error} />
       </View>
     );
   }
 );
 
 const styles = StyleSheet.create({
-  container: {
-    height: 63,
-  },
   row: {
     flexDirection: 'row',
     color: Color.greyDarkColor,
     backgroundColor: Color.whiteColor,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    marginVertical: 0,
-    height: 38,
+    height: 46,
     borderWidth: 1,
     borderRadius: 6,
     borderColor: Color.greyColor,
   },
   textInput: {
     flex: 1,
-  },
-  errorContainer: {
-    width: '100%',
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-  },
-
-  error: {
-    marginTop: 7,
-    color: Color.errorColor,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
   },
   icon: {
     backgroundColor: Color.whiteColor,
+    justifyContent: 'center',
+    margin: 5,
   },
 });

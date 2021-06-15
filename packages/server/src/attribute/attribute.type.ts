@@ -12,6 +12,9 @@ export class Attribute {
   @Field(() => [PossibleValues])
   possibleValues: PossibleValues[];
 
+  @Field()
+  required: boolean;
+
   @Field({ nullable: true })
   dependsBy?: string;
 }

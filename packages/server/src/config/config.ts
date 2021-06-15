@@ -31,6 +31,20 @@ export const config = convict({
     default: false,
     env: 'RUN_SEEDERS',
   },
+  google: {
+    apiKey: {
+      doc: 'Api key to access google Identity Toolkit API, Directions API. Used for phone number validation and delivery time estimation.',
+      format: String,
+      default: '',
+      env: 'GOOGLE_API_KEY',
+    },
+  },
+  facebookUrl: {
+    doc: 'The facebook graph API url',
+    format: String,
+    default: '',
+    env: 'FACEBOOK_API_URL',
+  },
   awsAccessKeyId: {
     doc: 'AWS access key id',
     format: String,

@@ -21,6 +21,7 @@ import { LocationModule } from './location/locations.module';
     CategoryModule,
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
+      introspection: true,
       plugins: [
         {
           requestDidStart(): any {

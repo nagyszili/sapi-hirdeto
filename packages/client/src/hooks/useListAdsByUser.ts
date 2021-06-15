@@ -5,7 +5,12 @@ import { useAdsByUser } from '../apollo/ad/useAdsByUser';
 export const useListAdsByUser = (perPage?: number, page?: number) => {
   const pageRef = useRef(page || 0);
 
-  const { data: ads, loading: loadingAds, fetchMore, refetch } = useAdsByUser({
+  const {
+    data: ads,
+    loading: loadingAds,
+    fetchMore,
+    refetch,
+  } = useAdsByUser({
     page: pageRef.current,
     perPage,
   });

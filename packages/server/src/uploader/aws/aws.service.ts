@@ -48,6 +48,7 @@ export class AwsService implements ImageUploader {
           Body: pass,
           ContentType: mimetype,
           ACL: 'public-read',
+          CacheControl: 'no-cache',
         })
         .promise()
         .then((value) => value.Location)
@@ -57,18 +58,31 @@ export class AwsService implements ImageUploader {
     };
   }
 
-  public async uploadImage(image: any, key: string) {
+  public async uploadImage(image: any, key: string, mimetype?: string) {
     return this.s3
       .upload({
         Bucket: this.config.bucketName,
         Key: key,
         Body: image,
+        ContentType: mimetype,
         ACL: 'public-read',
+        CacheControl: 'no-cache',
       })
       .promise()
       .then((data) => data.Location)
       .catch((error) => {
         throw error;
       });
+  }
+
+  public async deleteImage(key: string) {
+    try {
+      await this.s3
+        .deleteObject({ Bucket: this.config.bucketName, Key: key })
+        .promise();
+      return true;
+    } catch (error) {
+      throw error;
+    }
   }
 }

@@ -28,15 +28,10 @@ export const typeDefs = gql`
     isLoading: Boolean!
   }
 
-  type SortType {
-    sortField: String
-    sortOrder: Int
-  }
-
   extend type Query {
     isLoggedIn: Boolean!
     uiState: UIState!
     currency: String!
-    sortType: SortType!
+    asyncFavorites: [String!]!
   }
 `;

@@ -10,6 +10,5 @@ export class AttributeValueModel extends Document {
   value: string | number;
 }
 
-export const AttributeValueSchema = SchemaFactory.createForClass(
-  AttributeValueModel,
-);
+export const AttributeValueSchema =
+  SchemaFactory.createForClass(AttributeValueModel);

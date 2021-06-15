@@ -1,20 +1,15 @@
 import { InMemoryCache } from '@apollo/client';
 import { offsetLimitPagination } from '@apollo/client/utilities';
-import { Platform } from 'react-native';
+import { Dimensions } from 'react-native';
 
-import {
-  uiStateVar,
-  isLoggedInVar,
-  currencyVar,
-  sortTypeVar,
-} from './reactiveVariables';
+import { MIN_WIDTH_FOR_NATIVE_VIEW_ON_WEB } from '../utils/theme/responsiveness';
 
 export const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
         findAllAds:
-          Platform.OS === 'web'
+          Dimensions.get('window').width > MIN_WIDTH_FOR_NATIVE_VIEW_ON_WEB
             ? offsetLimitPagination([
                 'queryString',
                 'mainCategoryIdentifier',
@@ -25,6 +20,7 @@ export const cache = new InMemoryCache({
                 'location',
                 'currency',
                 'filters',
+                'creatorId',
                 'page',
                 'perPage',
               ])
@@ -37,10 +33,15 @@ export const cache = new InMemoryCache({
                   'sortField',
                   'sortOrder',
                   'location',
+                  'creatorId',
                   'currency',
                   'filters',
                 ],
-                merge(existing = [], incoming: any[], { readField }) {
+                merge(existing = [], incoming: any[], { args, readField }) {
+                  if (existing.length / args!.perPage < args!.page) {
+                    return existing;
+                  }
+
                   const newAds = incoming.filter(
                     (ad) =>
                       !existing.some(
@@ -68,34 +69,10 @@ export const cache = new InMemoryCache({
             return merged;
           },
         },
-        uiState: {
-          read() {
-            return uiStateVar();
-          },
-        },
-        isLoggedIn: {
-          read() {
-            return isLoggedInVar();
-          },
-        },
-        currency: {
-          read() {
-            return currencyVar();
-          },
-        },
-        sortType: {
-          read() {
-            return sortTypeVar();
-          },
-        },
       },
     },
-    User: {
-      fields: {
-        favorites: {
-          merge: false,
-        },
-      },
+    AdListItem: {
+      keyFields: ['id', 'currency'],
     },
   },
 });

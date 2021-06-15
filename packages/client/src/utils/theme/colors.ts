@@ -19,3 +19,10 @@ export const secondaryColor = '#7cac92';
 
 export const successColor = '#00B517';
 export const errorColor = '#E00B0B';
+
+export const activateAdColor = '#8bc24c';
+export const inactivateAdColor = '#f5587b';
+
+export const facebookColor = '#1955F1';
+
+export const fakeShadowColor = '#d5dbdf';

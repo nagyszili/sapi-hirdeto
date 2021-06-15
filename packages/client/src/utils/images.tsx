@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { StyleProp, Image, ImageStyle } from 'react-native';
+import { Image, ImageProps } from 'react-native';
 
 import activeImageUpload from '../../assets/images/active-image-upload.png';
 import agriculture from '../../assets/images/agriculture.png';
 import appStore from '../../assets/images/appStore.png';
 import child from '../../assets/images/child.png';
+import profilePic from '../../assets/images/defaultProfilePicture.png';
 import electronics from '../../assets/images/electronics.png';
 import google from '../../assets/images/googleIcon.png';
 import house from '../../assets/images/house.png';
@@ -23,39 +24,52 @@ import vehicle from '../../assets/images/vehicle.png';
 import whiteLogo from '../../assets/images/whiteLogo.png';
 import work from '../../assets/images/work.png';
 
-interface Props {
+interface Props extends Omit<ImageProps, 'source'> {}
+
+interface ImageComponentProps extends Props {
   name: ImageName;
-  style?: StyleProp<ImageStyle>;
 }
 
-const images = (style?: StyleProp<ImageStyle>) => ({
-  'active-image-upload': () => (
-    <Image source={activeImageUpload} style={style} />
+const images = (props?: Props) => ({
+  'active-image-upload': () => <Image source={activeImageUpload} {...props} />,
+  placeholder: () => <Image source={placeholderImage} {...props} />,
+  'image-upload': () => <Image source={imageUpload} {...props} />,
+  'white-logo': () => <Image source={whiteLogo} {...props} />,
+  playStore: () => <Image source={playStore} {...props} />,
+  appStore: () => <Image source={appStore} {...props} />,
+  piacter: () => <Image source={piacter} {...props} />,
+  google: () => <Image source={google} {...props} />,
+  mezogazdasag: () => <Image source={agriculture} {...props} />,
+  kabanna: () => <Image source={house} {...props} />,
+  'mezogazdasag-es-ipar': () => <Image source={agriculture} {...props} />,
+  szallas: () => <Image source={house} {...props} />,
+  allatok: () => <Image source={pig} {...props} />,
+  'szabadido-es-sport': () => <Image source={sport} {...props} />,
+  'sport-muveszet': () => <Image source={sport} {...props} />,
+  'felszereles-szolgaltatas': () => <Image source={tools} {...props} />,
+  jarmuvek: () => <Image source={vehicle} {...props} />,
+  ingatlan: () => <Image source={realEstate} {...props} />,
+  allas: () => <Image source={work} {...props} />,
+  'muszaki-cikkek-es-elektronika': () => (
+    <Image source={electronics} {...props} />
   ),
-  placeholder: () => <Image source={placeholderImage} style={style} />,
-  'image-upload': () => <Image source={imageUpload} style={style} />,
-  'white-logo': () => <Image source={whiteLogo} style={style} />,
-  playStore: () => <Image source={playStore} style={style} />,
-  appStore: () => <Image source={appStore} style={style} />,
-  piacter: () => <Image source={piacter} style={style} />,
-  google: () => <Image source={google} style={style} />,
-  mezogazdasag: () => <Image source={agriculture} style={style} />,
-  kabanna: () => <Image source={house} style={style} />,
-  allatok: () => <Image source={pig} style={style} />,
-  'sport-muveszet': () => <Image source={sport} style={style} />,
-  'felszereles-szolgaltatas': () => <Image source={tools} style={style} />,
-  jarmuvek: () => <Image source={vehicle} style={style} />,
-  ingatlan: () => <Image source={realEstate} style={style} />,
-  munkahely: () => <Image source={work} style={style} />,
-  elektronika: () => <Image source={electronics} style={style} />,
-  'divat-ruha': () => <Image source={shopping} style={style} />,
-  'haztartas-kert': () => <Image source={household} style={style} />,
-  'baba-mama': () => <Image source={child} style={style} />,
-  'star-filled': () => <Image source={starFilled} style={style} />,
+  'uzlet-es-szolgaltatas': () => <Image source={work} {...props} />,
+  munkahely: () => <Image source={work} {...props} />,
+  elektronika: () => <Image source={electronics} {...props} />,
+  'divat-ruhazat': () => <Image source={shopping} {...props} />,
+  'divat-ruha': () => <Image source={shopping} {...props} />,
+  'haztartas-es-kert': () => <Image source={household} {...props} />,
+  'haztartas-kert': () => <Image source={household} {...props} />,
+  'baba-mama': () => <Image source={child} {...props} />,
+  'star-filled': () => <Image source={starFilled} {...props} />,
+  profilePicPlaceholder: () => <Image source={profilePic} {...props} />,
 });
 
 export type ImageName = keyof ReturnType<typeof images>;
 
-export const ImageComponent: React.FC<Props> = ({ name, style }) => {
-  return images(style)[name]();
+export const ImageComponent: React.FC<ImageComponentProps> = ({
+  name,
+  ...props
+}) => {
+  return images(props)[name]();
 };

@@ -3,7 +3,7 @@ import {
   LoginUserMutation,
   LoginUserMutationVariables,
 } from '../types/LoginUserMutation';
-import { LOGIN_USER } from './useLogin';
+import { LOGIN_USER } from './loginMutations';
 import { useLoginState } from './useLoginState';
 
 export const useLoginWithEmailAndPassword = () => {

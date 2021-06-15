@@ -1,33 +1,38 @@
+import { useReactiveVar } from '@apollo/client';
 import * as React from 'react';
-import { StyleSheet, View, SafeAreaView } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 
+import { useAdsByIds } from '../../apollo/ad/useAdsByIds';
+import { useFavoriteAds } from '../../apollo/ad/useFavoriteAds';
+import {
+  isLoggedInVar,
+  asyncFavoritesVar,
+} from '../../apollo/reactiveVariables';
 import { useCurrentUser } from '../../apollo/user/useCurrentUser';
-import { Fetching } from '../../components/Fetching';
-import { HeaderContentComponent } from '../../components/Header/HeaderContentComponent';
-import { Text } from '../../components/themed/Text';
-import { ListFavorites } from './ListFavorites';
+import { FavoritesComponent } from './FavoritesComponent';
 
 export const FavoritesScreen: React.FC<{}> = () => {
-  const { data: user, loading } = useCurrentUser();
+  const asyncFavorites = useReactiveVar(asyncFavoritesVar);
 
-  if (loading) {
-    return <Fetching />;
-  }
+  const { data: user } = useCurrentUser();
+  const { data: favoriteAds } = useFavoriteAds();
+
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
+  const { data: adsByIds } = useAdsByIds({
+    ids: asyncFavorites || [],
+  });
+
   return (
     <SafeAreaView style={styles.container}>
-      {!user ? (
-        <HeaderContentComponent />
-      ) : user.currentUser.favorites?.length !== 0 ? (
-        <ListFavorites
-          ads={user.currentUser.favorites || []}
-          loading
-          user={user.currentUser}
-        />
-      ) : (
-        <View style={styles.noFavorite}>
-          <Text>Nincs mentett hirdetes</Text>
-        </View>
-      )}
+      <FavoritesComponent
+        loading
+        user={user?.currentUser}
+        ads={
+          isLoggedIn
+            ? favoriteAds?.findFavoriteAdsByUser
+            : adsByIds?.findAdsByIds
+        }
+      />
     </SafeAreaView>
   );
 };
@@ -35,10 +40,5 @@ export const FavoritesScreen: React.FC<{}> = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  noFavorite: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });

@@ -1,3 +1,4 @@
+import { useReactiveVar } from '@apollo/client';
 import * as React from 'react';
 import { useState } from 'react';
 import {
@@ -14,14 +15,22 @@ import {
 import { CustomAnimation, Animation } from 'react-native-animatable';
 import Modal from 'react-native-modal';
 
+import { uiStateVar } from '../../apollo/reactiveVariables';
 import { hideModal } from '../../apollo/ui/modalMutations';
-import { useUiStateQuery } from '../../apollo/ui/useUIStateQuery';
 import { ModalHeader } from '../../components/ModalHeader/ModalHeader';
+import { DeleteModal } from '../../modals/delete/DeleteModal';
+import { ListTypeModal } from '../../modals/list-type/ListTypeModal';
+import { LocationModal } from '../../modals/location/LocationModal';
 import { LoginModal } from '../../modals/login/LoginModal';
+import { OperationsModal } from '../../modals/operations/OperationsModal';
+import { SortModal } from '../../modals/sort/SortModal';
 import {
   ModalCommonProps,
   LoginModalParams,
   ModalName,
+  LocationModalParams,
+  OperationsModalParams,
+  DeleteModalParams,
 } from '../../modals/types';
 
 type ModalsMap = (props: ModalCommonProps) => ModalsObject;
@@ -42,6 +51,15 @@ interface Props {
 const modals: ModalsMap = (props: ModalCommonProps) => ({
   none: () => null,
   login: (params?: LoginModalParams) => <LoginModal {...props} {...params} />,
+  sort: () => <SortModal {...props} />,
+  location: (params: LocationModalParams) => (
+    <LocationModal {...props} {...params} />
+  ),
+  listType: () => <ListTypeModal {...props} />,
+  operations: (params: OperationsModalParams) => (
+    <OperationsModal {...props} {...params} />
+  ),
+  delete: (params: DeleteModalParams) => <DeleteModal {...props} {...params} />,
 });
 
 export const UIStateComponent: React.FC<Props> = ({
@@ -50,13 +68,11 @@ export const UIStateComponent: React.FC<Props> = ({
   animationOut,
   safeContainerStyle,
 }) => {
-  const { data: uiStateData } = useUiStateQuery();
+  const uiStateData = useReactiveVar(uiStateVar);
 
   const [title, setTitle] = useState('');
 
-  const { activeModal } = uiStateData!.uiState!;
-  const { isLoading } = uiStateData!.uiState;
-  const { activeAlert } = uiStateData!.uiState;
+  const { activeModal, isLoading, activeAlert } = uiStateData;
 
   const existsActiveModal = activeModal.name !== 'none';
 
@@ -97,6 +113,7 @@ export const UIStateComponent: React.FC<Props> = ({
       deviceWidth={getDeviceWidth()}
       supportedOrientations={['portrait']}
       backdropTransitionOutTiming={0}
+      propagateSwipe
     >
       {(isLoading || activeAlert) && (
         <SafeAreaView style={styles.loading}>
@@ -118,7 +135,7 @@ export const UIStateComponent: React.FC<Props> = ({
               <View style={styles.disabledActiveModal} />
             )}
             <ModalHeader title={title} close={_hideModal} />
-            {modals({ setTitle, hideModal })[activeModal.name](
+            {modals({ setTitle, hideModal: _hideModal })[activeModal.name](
               activeModal.params
             )}
           </SafeAreaView>

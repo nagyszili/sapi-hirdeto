@@ -1,8 +1,14 @@
+import { useReactiveVar } from '@apollo/client';
 import * as React from 'react';
 import { useState } from 'react';
 import { StyleSheet, Pressable, StyleProp, ViewStyle } from 'react-native';
 
+import { addToAsyncFavorites } from '../../apollo/ad/addToAsyncFavorites';
 import { useAddToFavorites } from '../../apollo/ad/useAddToFavorites';
+import {
+  isLoggedInVar,
+  asyncFavoritesVar,
+} from '../../apollo/reactiveVariables';
 import { CurrentUser_currentUser } from '../../apollo/types/CurrentUser';
 import { Icon } from '../../utils/icons';
 import { blackColor, primaryColor } from '../../utils/theme/colors';
@@ -14,34 +20,39 @@ interface Props {
 }
 
 export const AddFavoriteButton: React.FC<Props> = ({ user, adId, style }) => {
-  const [addToFavorites] = useAddToFavorites();
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
+  const asyncFavorites = useReactiveVar(asyncFavoritesVar);
 
-  const isFavorite = () => !!user?.favorites?.find((fav) => fav.id === adId);
+  const isFavorite = () => {
+    if (isLoggedIn && user) {
+      return user.favorites?.some((fav) => fav === adId) || false;
+    }
+    return asyncFavorites.some((fav) => fav === adId) || false;
+  };
 
-  const [favorite, setFavorite] = useState(isFavorite());
+  const [favorite, setFavorite] = useState<boolean>(false);
+
+  const [addToFavorites] = useAddToFavorites(setFavorite);
 
   React.useEffect(() => {
     setFavorite(isFavorite());
-  }, [user]);
+  }, [user, isLoggedIn, asyncFavorites]);
+
+  const onPress = () => {
+    setFavorite((oldValue) => !oldValue);
+
+    if (isLoggedIn && user?.id) {
+      addToFavorites({
+        variables: { adId },
+      });
+    } else {
+      addToAsyncFavorites(adId);
+    }
+  };
 
   return (
-    <Pressable
-      style={[styles.starIcon, style]}
-      onPress={() => {
-        setFavorite((oldValue) => !oldValue);
-
-        try {
-          addToFavorites({
-            variables: { adId },
-          });
-        } catch (error) {
-          setFavorite((oldValue) => !oldValue);
-          console.error(error);
-        }
-      }}
-    >
+    <Pressable style={[styles.starIcon, style]} onPress={onPress}>
       {favorite ? (
-        // <ImageComponent name="star-filled" style={styles.starFilled} />
         <Icon name="star-empty" size={24} color={primaryColor} />
       ) : (
         <Icon name="star-empty" size={24} color={blackColor} />

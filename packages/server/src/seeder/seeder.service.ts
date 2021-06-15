@@ -19,6 +19,9 @@ import * as locations from '../../assets/locations.json';
 import { CURRENCY, ATTRIBUTE_TYPES } from 'src/util/constants';
 import { AttributeValueModel } from 'src/attribute-value/attribute-value.schema';
 import { AdMock } from './mock-data/ad.mock';
+import { initializationAndRunCars } from './mock-data/data-files/CarMocker';
+import { initializationAndRunAccomendations } from './mock-data/data-files/AccomendationMocker';
+import { initializationAndRunProperties } from './mock-data/data-files/PropertyMocker';
 
 @Injectable()
 export class SeederService {
@@ -55,16 +58,19 @@ export class SeederService {
 
   async seedAds(): Promise<void> {
     const users = await this.userModel.find().exec();
-    const categories = await this.categoryModel.find().exec();
-    const countLocations = await this.locationModel.estimatedDocumentCount();
 
     console.log('Seeding ads');
     await this.seedAdsFromMock(users);
+  }
 
+  private async seedRandomAds(users: UserModel[]): Promise<void> {
+    const categories = await this.categoryModel.find().exec();
+    const countLocations = await this.locationModel.estimatedDocumentCount();
     categories.forEach(async (category) => {
       for (let i = 0; i < 1000; i++) {
         const randomUser = users[Math.floor(Math.random() * users.length)];
         const createdAt = this.randomDate(new Date(2020, 0, 1), new Date());
+        const actualizedAt = new Date();
         const location = await this.locationModel
           .find()
           .limit(-1)
@@ -122,6 +128,7 @@ export class SeederService {
           randomUser,
           category,
           createdAt,
+          actualizedAt,
           location[0],
           currency,
           attributeValues,
@@ -131,7 +138,15 @@ export class SeederService {
   }
 
   private async seedAdsFromMock(users: UserModel[]): Promise<void> {
-    AdMock.forEach(async (ad) => {
+    const accomendations = initializationAndRunAccomendations(10, locations);
+    const cars = initializationAndRunCars(10, locations);
+    const properties = initializationAndRunProperties(10, locations);
+
+    AdMock.push(...accomendations);
+    AdMock.push(...cars);
+    AdMock.push(...properties);
+
+    AdMock?.forEach(async (ad) => {
       const randomUser = users[Math.floor(Math.random() * users.length)];
       const newAd = new this.adModel(ad);
       const categories = await this.categoryModel.find().exec();
@@ -150,6 +165,7 @@ export class SeederService {
     user: UserModel,
     category: CategoryModel,
     createdAt: Date,
+    actualizedAt: Date,
     location: LocationModel,
     currency: string,
     attributeValues: AttributeValueModel[],
@@ -162,6 +178,7 @@ export class SeederService {
       name + ',\n ' + name + ',\n ' + name + ',\n' + name + ',\n ' + name;
     newAd.user = user;
     newAd.createdAt = createdAt;
+    newAd.actualizedAt = new Date();
     newAd.views = randomViews;
     newAd.identifier = generateIdentifier();
     newAd.category = new ObjectId(category.id);

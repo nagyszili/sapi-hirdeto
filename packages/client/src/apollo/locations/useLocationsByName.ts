@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useLazyQuery } from '@apollo/client';
 
 import {
   LocationsByName,
@@ -6,17 +6,16 @@ import {
 } from '../types/LocationsByName';
 
 export const FIND_LOCATIONS_BY_NAME = gql`
-  query LocationsByName($name: String!) {
-    findLocationsByName(name: $name) {
+  query LocationsByName($name: String!, $limit: Int!) {
+    findLocationsByName(name: $name, limit: $limit) {
       name
       county
-      longitude
-      latitude
+      type
     }
   }
 `;
 
-export const useLocationsByName = (variables: LocationsByNameVariables) =>
-  useQuery<LocationsByName, LocationsByNameVariables>(FIND_LOCATIONS_BY_NAME, {
-    variables,
-  });
+export const useLocationsByName = () =>
+  useLazyQuery<LocationsByName, LocationsByNameVariables>(
+    FIND_LOCATIONS_BY_NAME
+  );

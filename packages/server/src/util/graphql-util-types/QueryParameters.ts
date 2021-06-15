@@ -1,6 +1,6 @@
 import { ArgsType, Field, Int } from '@nestjs/graphql';
-import { LocationInput } from 'src/location/location.input';
 import { Filter } from './Filter';
+import { LocationQueryInput } from 'src/location/location-query.input';
 
 @ArgsType()
 export class QueryParameters {
@@ -28,11 +28,14 @@ export class QueryParameters {
   @Field(() => String, { nullable: true })
   mainCategoryIdentifier?: string;
 
-  @Field(() => LocationInput, { nullable: true })
-  location?: LocationInput;
+  @Field(() => LocationQueryInput, { nullable: true })
+  location?: LocationQueryInput;
 
   @Field(() => String)
   currency: string;
+
+  @Field(() => String, { nullable: true })
+  creatorId?: string;
 
   @Field(() => [Filter], { nullable: true })
   filters?: Filter[];

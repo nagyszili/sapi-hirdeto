@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
+} from 'react-native';
 
 import attributeLabels from '../../../assets/texts/attributes.json';
 import {
@@ -8,18 +14,23 @@ import {
 } from '../../apollo/types/CategoriesByMainCategoryIdentifier';
 import { Filter } from '../../apollo/types/graphql-global-types';
 import { ATTRIBUTE_TYPES } from '../../utils/constants';
+import { maxContentWidth } from '../../utils/theme/layout';
 import { MultiSelectFilter } from './MultiSelectFilter';
-import { RangeFilter } from './RangeFilter';
+import { RangeFilter } from './Range';
 import { SelectFilter } from './SelectFilter';
 
 interface Props {
   filters?: Filter[];
   selectedCategory: CategoriesByMainCategoryIdentifier_findCategoriesByMainCategoryIdentifier;
+  filterStyle?: StyleProp<ViewStyle>;
+  labelStyle?: StyleProp<TextStyle>;
 }
 
 export const FiltersContainer: React.FC<Props> = ({
   filters,
   selectedCategory,
+  filterStyle,
+  labelStyle,
 }) => {
   const getAttributeLabel = (title: string) =>
     attributeLabels[title as keyof typeof attributeLabels];
@@ -53,10 +64,14 @@ export const FiltersContainer: React.FC<Props> = ({
       <View style={styles.filters}>
         {selectedCategory.attributes &&
           selectedCategory.attributes.map((attribute, key) => (
-            <View key={key} style={[styles.filter, { zIndex: 98 - key }]}>
+            <View
+              key={key}
+              style={[styles.filter, filterStyle, { zIndex: 98 - key }]}
+            >
               {attribute.type === ATTRIBUTE_TYPES.RANGE ? (
                 <RangeFilter
                   label={getAttributeLabel(attribute.title)}
+                  labelStyle={labelStyle}
                   filters={filters}
                   title={attribute.title}
                 />
@@ -64,12 +79,14 @@ export const FiltersContainer: React.FC<Props> = ({
                 <MultiSelectFilter
                   label={getAttributeLabel(attribute.title)}
                   elements={getElements(attribute)}
+                  labelStyle={labelStyle}
                   filters={filters}
                   title={attribute.title}
                 />
               ) : attribute.type === ATTRIBUTE_TYPES.SELECT ? (
                 <SelectFilter
                   label={getAttributeLabel(attribute.title)}
+                  labelStyle={labelStyle}
                   elements={attribute.possibleValues[0].values}
                   filters={filters}
                   title={attribute.title}
@@ -86,18 +103,15 @@ export const FiltersContainer: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     alignItems: 'center',
   },
   filters: {
     alignItems: 'center',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    maxWidth: 1200,
+    maxWidth: maxContentWidth,
   },
   filter: {
-    marginVertical: 8,
-    marginRight: 16,
-    width: 270,
+    width: '100%',
   },
 });

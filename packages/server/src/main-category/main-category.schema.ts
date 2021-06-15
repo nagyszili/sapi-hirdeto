@@ -10,6 +10,5 @@ export class MainCategoryModel extends Document {
   name: string;
 }
 
-export const MainCategorySchema = SchemaFactory.createForClass(
-  MainCategoryModel,
-);
+export const MainCategorySchema =
+  SchemaFactory.createForClass(MainCategoryModel);

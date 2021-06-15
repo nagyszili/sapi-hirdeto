@@ -7,6 +7,7 @@ import {
   AdByIdentifier_findAdByIdentifier_attributeValues,
 } from '../../apollo/types/AdByIdentifier';
 import { Filter } from '../../apollo/types/graphql-global-types';
+import { useComponentSize } from '../../hooks/useComponentSize';
 import { attributeName } from '../../utils';
 import { ATTRIBUTE_TYPES } from '../../utils/constants';
 import * as Color from '../../utils/theme/colors';
@@ -19,6 +20,7 @@ interface Props {
 
 export const AdAttributeTable: React.FC<Props> = ({ ad }) => {
   const navigation = useNavigation();
+  const screenSize = useComponentSize();
 
   const getFilter = (
     attribute: AdByIdentifier_findAdByIdentifier_attributeValues
@@ -32,7 +34,7 @@ export const AdAttributeTable: React.FC<Props> = ({ ad }) => {
         name: attr.title,
         selectedAttributeValues: [attribute.value],
       };
-      return filter;
+      return [filter];
     }
   };
 
@@ -57,11 +59,25 @@ export const AdAttributeTable: React.FC<Props> = ({ ad }) => {
               disabled={!getFilter(attribute)}
               disableHover={!getFilter(attribute)}
               onPress={() =>
-                navigation.navigate('AdsScreen', {
-                  categoryIdentifier: ad.category.identifier,
-                  mainCategoryIdentifier: ad.category.mainCategory.identifier,
-                  filters: getFilter(attribute),
-                })
+                screenSize === 'large'
+                  ? navigation.navigate('AdsScreen', {
+                      categoryIdentifier: ad.category.identifier,
+                      mainCategoryIdentifier:
+                        ad.category.mainCategory.identifier,
+                      filters: getFilter(attribute),
+                    })
+                  : navigation.navigate('Main', {
+                      screen: 'Home',
+                      params: {
+                        screen: 'AdsScreen',
+                        params: {
+                          categoryIdentifier: ad.category.identifier,
+                          mainCategoryIdentifier:
+                            ad.category.mainCategory.identifier,
+                          filters: getFilter(attribute),
+                        },
+                      },
+                    })
               }
               style={styles.attributeValue}
               semiBold

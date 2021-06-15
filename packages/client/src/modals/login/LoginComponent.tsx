@@ -1,16 +1,18 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { SocialIcon } from 'react-native-elements';
 
 import texts from '../../../assets/texts/texts.json';
 import { useLoginWithEmailAndPassword } from '../../apollo/user/useLoginWithEmailAndPassword';
+import { useSignUpWithFacebook } from '../../apollo/user/useSignUpWithFacebook';
+import { useSignUpWithGoogle } from '../../apollo/user/useSignUpWithGoogle';
 import { Button } from '../../components/Buttons/Button';
 import { CheckBoxComponent } from '../../components/CheckboxComponent';
 import { TextInput } from '../../components/TextInput/TextInput';
 import { HoverText } from '../../components/themed/HoverText';
 import { Text } from '../../components/themed/Text';
 import { getErrorMessage } from '../../utils/errors';
+import { Icon } from '../../utils/icons';
 import { ImageComponent } from '../../utils/images';
 import * as Color from '../../utils/theme/colors';
 import {
@@ -22,11 +24,13 @@ import {
 interface Props {
   setTitle: (title: string) => void;
   switchLoginRegister: () => void;
+  hideModal?: () => void;
 }
 
 export const LoginComponent: React.FC<Props> = ({
   setTitle,
   switchLoginRegister,
+  hideModal,
 }) => {
   const emailRef = useRef<any>();
   const passwordRef = useRef<any>();
@@ -35,7 +39,11 @@ export const LoginComponent: React.FC<Props> = ({
 
   const { loginWithEmailAndPassword } = useLoginWithEmailAndPassword();
 
-  React.useEffect(() => {
+  const { signUpWithGoogle } = useSignUpWithGoogle();
+
+  const { signUpWithFacebook } = useSignUpWithFacebook();
+
+  React.useLayoutEffect(() => {
     setTitle(texts['signIn']);
   }, []);
 
@@ -46,6 +54,8 @@ export const LoginComponent: React.FC<Props> = ({
       const { error } = await loginWithEmailAndPassword(email, password);
       if (error) {
         emailRef.current.showError(getErrorMessage(error));
+      } else {
+        hideModal && hideModal();
       }
     } else {
       emailRef.current.showError();
@@ -60,7 +70,13 @@ export const LoginComponent: React.FC<Props> = ({
           <Text style={styles.label} regular greyDark>
             {texts['emailAddress']}
           </Text>
-          <TextInput ref={emailRef} errorMessage={emailErrorMessage} />
+          <TextInput
+            ref={emailRef}
+            errorMessage={emailErrorMessage}
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
         </View>
         <View style={styles.labelInputGroup}>
           <View style={styles.passwordLabelContainer}>
@@ -68,9 +84,11 @@ export const LoginComponent: React.FC<Props> = ({
               {texts['password']}
             </Text>
 
-            <HoverText style={styles.forgotPasswordLabel} onPress={() => {}}>
-              {texts['forgotPassword']}
-            </HoverText>
+            {false && (
+              <HoverText style={styles.forgotPasswordLabel} onPress={() => {}}>
+                {texts['forgotPassword']}
+              </HoverText>
+            )}
           </View>
 
           <TextInput
@@ -78,19 +96,23 @@ export const LoginComponent: React.FC<Props> = ({
             secureTextEntry
             onSubmitEditing={login}
             errorMessage={passwordErrorMessage}
+            textContentType="password"
+            autoCapitalize="none"
           />
         </View>
-        <View style={styles.rememberContainer}>
-          <CheckBoxComponent
-            title={
-              <Text style={styles.rememberLabel} regular greyDark>
-                {texts['rememberMe']}
-              </Text>
-            }
-            onSelect={() => setRemember((oldValue) => !oldValue)}
-            selected={remember}
-          />
-        </View>
+        {false && (
+          <View style={styles.rememberContainer}>
+            <CheckBoxComponent
+              title={
+                <Text style={styles.rememberLabel} regular greyDark>
+                  {texts['rememberMe']}
+                </Text>
+              }
+              onSelect={() => setRemember((oldValue) => !oldValue)}
+              selected={remember}
+            />
+          </View>
+        )}
 
         <Button style={styles.button} onPress={login}>
           <Text style={styles.buttonText} semiBold white>
@@ -103,13 +125,12 @@ export const LoginComponent: React.FC<Props> = ({
         <Button
           style={styles.fbButton}
           hoverStyle={styles.fbHover}
-          onPress={() => {}}
+          onPress={() => signUpWithFacebook()}
         >
-          <SocialIcon
-            iconSize={20}
-            raised={false}
+          <Icon
+            name="facebook"
             style={styles.fbIcon}
-            type="facebook"
+            color={Color.whiteColor}
           />
           <Text style={styles.buttonText} semiBold white>
             {texts['facebookLogin']}
@@ -119,7 +140,7 @@ export const LoginComponent: React.FC<Props> = ({
         <Button
           style={styles.googleButton}
           hoverStyle={styles.googleHover}
-          onPress={() => {}}
+          onPress={() => signUpWithGoogle()}
         >
           <View style={styles.googleIconContainer}>
             <ImageComponent name="google" style={styles.googleIcon} />
@@ -145,7 +166,7 @@ export const LoginComponent: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Color.whiteColor,
     paddingHorizontal: 50,
     alignItems: 'flex-start',
     marginBottom: 20,
@@ -191,10 +212,6 @@ const styles = StyleSheet.create({
   fbIcon: {
     position: 'absolute',
     left: 18,
-    width: 0,
-    height: 0,
-    backgroundColor: 'transparent',
-    shadowColor: 'transparent',
   },
   googleIconContainer: {
     position: 'absolute',
@@ -220,6 +237,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: '100%',
+    marginTop: 20,
   },
   buttonText: {
     fontSize: 15,

@@ -6,12 +6,7 @@ import {
   TextProps as DefaultTextProps,
 } from 'react-native';
 
-import {
-  whiteColor,
-  blackColor,
-  greyDarkColor,
-  greyMediumColor,
-} from '../../utils/theme/colors';
+import * as Color from '../../utils/theme/colors';
 
 interface FontWeight {
   regular?: boolean;
@@ -37,6 +32,7 @@ interface FontColor {
   black?: boolean;
   greyMedium?: boolean;
   greyDark?: boolean;
+  errorColor?: boolean;
 }
 
 interface TextTransform {
@@ -113,15 +109,18 @@ export const styles = StyleSheet.create({
     textTransform: 'capitalize',
   },
   white: {
-    color: whiteColor,
+    color: Color.whiteColor,
   },
   black: {
-    color: blackColor,
+    color: Color.blackColor,
   },
   greyMedium: {
-    color: greyMediumColor,
+    color: Color.greyMediumColor,
   },
   greyDark: {
-    color: greyDarkColor,
+    color: Color.greyDarkColor,
+  },
+  errorColor: {
+    color: Color.errorColor,
   },
 });

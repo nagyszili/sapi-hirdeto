@@ -1,0 +1,242 @@
+{
+  "type": ["cabana", "guest_hotel_motel", "house_villa", "acmndbl_apartment"],
+
+  "ad_currency": {
+    "currency": ["euro", "lei"]
+  },
+
+  "ad_negotiable": {
+    "negotiable": [true, false]
+  },
+
+  "cabana": {
+    "service_eqiupment": [
+      "áram",
+      "víz",
+      "melegvíz",
+      "internet / WIFI",
+      "fűtés",
+      "étkezés",
+      "jacuzzi",
+      "dézsa",
+      "szauna",
+      "medence",
+      "grill",
+      "micro",
+      "kályha",
+      "légkondícionálás",
+      "parkolás"
+    ],
+    "ad_title": [
+      "Cabana de inchiriat cu piscina incalzita",
+      "Cabană de închiriat Borzont",
+      "Inchiriez cabana cu ciubar la Munte, com. Baisoara, jud. Cluj",
+      "Lazitàs a Csikszentimrei Büdösfürdön, Szilveszterre is",
+      "Kiadó ház Csikszentimrei Büdösfürdön",
+      "Kiadó Kulcsosház Csikszentimrei Büdösfürdőn"
+    ],
+    "description": [
+      "Cabana Poienita Podeni dispune de urmatoarele facilitati: - 4 dormitoare - 1 living spatios cu semineu - 1 baie cu toate utilitatile - 1 foisor cu gratar si loc pentru ceaun - piscina inchisa (cu lumini ambientale) si incalzita (se poate face baie indiferent de anotimp) + sistem audio piscina - sonorizare audio performanta - sistem karaoke - wi-fi - TV Capacitatea de cazare este de 12 persoane Nu ezitati sa ne contactati. Va stam la dispozitie pentru orice informatie. Cabana este situata la poalele Muntelui Trascau in sat Podeni, comuna Moldovenesti, judetul Cluj, la o distanta de 25 km de Turda, 30 km de Campia-Turzii si 60 km de Cluj-Napoca. Cabana este ideala pentru a petrece cateva zile la munte alaturi de familie sau de prieteni!",
+      "Curtea este amenajată cu terasă acoperită ,loc pentru grătar şi ceaun. Avem bucătărie dotată dar la cerere vă asigurăm şi măncare. Casa de vacanță se află intr-o zona linistita şi ideală pentru relaxare. Ciubărul şi sauna se plătesc separat. Casa are zece camere de două persoane fiecare cu baie proprie şi un living (canapea de două persoane)",
+      "Inchiriez cabana la Munte, com. Baisoara, jud. Cluj pentru a petrece clipe de neuitat in varf de munte, linistit si retras alaturi de cei dragi . Cabana dispune de 5 dormitoare , 3 bai , un living mare, ciubar mare incalzit si acoperit, loc amenajat pentru gratar si ceaun . Pentru mai multe informatii contactatine-ne la telefon",
+      "Kiado takarekos, kulcsos haz a mofettairol hires BUDOSFURDON 1250 m a HARGITA hegyseg deli reszen ozondus levegon 8 max 10 szemely reszere, ahova uj aszfaltut vezet, 15 km re Csikszentkiralytol, Csikszeredatol 22 km re, Csiksomlyòtòl 24 km re, onallo telken a fenyvesek kozott, autoval megkozelitheto szep, csendes helyen! Viz a haz mellett, furdoszoba nincs! Lazitasra, kikapcsolodasra, akar gyogyulasra, piheno szabadsagra is alkalmas, nagyon jo hely! A mofetta kb 5 max 10 percre van! Viz a kozelben! A hazban van, konyha, haloszoba, manzardszoba, eloszoba, villany, huto, , jo nagy terasz etkezesre, kint sutesi lehetoseg, tuzifa biztositva! Ar megeggyezes alapjan lazitasra! Sajnos nem enged Több kèpet feltolteni! Szilveszterre is màr Foglalhatò!",
+      "Kiadó ház Csikszentimrei Büdösfürdön csendes, nyugodt környezetben ahova ùjaszfaltùt vezet. \n A ház tartalmaz két szobát, konyhát, nappalit és fürdő szobát. \n Házban még található Televízió s van internetkapcsolat. Tágas nagy udvar várja a pihenni vágyókat. Az ár megegyezés szerint. Csikszentkirály / Hargita megye",
+      "Kiadó Kulcsosház Csikszentimrei Büdösfürdőn ami tartalmaz két szobát, konyha-nappalit, fürdőszobát. \n A házba vízköpenyes kandalló található padlófűtéssel. Házban még található csócsóasztal s van internetkapcsolat. \n Kint az udvaron található egy filagória s az mellett egy tűzhely. \n 50 méterre található az aszfaltútól így könnyedén meg lehet közelíteni nagyobb hó esetén is. \n Csikszentkirály / Hargita megye"
+    ],
+    "images": [
+      "https://frankfurt.apollo.olxcdn.com/v1/files/u8b5v5wm1vca-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/a4xhtvyqadt1-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/klutlxn16gjk-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/6fuseug88fa21-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/spvc89q3qylm2-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/49ekduww7r0k3-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/owlevihdkaq7-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/3kj3rlrvi4im1-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/ewm1s3dbwtnn3-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/c5mxalexmsrt1-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/8ay5xfyuw5xl1-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/hw1w6255gi522-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/9d028rrk9v9c-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/jue78anb2a3l1-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/lxcsxm8eo3f71-RO/image;s=1000x700",
+      "http://www.hirdetes.ro/termekkepek/248253_lazit224s-a-csikszentimrei-budosfurdon-szilveszterre-is-_sl8k8j_1.jpeg",
+      "http://www.hirdetes.ro/termekkepek/248253_lazit224s-a-csikszentimrei-budosfurdon-szilveszterre-is-_sl8k8j_3.jpg",
+      "http://www.hirdetes.ro/termekkepek/248253_lazit224s-a-csikszentimrei-budosfurdon-szilveszterre-is-_sl8k8j_4.jpg",
+      "http://www.hirdetes.ro/termekkepek/248253_lazit224s-a-csikszentimrei-budosfurdon-szilveszterre-is-_sl8k8j_5.jpg",
+      "http://www.hirdetes.ro/termekkepek/244003_kiado-haz-csikszentimrei-budosfurdon_j1cr9s_1.jpg",
+      "http://www.hirdetes.ro/termekkepek/244003_kiado-haz-csikszentimrei-budosfurdon_j1cr9s_3.jpg",
+      "http://www.hirdetes.ro/termekkepek/244003_kiado-haz-csikszentimrei-budosfurdon_j1cr9s_2.jpg",
+      "http://www.hirdetes.ro/termekkepek/244003_kiado-haz-csikszentimrei-budosfurdon_j1cr9s_5.jpg",
+      "http://www.hirdetes.ro/termekkepek/244002_kiado-kulcsoshaz-csikszentimrei-budosfurdon_c7g5pr_1.jpg",
+      "http://www.hirdetes.ro/termekkepek/244002_kiado-kulcsoshaz-csikszentimrei-budosfurdon_c7g5pr_2.jpg",
+      "http://www.hirdetes.ro/termekkepek/244002_kiado-kulcsoshaz-csikszentimrei-budosfurdon_c7g5pr_5.jpg",
+      "http://www.hirdetes.ro/termekkepek/244002_kiado-kulcsoshaz-csikszentimrei-budosfurdon_c7g5pr_6.jpg"
+    ]
+  },
+
+  "guest_hotel_motel": {
+    "service_eqiupment": [
+      "internet / WIFI",
+      "étkezés",
+      "jacuzzi",
+      "dézsa",
+      "szauna",
+      "medence",
+      "grill",
+      "micro",
+      "kályha",
+      "légkondícionálás",
+      "parkolás"
+    ],
+    "ad_title": [
+      "Inchiriez apartament in regim hotelier",
+      "Regim Hotelier București",
+      "Regim hotelier 3 camere 125",
+      "Kiadó 2 szobás luxus lakás a 4**** BLISS Hotelben az Ó utcában",
+      "Hotel Charles!!! Kiadó APARTMANOK!! Hosszabb illetve Rövidebb távra.",
+      "Petneházy Club Hotel - Adyliget - Főszezoni Üdülési jog kiadó"
+    ],
+    "description": [
+      "Închiriez apartament in regim hotelier format din : dormitor, living, bucatarie, baie si terasa. Este situat in cartierul Buna Ziua nr41 B,Condominiul 'SOPHIA RESIDENCE', bloc M7, scara 2, etajul 1 cu parcare subterana. Bucataria este utilata cu : frigider, cuptor electric, cuptor cu microunde, plita cu inductie, masina spalat vase, masina spalat haine, espressor, fierbator, vesela, tacamuri, etc. \nDormitor: Pat matrimonial mare 180/200 cu saltea memory , dressing, TV LED cu programe prin cablu , internet wireless , prosoape , uscator de par etc. \nLivingul dispune de canapea extensibila, masuta, TV LED. \nAccesul din garaj la apartament este direct prin lift. Dispune de bariere la intrare si camere de securitate instalate in jurul perimetrului.",
+      "Va oferim spre închiriere în regim hotelier un apartament cu 2 camere , complet mobilat si utilat pentru o acomodare cât mai confortabila, fie pe termen scurt ori de durata. \nApartamentul este dotat cu Tv , Wi-fi, cuptor microunde, frigider, masina de spălat, aer condiționat, lenjerii si prosoape spălate si dezinfectate doar in curatatorie profesionala. Prețul difera în funcție de perioada și de numărul de persoane ocupante. \nPreț tranzit : 3-4 ore - 100 RON",
+      "Apartament 3 camere decomandate pe strada Iosiv Cocea nr 12 utilat complet .lângă piața Morita (aproape de Moll ) sau o garsoniera în centru lângă Catedrală",
+      "Kiadó a VI. kerületi Ó utcában (Oktogontól 3 perc), a 4**** BLISS Hotel & Wellness Home-ban egy 2 szobás Luxus ingatlan. \nJó választás lehet Egyedülálló személynek, de akár egy Fiatal Párnak is, akik szeretik a Kényelmet, És A Luxust. \nA lakás egy 4* szálloda 3. emeletén található. Egy hálószoba, amerikai konyhás nappali, fürdőszoba káddal és zuhanyzóval. Gépesített és teljesen bútorozott. \nA szállodában rengeteg kényelmi szolgáltatás van : \nKonditerem: \n- fitness részleg \n- kardio-erősítő gépek\n- funkcionális edzőterem részleg \nWellness Részleg: \n- 17 m hosszú úszómedence \n- jacuzzi \n- finn szauna \n- gőzfürdő \n- szolárium \nPortaszolgálat \nA wellness részleget a helyzetre való tekintettel jelenleg Védettségi Igazolvánnyal, a konditermi részleget Sportegyesületi papírral lehet igénybe venni.",
+      "Hotel Charles!!! Kiadó APARTMANOK!! Hosszabb illetve Rövidebb távra. ÁLLATBARÁT!! A hotelban igénybe vehető: -MOSÓHELYISÉG -ÉTTEREM -TAKARÍTÁS -PARKOLÓ A recepció és a portaszolgálat 0-24-ben üzemel! Bérleti díj: 99.000 Ft-tól 139.000 Ft-ig Rezsi: 40.000 Ft/hó (fix) Kaució: 150.000 Ft Keressenek bizalommal a nap bármely szakában.",
+      "Adyligeti 1 hetes (2021.július vége - aug. eleje), 2 személyes üdülési jogomat kiadom. 7 nap, 7 éjszaka (szombattól szombatig). Ha csak 3-4-5 éjszakára venné igénybe a szállást, az is megoldható, ez esetben a H/K/Sze/Cs éjszaka ára 17.000Ft/szoba/éj, a P/Szo/V éjszaka ára pedig 19.000Ft/szoba/éj. \nA Petneházy Club Hotel főépületében, a 28m2 alapterületű apartman barátságos külsővel és modern, igényes berendezéssel várja a pihenni, feltöltődni vágyókat, kilátással a Budai-hegyekre. \nAz üdülő területén beltéri és kültéri medence, finn és infra szauna ingyenesen használható. Teniszpálya is van, de az fizetős."
+    ],
+    "images": [
+      "https://frankfurt.apollo.olxcdn.com/v1/files/15glamrztgiz-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/fcdb7y3x93tc2-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/2f7cbdaosfqh1-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/8dfyrchqkmhf-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/j7esdlhfd0mx-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/2u15fwmbv08h3-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/o5t5mduopeaq2-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/4orka9sx2yc6-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/8itcnbs1amhf-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/i6i4zljnzu63-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/wz4v99rt2vfg-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/jc0yblkp4mp1-RO/image;s=1032x502;r=270",
+      "https://img.jofogas.hu/hdimages/Kiado_2_szobas_luxus_lakas_a_4_____BLISS_Hotelben_az_O_utcaban_799211959374196.jpg",
+      "https://img.jofogas.hu/hdimages/Kiado_2_szobas_luxus_lakas_a_4_____BLISS_Hotelben_az_O_utcaban_916031959372791.jpg",
+      "https://img.jofogas.hu/hdimages/Kiado_2_szobas_luxus_lakas_a_4_____BLISS_Hotelben_az_O_utcaban_922731959372983.jpg",
+      "https://img.jofogas.hu/hdimages/Kiado_2_szobas_luxus_lakas_a_4_____BLISS_Hotelben_az_O_utcaban_923501959372793.jpg",
+      "https://img.jofogas.hu/hdimages/Kiado_2_szobas_luxus_lakas_a_4_____BLISS_Hotelben_az_O_utcaban_934101959372894.jpg",
+      "https://img.jofogas.hu/hdimages/Hotel_Charles____Kiado_APARTMANOK___Hosszabb_illetve_Rovidebb_tavra__419771952135971.jpg",
+      "https://img.jofogas.hu/hdimages/Hotel_Charles____Kiado_APARTMANOK___Hosszabb_illetve_Rovidebb_tavra__418931952135768.jpg",
+      "https://img.jofogas.hu/hdimages/Hotel_Charles____Kiado_APARTMANOK___Hosszabb_illetve_Rovidebb_tavra__415651952135969.jpg",
+      "https://img.jofogas.hu/hdimages/Hotel_Charles____Kiado_APARTMANOK___Hosszabb_illetve_Rovidebb_tavra__418611952135875.jpg",
+      "https://img.jofogas.hu/hdimages/Hotel_Charles____Kiado_APARTMANOK___Hosszabb_illetve_Rovidebb_tavra__411981952135876.jpg",
+      "https://img.jofogas.hu/hdimages/Petnehazy_Club_Hotel___Adyliget___Foszezoni_Udulesi_jog_kiado_692641904867972.jpg",
+      "https://img.jofogas.hu/hdimages/Petnehazy_Club_Hotel___Adyliget___Foszezoni_Udulesi_jog_kiado_694851904867973.jpg",
+      "https://img.jofogas.hu/hdimages/Petnehazy_Club_Hotel___Adyliget___Foszezoni_Udulesi_jog_kiado_694251904867881.jpg",
+      "https://img.jofogas.hu/hdimages/Petnehazy_Club_Hotel___Adyliget___Foszezoni_Udulesi_jog_kiado_692281904867793.jpg"
+    ]
+  },
+
+  "house_villa": {
+    "service_eqiupment": [
+      "TV",
+      "internet / WIFI",
+      "erkély",
+      "parkoló",
+      "légkondícionálás",
+      "mosogatógép",
+      "mosógép"
+    ],
+    "ad_title": [
+      "Mountain View Villa",
+      "Casa/Villa mobilata/utilata LUX-zona Ghimbav(Brasov)",
+      "Villa Neversea Black Sea",
+      "Siófok szállás, apartman kiadó Rigó Villa",
+      "Kiadó Villa lakás a Pázsit utcában"
+    ],
+    "description": [
+      "Pensiune de inchiriat situata in Busteni care ofera o panorama unica in Romania spre Varful Caraiman. Se poate inchiria integral pentru grupuri de pana la 10-12 persoane, sau in regim hotelier in functie de perioada. Camerele au bai proprii, gratar, protap, living spatios 100 mp, parcare proprie. Detalii la telefon. 0733 892 262",
+      "AS EMPIRE INVEST va propune spre inchiriere casa/vila singur in curte, 3 camere, structura decomandata in zona Ghimbav. Imobilul este compusa din: - demisol (crama) - parter (birou, bucatarie, wc servici, garaj) - etj 1 (living cu bucatarie open-space, 2 dormitoare, baie, terasa, hol) - pod Curte libera 300 mp, amprenta la sol 100 mp, acces auto, garaj acoperit, toate utilitatile. Pretul de inchiriere este: 700 euro/luna + o luna garantie + 50% comision din chiria primei luni ",
+      "Inchiriez Etaj Vila pe perioada Neversea , cat si pe timpul verii in regim hotelier Locatia se afla la 2 minute de plaja Neversea \nEtajul are 70 mp si este alcatuit din \n1 dormitor cu pat matrimonial si plasma \n1 living cu canapea extensibila si plasma \n1 bucatarie complet utilata \n1 baie cu cada , prosoape , papuci, gel de dus \n1 balcon \nScara exterioara prevazuta cu camere si parcare!",
+      "Szeretettel várjuk pihenni vágyó vendégeinket Siófok Ezüstparti szabad strandtól 800 m-re, csendes, nyugodt környezetben lévő szálláshelyünkön.\n Az ingatlan két külön bejáratú apartmannal áll az Önök rendelkezésére. Ideális családok és baráti társaságok részére. Megkeresésüket telefonon várjuk. \nÁr: \nApartman 4 fő részére 24.000 Ft/éj + ifa \nApartman 5 fő részére 30.000 Ft/éj + ifa",
+      "Kiadó a II. kerületben Pasaréten, a Budagyöngye bevásárló közelében a Pázsit utcában egy 82nm-es, 3 szobás, 2 erkélyes, frissen felújított és bútorozott lakást . \nAz ingatlan egy 7 lakásos felújított villa épület első emeletén található. A lakás teljeskörűen felújított, új nyílászárókkal elektromos redőnnyel felszerelt, a konyhabútort is új. Az ingatlan bútorozott, gépesített, klímával felszerelt, fűtése gáz cirkó. Maga az épület is villa teljesen felújították. A lakáshoz tartozik egy beálló, és egy tároló is, ami benne van a bérleti díjban. Remek közlekedés, város központjához közel helyezkedik el . Ára : 540.000 Ft /hó + rezsi"
+    ],
+    "images": [
+      "https://frankfurt.apollo.olxcdn.com/v1/files/y0quhkvnevof2-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/ksuvjpz7iqga1-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/z81dnq13acm13-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/6nsmypjt60ue3-RO/image;s=1000x700",
+      "https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6InJleGttcGN1NHU3ZDEtQVJPIiwidyI6W3siZm4iOiJvMXpjd3JkeHQ2eG4tQVJPIiwicyI6IjE0IiwicCI6IjEwLC0xMCIsImEiOiIwIn1dfQ.DHuxne5BMzM4OhuVCiNDbkhnl1i56l6_yK3u3-eSabM/image;s=1280x1024;q=80",
+      "https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6Ing5bDkzMmFsenlqbS1BUk8iLCJ3IjpbeyJmbiI6Im8xemN3cmR4dDZ4bi1BUk8iLCJzIjoiMTQiLCJwIjoiMTAsLTEwIiwiYSI6IjAifV19._K54AfrPHhdZgxrdITYBWNZ4dr8tiEBjq2asSsnPGuw/image;s=1280x1024;q=80",
+      "https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6InU2MG4yM3h1dzcyZjEtQVJPIiwidyI6W3siZm4iOiJvMXpjd3JkeHQ2eG4tQVJPIiwicyI6IjE0IiwicCI6IjEwLC0xMCIsImEiOiIwIn1dfQ.JoZgnCnUGTrxaUNtFXVwe7zofLH1XuVDuCK8PTAD0AQ/image;s=1280x1024;q=80",
+      "https://ireland.apollo.olxcdn.com/v1/files/eyJmbiI6IjNzNWxiMWsyOXlwdjItQVJPIiwidyI6W3siZm4iOiJvMXpjd3JkeHQ2eG4tQVJPIiwicyI6IjE0IiwicCI6IjEwLC0xMCIsImEiOiIwIn1dfQ.CJ4ctYKpcPukuetfOrnimu5_nG8yaPli7HclBChpRRo/image;s=1280x1024;q=80",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/25k03pct1aig3-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/itgnvgmit9ae1-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/ievm9dyt7g2d-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/iuc9s5shjzbd3-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/70ff3800xqm02-RO/image;s=1000x700",
+      "https://img.jofogas.hu/hdimages/Siofok_szallas__apartman_kiado_Rigo_Villa_115491954965865.jpg",
+      "https://img.jofogas.hu/hdimages/Siofok_szallas__apartman_kiado_Rigo_Villa_189641954965959.jpg",
+      "https://img.jofogas.hu/hdimages/Siofok_szallas__apartman_kiado_Rigo_Villa_614381954966099.jpg",
+      "https://img.jofogas.hu/hdimages/Siofok_szallas__apartman_kiado_Rigo_Villa_157921954966464.jpg",
+      "https://img.jofogas.hu/hdimages/Siofok_szallas__apartman_kiado_Rigo_Villa_597541954966494.jpg",
+      "https://img.jofogas.hu/hdimages/Siofok_szallas__apartman_kiado_Rigo_Villa_408931954966483.jpg",
+      "https://img.jofogas.hu/hdimages/Kiado_Villa_lakas_a_Pazsit_utcaban_516701951787868.jpg",
+      "https://img.jofogas.hu/hdimages/Kiado_Villa_lakas_a_Pazsit_utcaban_529351951787871.jpg",
+      "https://img.jofogas.hu/hdimages/Kiado_Villa_lakas_a_Pazsit_utcaban_523941951787872.jpg",
+      "https://img.jofogas.hu/hdimages/Kiado_Villa_lakas_a_Pazsit_utcaban_526401951787792.jpg"
+    ]
+  },
+  "acmndbl_apartment": {
+    "service_eqiupment": [
+      "TV",
+      "internet / WIFI",
+      "erkély",
+      "parkoló",
+      "légkondícionálás",
+      "mosogatógép",
+      "mosógép"
+    ],
+    "ad_title": [
+      "AMZA Apartments Brasov 2 - Cazare regim hotelier Mall Coresi",
+      "Garsonieră in regim hotelier Brazdă 100RON/zi",
+      "Regim hotelier - studio Mamaia- zona Butoaie",
+      "Wonder Deer Luxury Aptartment at the Parliament contactless check-in",
+      "7Seasons Apartments Budapest",
+      "Vagabond Broadway"
+    ],
+    "description": [
+      "Închiriez apartament decomandat, 2 camere in regim hotelier in complex Coresi Avangarden. Apartamentul este nou și complet mobilat . Va punem la dispoziție toate utilitățile de care aveți nevoie pentru confortul dumneavostra: 2 televizoare Smart Tv, Netflix, mașina de spălat rufe, cuptor , plita, filtru de cafea, prajitor paine și frigider incorporabile , vesela și tacâmuri .\nApartamentul este situat vizavi de Mall Coresi și Belaqva Active Wellness (piscina ,Spa,Fitness ) , de asemenea zona dispune de alee pietonala , parc și pista de bicicletă, situat pe stada Zaharia Stancu 6 F. \nParcare privată. \nAccesul cu animale de companie nu este permis ! \nFumatul este permis doar pe terasa . \nCapacitate 1-4 persoane",
+      "Închiriez garsonieră in regim hotelier 100RON/zi . Garsoniera se află in cartierul Brazdă, la 5 minute distanță de gară și la 5 minute distanță de centrul orașului . În imediata apropiere se află magazinul NON-STOP Rendez-vous . Garsoniera este complet renovată și utilată : -centrală termică, aer condiționat , aragaz , frigider , espressor , cuptor cu microunde, sandwich maker , mașină de spălat , fier de călcat, uscător par , wifi gratuit etc. Pentru un număr mai mare de zile prețul se poate negocia . Mai multe detalii gasiți la numărul 0747608135 . Exclus escorte !!! Exclus petreceri !!! ",
+      "Închiriez studiou în regim hotelier zona Butoaie. \n- Utilat în totalitate \n- Vedere la mare și lac. \n- Capacitate maxima 6 persoane ( pat matrimonial și doua canapele extensibile) \n- Vis a vis de hotel Ambasador \n- Foarte aproape de plaja, cluburi ,restaurante si Barell's.",
+      "A Wonder Deer Luxury Aptartment at the Parliament szálláshelye ingyenes wifivel és városra nyíló kilátással várja vendégeit Budapest szívében, a Szent István-bazilikától alig 1 km-re, a Lánchídtól pedig 12 perces sétára. A Mátyás-templom 2,8 km-re, az Országház pedig 1,9 km-re látogatható.\nAz 1 hálószobás apartmanban mikrohullámú sütővel és hűtőszekrénnyel felszelt konyha, mosógép, 1 zuhanyzós fürdőszoba és műholdas tévé áll rendelkezésre. \nAz apartman közelében található népszerű látnivalók közé tartozik a Magyar Állami Operaház, a Dohány utcai zsinagóga és a Halászbástya is. A legközelebbi reptér a 18 km-re fekvő Budapest Liszt Ferenc Nemzetközi Repülőtér \nVendégeink elfogulatlan értékelései alapján ez Budapest egyik legkedveltebb része. \nOlyan helyen van, hogy a párok kedvence lett! Kétfős utakhoz 9,5 pontra értékelték. \nA szálláson beszélnek magyarul!",
+      "A 7Seasons Apartments szálláshelye 24 órás recepcióval, napi takarítással, valamint tágas, 1-3 szobás apartmanokkal várja vendégeit Budapest szívében, az egyik legnagyobb tömegközlekedési csomóponttól, a Deák Ferenc tértől mindössze 100 méterre. Az apartmanokban ingyenes vezeték nélküli internet-hozzáférés biztosított. Előzetes kérésre és felár ellenében transzferszolgáltatás is rendelkezésre áll.Az apartmanok konyhájában a vendégek maguk is főzhetnek, de a számos környező étterembe vagy bárba, illetve a 24 órás szupermarketbe is ellátogathatnak. A Szent István-bazilika, a Dohány utcai zsinagóga, az Állami Operaház és a Parlament könnyedén megközelíthetők gyalogosan. Vendégeink elfogulatlan értékelései alapján ez Budapest egyik legkedveltebb része. Olyan helyen van, hogy a párok kedvence lett! Kétfős utakhoz 9,7 pontra értékelték. A szálláson beszélnek magyarul!",
+      "A kertes Vagabond Broadway Budapesten, az Állami Operaház, a Dohány utcai zsinagóga és a Szent István-bazilika közelében várja vendégeit. A wifi ingyenes. Az apartmanhotel szállásai síkképernyős TV-vel, valamint ingyenes piperecikkekkel, hajszárítóval és káddal vagy zuhanyzóval ellátott saját fürdőszobával rendelkeznek. Egyes lakóegységekben mosogatógéppel, sütővel, mikrohullámú sütővel és kávéfőzővel felszerelt konyha található. A Magyar Nemzeti Múzeum 14 perces sétára, az Országház pedig 1,5 km-re van. A budapesti Liszt Ferenc nemzetközi repülőtér 17 km-re fekszik. Vendégeink elfogulatlan értékelései alapján ez Budapest egyik legkedveltebb része. Olyan helyen van, hogy a párok kedvence lett! Kétfős utakhoz 9,4 pontra értékelték. A szálláson beszélnek magyarul!"
+    ],
+    "images": [
+      "https://frankfurt.apollo.olxcdn.com/v1/files/cmymgc8ac2mg3-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/95nj8sy7gl103-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/pikiw32l2bn2-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/0oc1sy8jnfko1-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/n9jrcrtmcx9-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/kv1mb5yfjpuf1-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/4zw4evzy6nhm-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/mn1ko96sip392-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/hefnvri7yyws2-RO/image;s=1000x700",
+      "https://frankfurt.apollo.olxcdn.com/v1/files/z4dgxiopyzp81-RO/image;s=1000x700",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/221922323.jpg?k=426c9aea2497efbf21215077121e68f4019695ce3091c4a446e3efc6dbaa9a3e&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/221922949.jpg?k=87aa269dee3d33bc446a3b55dcd6953f26593aa0331d638fed0e418f6d9a6e94&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/221920841.jpg?k=801136f01306b5a7e8256239572d6a1f367f82596991a0102a1d42b447206604&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/147175187.jpg?k=d130911c4c163c1d93e11756a0db946a80c530d9fb55979c34a9b977a58d307f&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/88884569.jpg?k=a7a0792396f395892042fd2e1a4d8e11a657a4d8d6dce2815591333336ca2814&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/87428762.jpg?k=3f7ea7636b2689409ba55ce84f1b3c8921054cbeaebc747a517f1b2caead7a31&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/69585252.jpg?k=489e4e2117d04f1ce851a6e5f1cda7c7dd7af512577d132d113ae75f6553423b&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/252174870.jpg?k=f98062d60600b89726362037495e29a9348d04e8193c342721b5917408c0abe8&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/69585204.jpg?k=781fb019b2760bfcbbc88b38f4988a942397905d1c95a27899541eb7837ba90b&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/87430882.jpg?k=e821409683c285aa52b9b4826167181c48c0826378606e07a3cf343d139c5a2f&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/143370241.jpg?k=3d0b852fbb9b9519c0c1331b4a5249f42bfe52ef4da208087aadcc118bd614af&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/139225589.jpg?k=23944abe91913f1959729d3fad16e021aa2fcd62f78a543f3664b41d44d8e4c2&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/139225618.jpg?k=50a34701e1ff344fd8f232c6230c5aaa64661a2de7cab4232940f1771d2b61f1&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/143370247.jpg?k=3b3971f59652618a24784347dba49cc43f301a27b9764ee0917fa6075e7fd08a&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/139354442.jpg?k=040300986184e8df9fa4f914bf652c2cea709ecae0920c46581cb0d3b8371912&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1024x768/139354058.jpg?k=69bfe8be26232f91963df77df30e61b71b79ced0cc0b742e4096f40c81e5ef8a&o=&hp=1"
+    ]
+  }
+}

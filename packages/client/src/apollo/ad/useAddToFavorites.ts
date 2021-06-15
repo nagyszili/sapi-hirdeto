@@ -1,4 +1,5 @@
 import { gql, useMutation, ApolloError } from '@apollo/client';
+import React from 'react';
 
 import {
   AddToFavorites,
@@ -10,14 +11,14 @@ export const ADD_TO_FAVORITES = gql`
   mutation AddToFavorites($adId: String!) {
     addAdToFavorites(adId: $adId) {
       id
-      favorites {
-        id
-      }
+      favorites
     }
   }
 `;
 
-export const useAddToFavorites = () =>
+export const useAddToFavorites = (
+  setFavorite: React.Dispatch<React.SetStateAction<boolean>>
+) =>
   useMutation<AddToFavorites, AddToFavoritesVariables>(ADD_TO_FAVORITES, {
     onError: (error: ApolloError) => {
       if (error.graphQLErrors[0]?.extensions?.exception.status === 401) {
@@ -25,5 +26,7 @@ export const useAddToFavorites = () =>
       } else {
         alert('Something went wrong!');
       }
+      setFavorite((oldValue) => !oldValue);
     },
+    refetchQueries: ['FavoriteAds'],
   });

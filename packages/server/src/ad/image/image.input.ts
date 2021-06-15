@@ -7,9 +7,6 @@ export class ImageInput {
   @Field(() => Int)
   priority: number;
 
-  @Field()
-  isThumbnail: boolean;
-
   @Field(() => GraphQLUpload)
   image: FileUpload;
 }

@@ -10,43 +10,39 @@ export const MainCategoryMock: MainCategoryInput[] = [
     name: 'Járművek',
   },
   {
-    identifier: 'sport-muveszet',
-    name: 'Sport, művészet',
+    identifier: 'szallas',
+    name: 'Szállás',
   },
   {
-    identifier: 'elektronika',
-    name: 'Elektronikai cikkek',
+    identifier: 'allas',
+    name: 'Állás',
   },
   {
-    identifier: 'haztartas-kert',
-    name: 'Háztartás, kert',
+    identifier: 'muszaki-cikkek-es-elektronika',
+    name: 'Műszaki cikkek és elektronika',
   },
   {
-    identifier: 'divat-ruha',
-    name: 'Divat, ruházat',
+    identifier: 'uzlet-es-szolgaltatas',
+    name: 'Üzlet és szolgáltatás',
   },
   {
-    identifier: 'kabanna',
-    name: 'Kabannák',
+    identifier: 'szabadido-es-sport',
+    name: 'Szabadidő és sport',
   },
   {
-    identifier: 'allatok',
-    name: 'Állatok',
+    identifier: 'mezogazdasag-es-ipar',
+    name: 'Mezőgazdaság és ipar',
   },
   {
-    identifier: 'munkahely',
-    name: 'Munkahely',
-  },
-  {
-    identifier: 'mezogazdasag',
-    name: 'Mező-gazdaság',
+    identifier: 'haztartas-es-kert',
+    name: 'Háztartás és kert',
   },
   {
     identifier: 'baba-mama',
     name: 'Baba-mama',
   },
   {
-    identifier: 'felszereles-szolgaltatas',
-    name: 'Felszerelés, szolgáltatás',
+    identifier: 'divat-ruhazat',
+    name: 'Divat, ruházat',
   },
 ];

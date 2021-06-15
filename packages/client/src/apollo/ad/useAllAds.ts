@@ -12,8 +12,9 @@ export const FIND_ALL_ADS = gql`
     $mainCategoryIdentifier: String
     $categoryIdentifier: String
     $inDescription: Boolean
-    $location: LocationInput
+    $location: LocationQueryInput
     $currency: String!
+    $creatorId: String
     $filters: [Filter!]
   ) {
     findAllAds(
@@ -27,28 +28,27 @@ export const FIND_ALL_ADS = gql`
       inDescription: $inDescription
       location: $location
       currency: $currency
+      creatorId: $creatorId
       filters: $filters
     ) {
       id
       identifier
       name
       price
+      negotiable
+      status
       currency
       description
       createdAt
       updatedAt
       thumbnail
       numberOfImages
+      user {
+        id
+      }
       location {
-        longitude
-        latitude
         name
         county
-      }
-      views
-      attributeValues {
-        key
-        value
       }
     }
   }

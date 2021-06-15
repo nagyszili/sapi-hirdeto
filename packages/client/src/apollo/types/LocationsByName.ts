@@ -8,11 +8,10 @@
 // ====================================================
 
 export interface LocationsByName_findLocationsByName {
-  __typename: "Location";
+  __typename: "LocationQueryType";
   name: string;
-  county: string;
-  longitude: number;
-  latitude: number;
+  county: string | null;
+  type: string;
 }
 
 export interface LocationsByName {
@@ -21,4 +20,5 @@ export interface LocationsByName {
 
 export interface LocationsByNameVariables {
   name: string;
+  limit: number;
 }

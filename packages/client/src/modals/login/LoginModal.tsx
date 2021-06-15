@@ -7,7 +7,11 @@ import { RegisterComponent } from './RegisterComponent';
 
 type Props = ModalCommonProps & LoginModalParams;
 
-export const LoginModal: React.FC<Props> = ({ isRegister, setTitle }) => {
+export const LoginModal: React.FC<Props> = ({
+  isRegister,
+  setTitle,
+  hideModal,
+}) => {
   const [isLogin, setIsLogin] = useState(!isRegister);
 
   const switchLoginRegister = () => {
@@ -16,11 +20,13 @@ export const LoginModal: React.FC<Props> = ({ isRegister, setTitle }) => {
 
   return isLogin ? (
     <LoginComponent
+      hideModal={hideModal}
       setTitle={setTitle}
       switchLoginRegister={switchLoginRegister}
     />
   ) : (
     <RegisterComponent
+      hideModal={hideModal}
       setTitle={setTitle}
       switchLoginRegister={switchLoginRegister}
     />

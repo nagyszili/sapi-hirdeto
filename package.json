@@ -10,6 +10,8 @@
   "scripts": {
     "postinstall": "cd ./packages/client && expo-yarn-workspaces postinstall",
     "lint": "cd ./packages/client && yarn lint && cd ../server && yarn lint",
-    "start": "(cd ./packages/server && yarn dev) && #!/bin/sh\n cd ../client && yarn start"
+    "start": "(cd ./packages/server && yarn dev) && #!/bin/sh\n cd ../client && yarn start",
+    "start:server": "cd ./packages/server && yarn dev",
+    "start:client": "cd ./packages/client && yarn start"
   }
 }

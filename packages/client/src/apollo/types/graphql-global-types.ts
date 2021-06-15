@@ -23,8 +23,13 @@ export interface Filter {
 
 export interface ImageInput {
   priority: number;
-  isThumbnail: boolean;
   image: any;
+}
+
+export interface ImageUpdate {
+  url?: string | null;
+  image?: any | null;
+  priority: number;
 }
 
 export interface LocationInput {
@@ -32,6 +37,12 @@ export interface LocationInput {
   latitude: number;
   name: string;
   county: string;
+}
+
+export interface LocationQueryInput {
+  type: string;
+  name: string;
+  county?: string | null;
 }
 
 //==============================================================

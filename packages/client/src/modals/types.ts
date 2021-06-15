@@ -1,15 +1,35 @@
+import { LocationQueryInput } from '../apollo/types/graphql-global-types';
+
 export interface ModalCommonProps {
   setTitle: (title: string) => void;
   hideModal?: () => void;
 }
 
-export type CommonModalParams = {
-  next?: () => void;
+export type LoginModalParams = { isRegister?: boolean };
+
+export type LocationModalParams = {
+  setLocation: (location?: LocationQueryInput | null) => void;
 };
 
-export type LoginModalParams = { isRegister?: boolean } & CommonModalParams;
+export type OperationsModalParams = {
+  adId: string;
+  userId: string;
+  adIdentifier: string;
+  adName: string;
+};
 
-export type ModalName = 'none' | 'login';
+export type DeleteModalParams = {
+  adId: string;
+  userId: string;
+};
+export type ModalName =
+  | 'none'
+  | 'login'
+  | 'sort'
+  | 'location'
+  | 'listType'
+  | 'operations'
+  | 'delete';
 
 export interface ModalType {
   name: ModalName;

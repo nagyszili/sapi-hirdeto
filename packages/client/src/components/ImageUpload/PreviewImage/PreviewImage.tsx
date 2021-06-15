@@ -9,6 +9,8 @@ export const PreviewImage: React.FC<PreviewImageProps> = ({
   image,
   deleteImage,
   isThumbnail,
+  setThumbnail,
+  rotate,
 }) => {
   return (
     <View style={[styles.imageContainer, isThumbnail && styles.thumbnail]}>
@@ -18,9 +20,17 @@ export const PreviewImage: React.FC<PreviewImageProps> = ({
         resizeMethod="resize"
         resizeMode="cover"
       />
-      <Pressable style={styles.delete} onPress={deleteImage}>
-        <Icon name="delete" color={Color.errorColor} size={18} />
-      </Pressable>
+      <View style={styles.buttonRow}>
+        <Pressable style={[styles.smallButtonContainer]} onPress={rotate}>
+          <Icon name="rotate" color={Color.primaryDarkColor} size={18} />
+        </Pressable>
+        <Pressable style={[styles.smallButtonContainer]} onPress={setThumbnail}>
+          <View style={styles.thumbnailSelector} />
+        </Pressable>
+        <Pressable style={[styles.smallButtonContainer]} onPress={deleteImage}>
+          <Icon name="delete" color={Color.errorColor} size={18} />
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -37,16 +47,32 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  delete: {
+  buttonRow: {
     position: 'absolute',
     top: 10,
-    right: 10,
-    padding: 7,
-    backgroundColor: Color.whiteColor,
-    borderRadius: 100,
+    right: 2,
+    flexDirection: 'row',
   },
   thumbnail: {
     borderColor: Color.primaryDarkColor,
     borderWidth: 2,
+  },
+  thumbnailSelector: {
+    width: 14,
+    height: 14,
+    borderRadius: 3,
+    borderColor: Color.primaryDarkColor,
+    borderWidth: 2,
+  },
+  smallButtonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 32,
+    height: 32,
+    backgroundColor: Color.whiteColor,
+    borderRadius: 100,
+    borderColor: Color.greyColor,
+    borderWidth: 1,
+    marginRight: 8,
   },
 });

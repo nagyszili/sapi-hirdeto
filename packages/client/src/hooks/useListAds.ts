@@ -1,36 +1,79 @@
+import { useReactiveVar } from '@apollo/client';
 import { useRef, useEffect } from 'react';
 
 import { useAllAds } from '../apollo/ad/useAllAds';
 import { useCountAds } from '../apollo/ad/useCountAds';
-import { useActiveCurrency } from '../apollo/filters/useActiveCurrency';
-import { useSortType } from '../apollo/sort/useSortType';
-import { Filter } from '../apollo/types/graphql-global-types';
+import { currencyVar } from '../apollo/reactiveVariables';
+import { SortType } from '../apollo/types';
+import {
+  Filter,
+  LocationQueryInput,
+} from '../apollo/types/graphql-global-types';
+import { useComponentSize } from './useComponentSize';
 
-export const useListAds = (
-  adsPerPage: number,
-  categoryIdentifier?: string,
-  mainCategoryIdentifier?: string,
-  queryString?: string,
-  inDescription?: boolean,
-  filters?: Filter[],
-  page?: number
-) => {
-  const { data: currency } = useActiveCurrency();
-  const { data: sort } = useSortType();
+interface Props {
+  adsPerPage: number;
+  categoryIdentifier?: string;
+  mainCategoryIdentifier?: string;
+  queryString?: string;
+  inDescription?: boolean;
+  filters?: Filter[];
+  location?: LocationQueryInput | null;
+  creatorId?: string | null;
+  sort?: SortType;
+  currency?: string;
+}
 
-  const pageRef = useRef(page || 0);
+export const useListAds = ({
+  adsPerPage,
+  categoryIdentifier,
+  mainCategoryIdentifier,
+  queryString,
+  inDescription,
+  filters,
+  location,
+  creatorId,
+  sort,
+  currency,
+}: Props) => {
+  const activeCurrency = useReactiveVar(currencyVar);
 
-  const { data: ads, loading: loadingAds, fetchMore, refetch } = useAllAds({
+  const size = useComponentSize();
+
+  const pageRef = useRef(0);
+
+  useEffect(() => {
+    pageRef.current = 0;
+    refetchAds();
+  }, [
+    creatorId,
+    queryString,
+    mainCategoryIdentifier,
+    categoryIdentifier,
+    filters,
+    inDescription,
+    sort,
+    location,
+    size,
+  ]);
+  const {
+    data: ads,
+    loading: loadingAds,
+    fetchMore,
+    refetch,
+  } = useAllAds({
     categoryIdentifier:
       categoryIdentifier === 'all' ? null : categoryIdentifier,
     mainCategoryIdentifier,
     queryString,
-    inDescription,
-    sortField: sort?.sortType.sortField,
-    sortOrder: sort?.sortType.sortOrder,
+    inDescription: !!inDescription,
+    sortField: sort?.sortField,
+    sortOrder: sort?.sortOrder,
     page: pageRef.current,
     perPage: adsPerPage,
-    currency: currency!.currency,
+    creatorId: creatorId || null,
+    currency: currency || activeCurrency,
+    location,
     filters,
   });
 
@@ -40,31 +83,24 @@ export const useListAds = (
     mainCategoryIdentifier,
     queryString,
     inDescription,
-    currency: currency!.currency,
+    currency: currency || activeCurrency,
+    location,
+    creatorId,
     filters,
   });
 
   useEffect(() => {
-    pageRef.current = 0;
-  }, [
-    queryString,
-    mainCategoryIdentifier,
-    categoryIdentifier,
-    filters,
-    inDescription,
-  ]);
-
-  useEffect(() => {
-    refetchAds(pageRef.current);
-  }, [currency!.currency]);
+    !currency && refetchAds(pageRef.current);
+  }, [activeCurrency]);
 
   const fetchMoreAds = () => {
     pageRef.current = pageRef.current + 1;
-    fetchMore({
-      variables: {
-        page: pageRef.current,
-      },
-    });
+    fetchMore &&
+      fetchMore({
+        variables: {
+          page: pageRef.current,
+        },
+      });
   };
 
   const refetchAds = (page = 0, perPage = adsPerPage) => {

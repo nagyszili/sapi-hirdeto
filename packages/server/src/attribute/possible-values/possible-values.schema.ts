@@ -10,6 +10,5 @@ export class PossibleValuesModel extends Document {
   values: string[];
 }
 
-export const PossibleValuesSchema = SchemaFactory.createForClass(
-  PossibleValuesModel,
-);
+export const PossibleValuesSchema =
+  SchemaFactory.createForClass(PossibleValuesModel);

@@ -10,8 +10,10 @@
 export interface UpdateCurrentUser_updateCurrentUser {
   __typename: "User";
   id: string;
+  email: string;
   name: string;
   phoneNumber: string | null;
+  profilePictureUrl: string | null;
 }
 
 export interface UpdateCurrentUser {
@@ -19,6 +21,8 @@ export interface UpdateCurrentUser {
 }
 
 export interface UpdateCurrentUserVariables {
+  email?: string | null;
   name?: string | null;
   phoneNumber?: string | null;
+  profilePicture?: any | null;
 }

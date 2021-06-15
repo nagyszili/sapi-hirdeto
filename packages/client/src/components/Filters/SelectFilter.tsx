@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { ViewStyle, View, StyleProp } from 'react-native';
+import { ViewStyle, View, StyleProp, TextStyle } from 'react-native';
 
 import texts from '../../../assets/texts/texts.json';
 import { Filter } from '../../apollo/types/graphql-global-types';
 import { getFiltersAfterRemove, addSelectFilter } from '../../utils';
-import { SelectInput } from './Select/SelectInput';
+import { SelectInput } from './Select';
 
 interface Props {
   elements: string[];
@@ -13,6 +13,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   title: string;
   label?: string;
+  labelStyle?: StyleProp<TextStyle>;
 }
 
 export const SelectFilter: React.FC<Props> = ({
@@ -21,12 +22,13 @@ export const SelectFilter: React.FC<Props> = ({
   style,
   title,
   label,
+  labelStyle,
 }) => {
   const navigation = useNavigation();
   const filter = filters && filters.find((filter) => filter.name === title);
 
   const allElement = [{ label: texts['all'], value: '' }].concat(
-    elements.map((element, key) => ({
+    elements.map((element) => ({
       label: element,
       value: element,
     }))
@@ -52,6 +54,7 @@ export const SelectFilter: React.FC<Props> = ({
   return (
     <View style={style}>
       <SelectInput
+        labelStyle={labelStyle}
         label={label}
         elements={allElement}
         setSelectedElement={setSelectedElement}

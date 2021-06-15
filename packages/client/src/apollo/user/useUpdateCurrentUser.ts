@@ -6,16 +6,29 @@ import {
 } from '../types/UpdateCurrentUser';
 
 export const UPDATE_CURRENT_USER = gql`
-  mutation UpdateCurrentUser($name: String, $phoneNumber: String) {
-    updateCurrentUser(name: $name, phoneNumber: $phoneNumber) {
+  mutation UpdateCurrentUser(
+    $email: String
+    $name: String
+    $phoneNumber: String
+    $profilePicture: Upload
+  ) {
+    updateCurrentUser(
+      email: $email
+      name: $name
+      phoneNumber: $phoneNumber
+      profilePicture: $profilePicture
+    ) {
       id
+      email
       name
       phoneNumber
+      profilePictureUrl
     }
   }
 `;
 
 export const useUpdateCurrentUser = () =>
   useMutation<UpdateCurrentUser, UpdateCurrentUserVariables>(
-    UPDATE_CURRENT_USER
+    UPDATE_CURRENT_USER,
+    { refetchQueries: ['CurrentUser'] }
   );

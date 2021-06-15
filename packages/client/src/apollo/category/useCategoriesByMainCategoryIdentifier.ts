@@ -19,6 +19,7 @@ export const FIND_CATEGORIES_BY_MAIN_CATEGORY_IDENTIFIER = gql`
           values
         }
         dependsBy
+        required
       }
       mainCategory {
         identifier

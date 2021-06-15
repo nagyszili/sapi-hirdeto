@@ -10,6 +10,8 @@ export const PreviewImage: React.FC<PreviewImageProps> = ({
   image,
   deleteImage,
   isThumbnail,
+  setThumbnail,
+  rotate,
 }) => {
   const imageRef = useRef<View>(null);
   const isHovered = useHover(imageRef);
@@ -24,8 +26,17 @@ export const PreviewImage: React.FC<PreviewImageProps> = ({
         resizeMethod="resize"
       />
       <View style={[styles.imageCover, !isHovered && { display: 'none' }]}>
-        <Pressable style={styles.delete} onPress={deleteImage}>
-          <Icon name="delete" color={Color.errorColor} size={18} />
+        <Pressable style={[styles.smallButtonContainer]} onPress={rotate}>
+          <Icon name="rotate" color={Color.primaryDarkColor} size={18} />
+        </Pressable>
+        <Pressable style={styles.smallButtonContainer} onPress={setThumbnail}>
+          <View style={styles.thumbnailSelector} />
+        </Pressable>
+        <Pressable
+          style={[styles.smallButtonContainer, styles.delete]}
+          onPress={deleteImage}
+        >
+          <Icon name="delete" color={Color.whiteColor} size={18} />
         </Pressable>
       </View>
     </View>
@@ -37,20 +48,32 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     margin: 4,
     overflow: 'hidden',
-  },
-  imageItem: {
     width: 170,
     height: 107,
   },
-  delete: {
-    padding: 7,
+  imageItem: {
+    flex: 1,
+  },
+  smallButtonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 32,
+    height: 32,
     backgroundColor: Color.whiteColor,
     borderRadius: 100,
+    borderColor: Color.greyColor,
+    borderWidth: 1,
+    marginHorizontal: 4,
+  },
+  delete: {
+    backgroundColor: Color.errorColor,
+    borderWidth: 0,
   },
   imageCover: {
     zIndex: 999,
     flex: 1,
     position: 'absolute',
+    flexDirection: 'row',
     top: 0,
     left: 0,
     right: 0,
@@ -63,5 +86,34 @@ const styles = StyleSheet.create({
   thumbnail: {
     borderColor: Color.primaryDarkColor,
     borderWidth: 2,
+  },
+  thumbnailSelector: {
+    width: 14,
+    height: 14,
+    borderRadius: 3,
+    borderColor: Color.primaryDarkColor,
+    borderWidth: 2,
+  },
+  profileContainer: {
+    width: 150,
+    height: 150,
+  },
+  profilePic: {
+    borderRadius: 100,
+    flex: 1,
+  },
+  profileCover: {
+    zIndex: 999,
+    flex: 1,
+    position: 'absolute',
+    flexDirection: 'row',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(28, 28, 28, 0.3)',
+    borderRadius: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

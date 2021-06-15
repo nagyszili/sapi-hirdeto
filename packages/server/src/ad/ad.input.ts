@@ -1,13 +1,19 @@
 import { ArgsType, Field } from '@nestjs/graphql';
 import { AttributeValueInput } from 'src/attribute-value/attribute-value.input';
 import { LocationInput } from 'src/location/location.input';
-import { MinLength, MaxLength, IsArray, ArrayMaxSize } from 'class-validator';
+import {
+  MinLength,
+  MaxLength,
+  IsArray,
+  ArrayMaxSize,
+  IsOptional,
+} from 'class-validator';
 import { ImageInput } from './image/image.input';
 
 @ArgsType()
 export class AdInput {
   @MinLength(12)
-  @MaxLength(60)
+  @MaxLength(100)
   @Field()
   name: string;
 
@@ -17,15 +23,22 @@ export class AdInput {
   @Field()
   currency: string;
 
+  @Field()
+  negotiable: boolean;
+
   @MinLength(60)
   @MaxLength(9000)
   @Field()
   description: string;
 
-  @IsArray()
+  @Field(() => ImageInput, { nullable: true })
+  thumbnail?: ImageInput;
+
   @ArrayMaxSize(8)
+  @IsArray()
+  @IsOptional()
   @Field(() => [ImageInput], { nullable: true })
-  images: ImageInput[];
+  images?: ImageInput[];
 
   @Field(() => LocationInput)
   location: LocationInput;
@@ -34,5 +47,5 @@ export class AdInput {
   categoryId: string;
 
   @Field(() => [AttributeValueInput], { nullable: true })
-  attributeValues: AttributeValueInput[];
+  attributeValues?: AttributeValueInput[];
 }

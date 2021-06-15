@@ -5,11 +5,18 @@ import { Pressable, StyleSheet } from 'react-native';
 import { Icon } from '../../utils/icons';
 import { blackColor, whiteColor } from '../../utils/theme/colors';
 
-export const HeaderBackButton: React.FC<{}> = () => {
+interface Props {
+  onPress?: () => void;
+}
+
+export const HeaderBackButton: React.FC<Props> = ({ onPress }) => {
   const navigation = useNavigation();
 
   return (
-    <Pressable style={styles.container} onPress={() => navigation.goBack()}>
+    <Pressable
+      style={styles.container}
+      onPress={() => (onPress ? onPress() : navigation.goBack())}
+    >
       <Icon name="arrow-left" color={blackColor} size={22} />
     </Pressable>
   );

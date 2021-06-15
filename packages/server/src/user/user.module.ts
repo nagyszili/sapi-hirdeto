@@ -4,6 +4,8 @@ import { UserModel, UserSchema } from './user.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserService } from './user.service';
 import { AdModule } from 'src/ad/ad.module';
+import { AwsService } from 'src/uploader/aws/aws.service';
+import { IMAGE_UPLOADER } from 'src/uploader/image-uploader';
 
 @Module({
   imports: [
@@ -12,7 +14,14 @@ import { AdModule } from 'src/ad/ad.module';
       { name: UserModel.name, schema: UserSchema, collection: 'User' },
     ]),
   ],
-  providers: [UserResolver, UserService],
+  providers: [
+    UserResolver,
+    UserService,
+    {
+      useClass: AwsService,
+      provide: IMAGE_UPLOADER,
+    },
+  ],
   exports: [UserService],
 })
 export class UserModule {}

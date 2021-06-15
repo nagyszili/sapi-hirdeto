@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ATTRIBUTE_TYPES, ATTRIBUTE_NAMES, CURRENCY } from 'src/util/constants';
+import {
+  ATTRIBUTE_TYPES,
+  ATTRIBUTE_NAMES,
+  CURRENCY,
+  STATUS,
+} from 'src/util/constants';
 import { ExchangeRatesService } from 'src/exchange-rates/exchange-rates.calculator';
 import { QueryParameters } from 'src/util/graphql-util-types/QueryParameters';
 import { CategoryService } from 'src/category/category.service';
@@ -15,13 +20,17 @@ export class AdQueryService {
       {
         $match: {
           $and: [
+            await this.isNotDeleted(),
+            await this.getLocationQuery(queryParameters),
             await this.getCategoryQuery(queryParameters),
             await this.getSearchStringQuery(queryParameters),
+            await this.getAdsByCreatorQuery(queryParameters),
           ],
         },
       },
       await this.changePrice(queryParameters.currency),
       await this.getAdsFilterQuery(queryParameters),
+      await this.populateUser(),
     ];
   }
 
@@ -62,11 +71,14 @@ export class AdQueryService {
             },
           }
         : {
-            name: {
-              $regex: queryParameters.queryString,
-              $options: 'i',
-            },
+            $text: { $search: queryParameters.queryString },
           }
+      : {};
+  }
+
+  async getAdsByCreatorQuery(queryParameters: QueryParameters) {
+    return queryParameters.creatorId
+      ? { user: new ObjectId(queryParameters.creatorId) }
       : {};
   }
 
@@ -111,6 +123,7 @@ export class AdQueryService {
                 },
               },
             },
+            currency: currency,
           },
         }
       : {
@@ -126,6 +139,7 @@ export class AdQueryService {
                 },
               },
             },
+            currency: currency,
           },
         };
   }
@@ -183,5 +197,37 @@ export class AdQueryService {
           },
         }
       : { $match: {} };
+  }
+
+  async getLocationQuery(queryParameters: QueryParameters) {
+    return queryParameters?.location?.type === 'county'
+      ? {
+          'location.county': queryParameters.location.name,
+        }
+      : queryParameters?.location?.type === 'location'
+      ? {
+          $and: [
+            { 'location.name': queryParameters.location.name },
+            { 'location.county': queryParameters.location.county },
+          ],
+        }
+      : {};
+  }
+
+  async isNotDeleted() {
+    return {
+      status: STATUS.ACTIVE,
+    };
+  }
+
+  async populateUser() {
+    return {
+      $lookup: {
+        from: 'User',
+        localField: 'user',
+        foreignField: '_id',
+        as: 'user',
+      },
+    };
   }
 }

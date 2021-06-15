@@ -1,0 +1,1 @@
+export { NumberOfImagesComponent } from './NumberOfImagesComponent';

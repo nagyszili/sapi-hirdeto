@@ -1,27 +1,54 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, View, Pressable } from 'react-native';
+import { StyleSheet, View, Pressable, ActivityIndicator } from 'react-native';
 
 import texts from '../../../../assets/texts/texts.json';
+import { ImageUpdate } from '../../../apollo/types/graphql-global-types';
+import { MAX_IMAGES_NUM } from '../../../utils/constants';
 import { Icon } from '../../../utils/icons';
 import { ImageComponent } from '../../../utils/images';
 import * as Color from '../../../utils/theme/colors';
 import { HoverText } from '../../themed/HoverText';
 import { Text } from '../../themed/Text';
 import { PreviewImage } from '../PreviewImage/PreviewImage.web';
+import { imageResize, imageRotate } from '../imageManipulators';
+import { newFile } from '../imageUtils';
 import { ImageUploadContainerProps } from './ImageUploadContainer.props';
 
 export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
   images,
   setImages,
+  setThumbnail,
+  thumbnail,
+  setDeletedImages,
 }) => {
   useEffect(() => {
-    setPreviewImages(images.map((image) => URL.createObjectURL(image.image)));
+    setPreviewImages(
+      images.map((image) =>
+        image.url ? image.url : URL.createObjectURL(image.image)
+      )
+    );
   }, [images]);
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [drag, setDrag] = useState(false);
   const dropRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const dragCounter = useRef(0);
+  const [progress, setProgress] = useState<boolean>(false);
+  const [numOfImages, setNumOfImages] = useState(images.length);
+
+  useEffect(() => {
+    if (images.length === numOfImages) {
+      setProgress(false);
+    }
+  });
+
+  useEffect(() => {
+    if (images.length && !thumbnail) {
+      const image = images.find((image) => image.priority === 1);
+      image && _setThumbnail(image);
+    }
+  }, [images]);
+
   const handleDrag = (e: any) => {
     e.preventDefault();
     e.stopPropagation();
@@ -57,34 +84,159 @@ export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
     }
   };
 
-  const onChange = ({ target: { files } }: any) => addImages(files);
+  const handleChange = ({ target: { files } }: any) => addImages(files);
 
-  const addImages = (files: any) =>
-    Object.values(files).forEach((file: any) => {
-      if (file && file.type.match('image.*')) {
-        setImages((oldValue) => [
-          ...oldValue,
-          {
-            isThumbnail: oldValue.length === 0,
-            image: file,
-            priority: oldValue.length + 1,
-          },
-        ]);
-      }
-    });
+  const addImages = async (files: any) => {
+    if (images.length + files.length > MAX_IMAGES_NUM) {
+      return alert('Maximum number of images is 8');
+    }
+    setProgress(true);
+    setNumOfImages(images.length + files.length);
+    await Promise.all(
+      Object.values(files).map(async (file: any) => {
+        if (file && file.type.match('image.*')) {
+          var reader = new FileReader();
+          reader.onload = async () => {
+            const imageType = file.type.split('/');
+            const arrayBuffer = reader.result as ArrayBuffer;
+            const array = new Uint8Array(arrayBuffer);
+            const imageBuffer = await imageResize(Buffer.from(array), 1080, 50);
+            setImages((oldValue) => [
+              ...oldValue,
+              {
+                image: newFile(
+                  imageBuffer,
+                  `${Date.now()}.${imageType[1] || 'jpg'}`,
+                  file.type
+                ),
+                priority: oldValue.length + 1,
+              },
+            ]);
+          };
+          reader.readAsArrayBuffer(file);
+        }
+      })
+    );
+  };
 
   const openDialog = () => inputRef.current && inputRef.current.click();
 
-  const deleteImage = (key: number) =>
+  const rotate = async (image: ImageUpdate) => {
+    if (image.url) {
+      const rotated = await imageRotate(image.url);
+      setDeletedImages &&
+        setDeletedImages((deletedImages) =>
+          deletedImages && image.url
+            ? [...deletedImages, image.url]
+            : [image.url as string]
+        );
+      setImages((oldImages) =>
+        oldImages.map((oldImage) =>
+          oldImage.priority === image.priority
+            ? {
+                image: newFile(rotated, `${Date.now()}.jpg`, 'image/jpeg'),
+                priority: oldImage.priority,
+              }
+            : oldImage
+        )
+      );
+      if (thumbnail?.priority === image.priority) {
+        setThumbnail({
+          image: newFile(rotated, `${Date.now()}.jpg`, 'image/jpeg'),
+          priority: image.priority,
+        });
+      }
+    } else {
+      var reader = new FileReader();
+      reader.onload = async () => {
+        const arrayBuffer = reader.result as ArrayBuffer;
+        const array = new Uint8Array(arrayBuffer);
+        const rotated = await imageRotate(Buffer.from(array));
+
+        setImages((oldImages) =>
+          oldImages.map((oldImage) =>
+            oldImage.priority === image.priority
+              ? {
+                  image: newFile(rotated, image.image.name, image.image.type),
+                  priority: oldImage.priority,
+                }
+              : oldImage
+          )
+        );
+        if (thumbnail?.priority === image.priority) {
+          setThumbnail({
+            image: newFile(rotated, image.image.name, image.image.type),
+            priority: image.priority,
+          });
+        }
+      };
+      reader.readAsArrayBuffer(image.image);
+    }
+  };
+
+  const deleteImage = async (item: ImageUpdate) => {
+    setNumOfImages((num) => --num);
+
+    if (item.url) {
+      setDeletedImages &&
+        setDeletedImages((oldValue) => {
+          if (oldValue) {
+            return item.url ? [...oldValue, item.url] : oldValue;
+          }
+          return item.url ? [item.url] : undefined;
+        });
+    }
+    if (thumbnail && item.priority < thumbnail?.priority) {
+      setThumbnail(
+        (oldThumbnail) =>
+          oldThumbnail && {
+            ...oldThumbnail,
+            priority: oldThumbnail?.priority - 1,
+          }
+      );
+    }
+    if (item.priority === thumbnail?.priority && images.length > 1) {
+      const image = item.priority === 1 ? images[1].image : images[0].image;
+      const url = item.priority === 1 ? images[1].url : images[0].url;
+
+      await _setThumbnail({ url, image, priority: 1 });
+    } else if (images.length === 1) {
+      setThumbnail(undefined);
+    }
     setImages((oldImages) =>
       oldImages
-        .filter((_, index) => index !== key)
-        .map((image, key) =>
-          key === 0 ? { ...image, isThumbnail: true } : image
-        )
+        .filter((image) => image.priority !== item.priority)
+        .map((image, key) => ({ ...image, priority: key + 1 }))
     );
+  };
 
-  return (
+  const _setThumbnail = async (image: ImageUpdate) => {
+    if (image.url) {
+      const thumbnailBuffer = await imageResize(image.url, 400, 50);
+      setThumbnail({
+        image: newFile(thumbnailBuffer, `${Date.now()}.jpg`, 'image/jpeg'),
+        priority: image.priority,
+      });
+    } else {
+      var reader = new FileReader();
+      reader.onload = async () => {
+        const arrayBuffer = reader.result as ArrayBuffer;
+        const array = new Uint8Array(arrayBuffer);
+        const thumbnailBuffer = await imageResize(Buffer.from(array), 400, 50);
+        setThumbnail({
+          image: newFile(thumbnailBuffer, image.image.name, image.image.type),
+          priority: image.priority,
+        });
+      };
+      reader.readAsArrayBuffer(image.image);
+    }
+  };
+
+  return progress ? (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <ActivityIndicator size="large" />
+    </View>
+  ) : (
     <div
       style={
         images.length
@@ -105,7 +257,7 @@ export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
         style={{ display: 'none' }}
         required
         multiple
-        onChange={onChange}
+        onChange={handleChange}
         accept="image/*"
       />
 
@@ -131,17 +283,21 @@ export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
         </View>
       ) : (
         <View style={styles.imagesContainer}>
-          {images.map((_, key) => (
+          {images.map((image, key) => (
             <PreviewImage
-              isThumbnail={key === 0}
+              isThumbnail={thumbnail?.priority === image.priority}
               image={previewImages[key]}
               key={key}
-              deleteImage={() => deleteImage(key)}
+              deleteImage={() => deleteImage(image)}
+              setThumbnail={() => _setThumbnail(image)}
+              rotate={() => rotate(image)}
             />
           ))}
-          <Pressable style={styles.addImage} onPress={openDialog}>
-            <Icon name="plus-circle" color={Color.errorColor} size={24} />
-          </Pressable>
+          {images.length < MAX_IMAGES_NUM && (
+            <Pressable style={styles.addImage} onPress={openDialog}>
+              <Icon name="plus-circle" color={Color.errorColor} size={24} />
+            </Pressable>
+          )}
         </View>
       )}
     </div>

@@ -1,3 +1,5 @@
+import { StyleProp, TextStyle } from 'react-native';
+
 import { Element } from '../Select/SelectInput.props';
 
 export interface MultiSelectProps {
@@ -6,4 +8,5 @@ export interface MultiSelectProps {
   setSelectedElements: (elements: any[]) => void;
   placeholder?: string;
   label?: string;
+  labelStyle?: StyleProp<TextStyle>;
 }

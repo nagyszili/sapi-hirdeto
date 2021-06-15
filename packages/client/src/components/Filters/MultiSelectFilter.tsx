@@ -1,17 +1,19 @@
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
+import { StyleProp, TextStyle } from 'react-native';
 
 import texts from '../../../assets/texts/texts.json';
 import { Filter } from '../../apollo/types/graphql-global-types';
 import { getFiltersAfterRemove, addMultiSelectFilter } from '../../utils';
 import { Element } from '../Filters/Select/SelectInput.props';
-import { MultiSelect } from './MultiSelect/MultiSelect';
+import { MultiSelect } from './MultiSelect';
 
 interface Props {
   elements: string[];
   filters?: Filter[];
   title: string;
   label?: string;
+  labelStyle?: StyleProp<TextStyle>;
 }
 
 export const MultiSelectFilter: React.FC<Props> = ({
@@ -19,6 +21,7 @@ export const MultiSelectFilter: React.FC<Props> = ({
   filters,
   title,
   label,
+  labelStyle,
 }) => {
   const navigation = useNavigation();
   const filter = filters && filters.find((filter) => filter.name === title);
@@ -56,6 +59,7 @@ export const MultiSelectFilter: React.FC<Props> = ({
   return (
     <MultiSelect
       label={label}
+      labelStyle={labelStyle}
       elements={allElements}
       selectedElements={selectedFilters() || []}
       placeholder={allElements[0].label}

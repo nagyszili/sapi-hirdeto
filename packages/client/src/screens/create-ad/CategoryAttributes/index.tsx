@@ -1,0 +1,1 @@
+export { CategoryAttributes } from './CategoryAttributes';

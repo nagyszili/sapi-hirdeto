@@ -11,6 +11,7 @@ type Attribute {
   title: String!
   type: String!
   possibleValues: [PossibleValues!]!
+  required: Boolean!
   dependsBy: String
 }
 
@@ -48,16 +49,19 @@ type Image {
 type Ad {
   id: ID!
   identifier: String!
+  status: String!
   name: String!
   user: User!
   price: Float!
   currency: String!
+  negotiable: Boolean!
   description: String
-  thumbnail: String
+  thumbnail: Image
   numberOfImages: Int!
   images: [Image!]
   createdAt: DateTime!
   updatedAt: DateTime
+  actualizedAt: DateTime!
   location: Location!
   views: Int!
   category: Category!
@@ -73,7 +77,9 @@ type User {
   id: ID!
   name: String!
   email: String!
+  profilePictureUrl: String
   phoneNumber: String
+  loginType: String!
   role: String!
   favorites: [Ad!]
 }
@@ -81,33 +87,57 @@ type User {
 type AdListItem {
   id: ID!
   identifier: String!
+  status: String!
   name: String!
+  user: User!
   price: Float!
   currency: String!
+  negotiable: Boolean!
   description: String
   thumbnail: String
   numberOfImages: Int!
   createdAt: DateTime!
   updatedAt: DateTime
+  actualizedAt: DateTime!
   location: Location!
   views: Int!
   attributeValues: [AttributeValue!]
+}
+
+type UserAdsList {
+  id: ID!
+  name: String!
+  email: String!
+  phoneNumber: String
+  loginType: String!
+  role: String!
+  profilePictureUrl: String
+  favorites: [String!]
 }
 
 type AccessToken {
   access_token: String!
 }
 
+type LocationQueryType {
+  type: String!
+  name: String!
+  county: String
+}
+
 type Query {
-  currentUser: User!
-  findUser: User!
+  currentUser: UserAdsList!
+  countUsersByDate(toDate: DateTime!, fromDate: DateTime!): Int!
   findUserById(id: String!): User!
   findAllUsers: [User!]!
+  countAdsByDate(toDate: DateTime!, fromDate: DateTime!): Int!
   findAdById(id: String!): Ad!
-  findAdByIdentifier(identifier: String!): Ad!
-  findAdsByUser(page: Int, perPage: Int): [Ad!]!
-  findAllAds(page: Int, perPage: Int, sortField: String, sortOrder: Int, queryString: String, inDescription: Boolean, categoryIdentifier: String, mainCategoryIdentifier: String, location: LocationInput, currency: String!, filters: [Filter!]): [AdListItem!]!
-  countAllAds(page: Int, perPage: Int, sortField: String, sortOrder: Int, queryString: String, inDescription: Boolean, categoryIdentifier: String, mainCategoryIdentifier: String, location: LocationInput, currency: String!, filters: [Filter!]): Int!
+  findAdByIdentifier(userId: String, identifier: String!): Ad!
+  findAdsByUser(page: Int, perPage: Int): [AdListItem!]!
+  findFavoriteAdsByUser: [AdListItem!]!
+  findAllAds(page: Int, perPage: Int, sortField: String, sortOrder: Int, queryString: String, inDescription: Boolean, categoryIdentifier: String, mainCategoryIdentifier: String, location: LocationQueryInput, currency: String!, creatorId: String, filters: [Filter!]): [AdListItem!]!
+  findAdsByIds(ids: [String!]!): [AdListItem!]!
+  countAllAds(page: Int, perPage: Int, sortField: String, sortOrder: Int, queryString: String, inDescription: Boolean, categoryIdentifier: String, mainCategoryIdentifier: String, location: LocationQueryInput, currency: String!, creatorId: String, filters: [Filter!]): Int!
   estimatedCount: Int!
   findCategoryById(id: String!): Category!
   findCategoryByIdentifier(identifier: String!): Category!
@@ -120,15 +150,14 @@ type Query {
   countLocations: Int!
   allLocations: [Location!]!
   allCounties: [String!]!
-  findLocationsByName(name: String!): [Location!]!
+  findLocationsByName(limit: Int!, name: String!): [LocationQueryType!]!
   findLocationsByCounty(county: String!): [Location!]!
 }
 
-input LocationInput {
-  longitude: Float!
-  latitude: Float!
+input LocationQueryInput {
+  type: String!
   name: String!
-  county: String!
+  county: String
 }
 
 input Filter {
@@ -141,25 +170,41 @@ input Filter {
 
 type Mutation {
   login(email: String!, password: String!): AccessToken!
+  loginGoogle(idToken: String!): AccessToken!
+  loginFacebook(accessToken: String!): AccessToken!
   createUser(email: String!, password: String!): User!
-  updateCurrentUser(name: String, email: String, password: String, phoneNumber: String, role: String): User!
-  updateUser(name: String, email: String, password: String, phoneNumber: String, role: String, id: String!): User!
-  addAdToFavorites(adId: String!): User!
-  createAd(name: String!, price: Float!, currency: String!, description: String!, images: [ImageInput!], location: LocationInput!, categoryId: String!, attributeValues: [AttributeValueInput!]): Ad!
-  updateAd(name: String, price: Float, currency: String, description: String, images: [ImageInput!], location: String, category: String, attributeValues: [AttributeValueInput!], id: String!): Ad!
-}
-
-input ImageInput {
-  priority: Int!
-  isThumbnail: Boolean!
-  image: Upload!
+  updateCurrentUser(name: String, email: String, phoneNumber: String, profilePicture: Upload): User!
+  updateUser(name: String, email: String, phoneNumber: String, profilePicture: Upload, id: String!): User!
+  addAdToFavorites(adId: String!): UserAdsList!
+  createAd(name: String!, price: Float!, currency: String!, negotiable: Boolean!, description: String!, thumbnail: ImageInput, images: [ImageInput!], location: LocationInput!, categoryId: String!, attributeValues: [AttributeValueInput!]): AdListItem!
+  updateAd(name: String!, price: Float!, currency: String!, negotiable: Boolean!, description: String!, thumbnail: ImageUpdate, deletedImages: [String!], images: [ImageUpdate!], location: LocationInput!, categoryId: String!, attributeValues: [AttributeValueInput!], id: String!): AdListItem!
+  setAdStatus(reasonOfDelete: String, status: String!, id: String!): Ad!
+  actualizeAd(id: String!): AdListItem!
 }
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
 
+input ImageInput {
+  priority: Int!
+  image: Upload!
+}
+
+input LocationInput {
+  longitude: Float!
+  latitude: Float!
+  name: String!
+  county: String!
+}
+
 input AttributeValueInput {
   key: String!
   value: String!
   type: String!
+}
+
+input ImageUpdate {
+  url: String
+  image: Upload
+  priority: Int!
 }

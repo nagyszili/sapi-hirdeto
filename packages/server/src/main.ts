@@ -25,7 +25,6 @@ async function bootstrap() {
     await seeder.seedLocations();
     await sleep(150000);
   }
-
   app.enableCors();
 
   await app.listen(config.get('server.port'));

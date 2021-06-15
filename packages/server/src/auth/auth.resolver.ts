@@ -11,4 +11,16 @@ export class AuthResolver {
   async login(@Args() loginInput: LoginCredentials): Promise<AccessToken> {
     return this.authService.login(loginInput.email, loginInput.password);
   }
+
+  @Mutation(() => AccessToken)
+  async loginGoogle(@Args('idToken') idToken: string): Promise<AccessToken> {
+    return this.authService.loginGoogle(idToken);
+  }
+
+  @Mutation(() => AccessToken)
+  async loginFacebook(
+    @Args('accessToken') accessToken: string,
+  ): Promise<AccessToken> {
+    return this.authService.loginFacebook(accessToken);
+  }
 }

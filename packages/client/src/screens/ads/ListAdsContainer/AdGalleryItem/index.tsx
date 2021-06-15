@@ -1,0 +1,1 @@
+export { AdGalleryItem } from './AdGalleryItem';

@@ -40,7 +40,7 @@ interface IPropTypes extends ScrollViewProps {
   renderContentBackground: () => void;
   renderFixedHeader: () => void;
   renderForeground: () => {};
-  renderStickyHeader: () => {};
+  renderStickyHeader?: () => {};
   stickyHeaderHeight: number;
   contentContainerStyle: any;
   outputScaleValue: number;
@@ -324,8 +324,8 @@ export default class ParallaxScrollView extends Component<IPropTypes, State> {
     parallaxHeaderHeight: number,
     stickyHeaderHeight: number,
     backgroundColor: string,
-    renderFixedHeader: () => void,
-    renderStickyHeader: () => {}
+    renderFixedHeader?: () => void,
+    renderStickyHeader?: () => {}
   ) {
     const { viewWidth } = this.state;
     const { scrollY } = this;

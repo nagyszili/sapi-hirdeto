@@ -13,7 +13,13 @@ export class User {
   email: string;
 
   @Field({ nullable: true })
+  profilePictureUrl?: string;
+
+  @Field({ nullable: true })
   phoneNumber?: string;
+
+  @Field()
+  loginType: string;
 
   @Field()
   role: string;

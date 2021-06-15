@@ -1,3 +1,6 @@
+import Constants from 'expo-constants';
+import { Share } from 'react-native';
+
 import attributesText from '../../assets/texts/attributes.json';
 import { Filter } from '../apollo/types/graphql-global-types';
 import { ATTRIBUTE_TYPES } from './constants';
@@ -60,7 +63,7 @@ export const addRangeFilter = (
   from: string,
   to: string,
   filters?: Filter[],
-  filter?: Filter
+  filter?: Filter,
 ) =>
   filter && filters
     ? filters.map((oldFilter) =>
@@ -71,7 +74,7 @@ export const addRangeFilter = (
               from: parseInt(from, 10),
               to: parseInt(to, 10),
             }
-          : oldFilter
+          : oldFilter,
       )
     : filters
     ? [
@@ -96,7 +99,7 @@ export const addMultiSelectFilter = (
   title: string,
   selectedElements: string[],
   filters?: Filter[],
-  filter?: Filter
+  filter?: Filter,
 ) =>
   filter && filters
     ? filters.map((oldFilter) =>
@@ -105,7 +108,7 @@ export const addMultiSelectFilter = (
               ...oldFilter,
               selectedAttributeValues: selectedElements,
             }
-          : oldFilter
+          : oldFilter,
       )
     : filters
     ? [
@@ -128,13 +131,13 @@ export const addSelectFilter = (
   title: string,
   element: string,
   filters?: Filter[],
-  filter?: Filter
+  filter?: Filter,
 ) =>
   filters && filter
     ? filters.map((oldFilter) =>
         oldFilter.name === title
           ? { ...oldFilter, selectedAttributeValues: [element] }
-          : oldFilter
+          : oldFilter,
       )
     : filters
     ? [
@@ -152,3 +155,36 @@ export const addSelectFilter = (
           selectedAttributeValues: [element],
         },
       ];
+
+export const shareAd = ({
+  adName,
+  adIdentifier,
+}: {
+  adName: string;
+  adIdentifier: string;
+}) =>
+  Share.share(
+    {
+      title: `${adName}`,
+      message: `${Constants?.manifest?.extra?.clientUrl}/ad-details/${adIdentifier}`,
+      url: `${Constants?.manifest?.extra?.clientUrl}/ad-details/${adIdentifier}`,
+    },
+    {
+      dialogTitle: `${adName}`,
+    },
+  );
+
+export const shareAdOnFacebook = ({
+  adName,
+  adIdentifier,
+}: {
+  adName: string;
+  adIdentifier: string;
+}) =>
+  // @ts-ignore
+  FB.ui({
+    method: 'share',
+    quote: `${adName}`,
+    href: `${Constants?.manifest?.extra?.clientUrl}/ad-details/${adIdentifier}`,
+    display: 'popup',
+  });

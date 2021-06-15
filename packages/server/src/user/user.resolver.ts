@@ -1,31 +1,32 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './user.type';
-import { UserModel } from './user.schema';
 import { UserInput } from './user.input';
 import { ManagerRole, UserRole, CurrentUser } from './../util/decorators';
 import { UserUpdate } from './user.update';
-import { modelToObject } from 'src/util/mappers';
+import { modelToObject, mapUserToUserAdsList } from 'src/util/mappers';
+import { UserAdsList } from './user-ads-list.type';
 
 @Resolver()
 export class UserResolver {
   constructor(private userService: UserService) {}
 
-  @Query(() => User)
+  @Query(() => UserAdsList)
   @UserRole()
-  async currentUser(@CurrentUser() user: User): Promise<User> {
+  async currentUser(@CurrentUser() user: User): Promise<UserAdsList> {
     return {
       ...user,
-      favorites: user.favorites.map((ad) => ({
-        ...ad,
-        numberOfImages: ad.images.length,
-      })),
+      favorites: user.favorites.map((ad) => ad.id),
     };
   }
 
-  @Query(() => User)
-  async findUser(): Promise<UserModel> {
-    return this.userService.getUser();
+  @ManagerRole()
+  @Query(() => Int)
+  async countUsersByDate(
+    @Args('fromDate') fromDate: Date,
+    @Args('toDate') toDate: Date,
+  ): Promise<number> {
+    return this.userService.countUsersByDate(fromDate, toDate);
   }
 
   @Query(() => User)
@@ -68,13 +69,13 @@ export class UserResolver {
   }
 
   @UserRole()
-  @Mutation(() => User)
+  @Mutation(() => UserAdsList)
   async addAdToFavorites(
     @Args('adId') adId: string,
     @CurrentUser() user: User,
-  ): Promise<User> {
-    return modelToObject(
-      await this.userService.addAdToFavorites(adId, user.id),
+  ): Promise<UserAdsList> {
+    return mapUserToUserAdsList(
+      modelToObject(await this.userService.addAdToFavorites(adId, user.id)),
     );
   }
 }

@@ -1,5 +1,6 @@
 import asyncStorage from '@react-native-async-storage/async-storage';
 
+import { reportError } from '../../utils/errors';
 import { client } from '../client';
 import { isLoggedInVar } from '../reactiveVariables';
 import { CurrentUser } from '../types/CurrentUser';
@@ -23,7 +24,7 @@ export const useLoginState = () => {
     }
   };
   const onError = (error: any) => {
-    console.error(error);
+    reportError(error);
     setLoading(false);
   };
   const onLoading = () => {

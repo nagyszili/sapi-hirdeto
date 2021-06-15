@@ -3,6 +3,7 @@ import { StyleSheet, View, Pressable } from 'react-native';
 
 import { Text } from '../components/themed/Text';
 import { Icon } from '../utils/icons';
+import * as Color from '../utils/theme/colors';
 
 interface Props {
   numberOfAds: number;
@@ -22,14 +23,14 @@ export const PaginationComponent: React.FC<Props> = ({
   return (
     <View style={styles.container}>
       <Pressable
-        style={styles.item}
+        style={styles.leftEnd}
         disabled={page.current <= 0}
         onPress={() => {
           page.current = 0;
           refetch(page.current);
         }}
       >
-        <Icon name="doubleLeft" />
+        <Icon name="doubleLeft" size={18} />
       </Pressable>
       <Pressable
         style={styles.item}
@@ -39,7 +40,7 @@ export const PaginationComponent: React.FC<Props> = ({
           refetch(page.current);
         }}
       >
-        <Icon name="left" />
+        <Icon name="left" size={18} />
       </Pressable>
 
       {page.current - 2 > 0 && (
@@ -160,17 +161,17 @@ export const PaginationComponent: React.FC<Props> = ({
           refetch(page.current);
         }}
       >
-        <Icon name="right" />
+        <Icon name="right" size={18} />
       </Pressable>
       <Pressable
-        style={styles.item}
+        style={styles.rightEnd}
         disabled={page.current >= numberOfAds / 5 - 1}
         onPress={() => {
           page.current = numPages - 1;
           refetch(page.current);
         }}
       >
-        <Icon name="doubleRight" />
+        <Icon name="doubleRight" size={18} />
       </Pressable>
     </View>
   );
@@ -179,35 +180,58 @@ export const PaginationComponent: React.FC<Props> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
   },
   item: {
-    margin: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderColor: 'gray',
-    borderRadius: 4,
+    width: 41,
+    height: 38,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Color.whiteColor,
+    borderColor: Color.greyColor,
+    borderStyle: 'solid',
+    borderWidth: 1,
+  },
+  leftEnd: {
+    width: 38,
+    height: 38,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Color.whiteColor,
+    borderColor: Color.greyColor,
+    borderBottomLeftRadius: 6,
+    borderTopLeftRadius: 6,
+    borderStyle: 'solid',
+    borderWidth: 1,
+  },
+  rightEnd: {
+    width: 38,
+    height: 38,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Color.whiteColor,
+    borderColor: Color.greyColor,
+    borderBottomRightRadius: 6,
+    borderTopRightRadius: 6,
     borderStyle: 'solid',
     borderWidth: 1,
   },
   active: {
-    margin: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderColor: 'gray',
-    borderRadius: 4,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    backgroundColor: 'black',
+    width: 41,
+    height: 38,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Color.primaryColor,
   },
   text: {
+    fontSize: 15,
     textAlign: 'center',
     textAlignVertical: 'center',
-    color: 'black',
+    color: Color.blackColor,
   },
   activeText: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    color: 'white',
+    color: Color.whiteColor,
   },
 });

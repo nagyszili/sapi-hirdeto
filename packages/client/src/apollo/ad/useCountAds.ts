@@ -9,8 +9,9 @@ export const COUNT_ADS = gql`
     $mainCategoryIdentifier: String
     $categoryIdentifier: String
     $inDescription: Boolean
-    $location: LocationInput
+    $location: LocationQueryInput
     $currency: String!
+    $creatorId: String
     $filters: [Filter!]
   ) {
     countAllAds(
@@ -20,6 +21,7 @@ export const COUNT_ADS = gql`
       inDescription: $inDescription
       location: $location
       currency: $currency
+      creatorId: $creatorId
       filters: $filters
     )
   }

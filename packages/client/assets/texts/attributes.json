@@ -10,12 +10,19 @@
   "car body": "Kivitel",
   "color": "Szín",
   "gearbox": "Váltó",
-  "type": "Tipus",
+  "type": "Típus",
+  "secondary type": "Altípus",
   "category": "Kategória",
   "mobility": "Mobilitás",
   "rooms": "Szobák",
   "usable area": "Terület",
   "year of construction": "Építési év",
   "floor": "Emelet",
-  "sex": "Nem"
+  "sex": "Nem",
+  "garden area": "Kert méret",
+  "rentable": "Kiadó/Eladó",
+  "maximum occupancy": "Férőhely",
+  "service and equipment": "Szolgáltatás és felszereltség",
+  "specialization": "Szakterület",
+  "experience": "Tapasztalat"
 }

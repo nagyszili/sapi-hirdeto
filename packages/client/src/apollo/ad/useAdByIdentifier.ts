@@ -6,28 +6,35 @@ import {
 } from '../types/AdByIdentifier';
 
 export const AD_BY_IDENTIFIER = gql`
-  query AdByIdentifier($identifier: String!) {
-    findAdByIdentifier(identifier: $identifier) {
+  query AdByIdentifier($userId: String, $identifier: String!) {
+    findAdByIdentifier(userId: $userId, identifier: $identifier) {
       id
       identifier
       name
+      status
       user {
         id
         name
         email
         phoneNumber
+        profilePictureUrl
       }
       price
       currency
+      negotiable
       description
       createdAt
       updatedAt
+      actualizedAt
       views
       images {
         priority
         url
       }
-      thumbnail
+      thumbnail {
+        priority
+        url
+      }
       location {
         longitude
         latitude
@@ -60,7 +67,7 @@ export const AD_BY_IDENTIFIER = gql`
   }
 `;
 
-export const useAdByIdentifier = (identifier: string) =>
+export const useAdByIdentifier = (identifier: string, userId?: string) =>
   useQuery<AdByIdentifier, AdByIdentifierVariables>(AD_BY_IDENTIFIER, {
-    variables: { identifier },
+    variables: { userId, identifier },
   });

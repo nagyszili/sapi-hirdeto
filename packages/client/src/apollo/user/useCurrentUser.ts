@@ -9,30 +9,10 @@ export const CURRENT_USER = gql`
       name
       email
       phoneNumber
+      loginType
       role
-      favorites {
-        id
-        identifier
-        name
-        price
-        currency
-        description
-        createdAt
-        updatedAt
-        thumbnail
-        numberOfImages
-        location {
-          longitude
-          latitude
-          name
-          county
-        }
-        views
-        attributeValues {
-          key
-          value
-        }
-      }
+      profilePictureUrl
+      favorites
     }
   }
 `;

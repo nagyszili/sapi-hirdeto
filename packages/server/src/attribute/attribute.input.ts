@@ -13,5 +13,8 @@ export class AttributeInput {
   possibleValues: PossibleValuesInput[];
 
   @Field({ nullable: true })
+  required?: boolean;
+
+  @Field({ nullable: true })
   dependsBy?: string;
 }

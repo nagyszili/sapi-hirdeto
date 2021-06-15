@@ -1,16 +1,18 @@
 import * as React from 'react';
-import { ViewStyle, View, StyleProp } from 'react-native';
+import { ViewStyle, View, StyleProp, TextStyle } from 'react-native';
 
 import texts from '../../../assets/texts/texts.json';
-import { SelectInput } from './Select/SelectInput';
+import { SelectInput } from './Select';
 
 interface Props {
-  categories: any[];
+  categories?: any[];
   selectedCategory?: string;
   setSelectedCategory: (category: string) => void;
   style?: StyleProp<ViewStyle>;
   label?: string;
+  labelStyle?: StyleProp<TextStyle>;
   defaultValue?: string;
+  error?: string;
 }
 
 export const CategoryFilter: React.FC<Props> = ({
@@ -19,11 +21,13 @@ export const CategoryFilter: React.FC<Props> = ({
   setSelectedCategory,
   style,
   label,
+  labelStyle,
   defaultValue,
+  error,
 }) => {
   let allCategories = [{ label: defaultValue ?? texts['all'], value: '' }];
   allCategories = allCategories.concat(
-    categories.map((category) => ({
+    (categories || []).map((category) => ({
       label: category.name,
       value: category.identifier,
     }))
@@ -33,9 +37,11 @@ export const CategoryFilter: React.FC<Props> = ({
     <View style={[style]}>
       <SelectInput
         label={label}
+        labelStyle={labelStyle}
         elements={allCategories}
         setSelectedElement={setSelectedCategory}
         selectedElement={selectedCategory}
+        error={error}
       />
     </View>
   );

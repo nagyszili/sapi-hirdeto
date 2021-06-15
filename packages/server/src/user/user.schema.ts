@@ -3,7 +3,7 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 import { ROLES, LOGIN_TYPES } from 'src/util/constants';
 import { AdModel } from 'src/ad/ad.schema';
 
-@Schema()
+@Schema({ timestamps: true })
 export class UserModel extends Document {
   @Prop({ default: '', maxlength: 40 })
   name: string;
@@ -15,10 +15,25 @@ export class UserModel extends Document {
   password: string;
 
   @Prop()
+  profilePictureUrl: string;
+
+  @Prop()
+  googleId: string;
+
+  @Prop()
+  facebookId: string;
+
+  @Prop()
   phoneNumber: string;
 
   @Prop({ default: ROLES.USER, enum: [ROLES.USER, ROLES.MANAGER] })
   role: string;
+
+  @Prop({ type: Date })
+  createdAt: Date;
+
+  @Prop({ type: Date })
+  updatedAt: Date;
 
   @Prop({
     enum: [LOGIN_TYPES.PASSWORD, LOGIN_TYPES.GOOGLE, LOGIN_TYPES.FACEBOOK],

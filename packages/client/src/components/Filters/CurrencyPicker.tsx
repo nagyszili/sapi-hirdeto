@@ -1,22 +1,32 @@
+import { useReactiveVar } from '@apollo/client';
 import * as React from 'react';
-import { StyleSheet, View, Pressable } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Pressable,
+  TextStyle,
+  StyleProp,
+} from 'react-native';
 
 import texts from '../../../assets/texts/texts.json';
 import { updateCurrency } from '../../apollo/filters/updateCurrency';
-import { useActiveCurrency } from '../../apollo/filters/useActiveCurrency';
+import { currencyVar } from '../../apollo/reactiveVariables';
 import { Text } from '../../components/themed/Text';
 import { CURRENCY } from '../../utils/constants';
 import * as Color from '../../utils/theme/colors';
+interface Props {
+  labelStyle?: StyleProp<TextStyle>;
+}
 
-export const CurrencyPicker: React.FC<{}> = () => {
-  const { data: currency } = useActiveCurrency();
+export const CurrencyPicker: React.FC<Props> = ({ labelStyle }) => {
+  const activeCurrency = useReactiveVar(currencyVar);
 
-  const isLeiActive = () => currency?.currency === CURRENCY.LEI;
-  const isEuroActive = () => currency?.currency === CURRENCY.EURO;
+  const isLeiActive = () => activeCurrency === CURRENCY.LEI;
+  const isEuroActive = () => activeCurrency === CURRENCY.EURO;
 
   return (
-    <View>
-      <Text style={styles.label}>{texts['currency']}</Text>
+    <View style={styles.container}>
+      <Text style={[styles.label, labelStyle]}>{texts['currency']}:</Text>
       <View style={styles.picker}>
         <Pressable
           style={[styles.left, isLeiActive() && styles.active]}
@@ -47,6 +57,11 @@ export const CurrencyPicker: React.FC<{}> = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
   picker: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -54,7 +69,7 @@ const styles = StyleSheet.create({
     height: 46,
   },
   label: {
-    marginBottom: 7,
+    marginRight: 12,
     fontSize: 15,
     color: Color.greyDarkColor,
   },
@@ -67,6 +82,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     lineHeight: 22,
     color: Color.greyDarkColor,
+    fontWeight: '500',
   },
   left: {
     flex: 1,
@@ -95,14 +111,11 @@ const styles = StyleSheet.create({
     borderLeftWidth: 0,
   },
   active: {
-    borderColor: Color.primaryLightColor,
-  },
-  inactive: {
-    borderColor: Color.primaryLightColor,
+    borderColor: Color.errorColor,
   },
   line: {
     height: '100%',
     width: 1,
-    backgroundColor: Color.primaryLightColor,
+    backgroundColor: Color.errorColor,
   },
 });

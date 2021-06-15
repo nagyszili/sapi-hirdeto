@@ -9,5 +9,6 @@ export type UploadStream = {
 
 export interface ImageUploader {
   createUploadStream: (key: string, mimetype?: string) => UploadStream;
-  uploadImage?: (image: any, key: string) => Promise<string>;
+  uploadImage?: (image: any, key: string, mimetype?: string) => Promise<string>;
+  deleteImage?: (key: string) => Promise<boolean>;
 }

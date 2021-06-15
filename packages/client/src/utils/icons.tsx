@@ -23,6 +23,20 @@ const IcoMoon = createIconSetFromIcoMoon(
 );
 
 const icons = (size: number, color: string, style: StyleProp<TextStyle>) => ({
+  edit: () => (
+    <IcoMoon name="ic24-edit" size={size} color={color} style={style} />
+  ),
+  'up-down': () => (
+    <IcoMoon
+      name="ic24-import-export"
+      size={size}
+      color={color}
+      style={style}
+    />
+  ),
+  filter: () => (
+    <IcoMoon name="ic24-filter" size={size} color={color} style={style} />
+  ),
   'my-profile': () => (
     <IcoMoon name="ic24-user" size={size} color={color} style={style} />
   ),
@@ -112,6 +126,39 @@ const icons = (size: number, color: string, style: StyleProp<TextStyle>) => ({
   ),
   file: () => (
     <IcoMoon name="ic24-file" size={size} color={color} style={style} />
+  ),
+  facebook: () => (
+    <IcoMoon name="ic24-facebook" size={size} color={color} style={style} />
+  ),
+  share: () => (
+    <IcoMoon name="ic24-share" size={size} color={color} style={style} />
+  ),
+  grid: () => (
+    <IcoMoon name="ic24-border-all" size={size} color={color} style={style} />
+  ),
+  list: () => (
+    <IcoMoon name="ic24-list-bullet" size={size} color={color} style={style} />
+  ),
+  gallery: () => (
+    <IcoMoon name="ic24-view-day" size={size} color={color} style={style} />
+  ),
+  'arrow-right': () => (
+    <IcoMoon name="ic24-arrow-right" size={size} color={color} style={style} />
+  ),
+  more: () => (
+    <IcoMoon name="ic24-more-hor" size={size} color={color} style={style} />
+  ),
+  remove: () => (
+    <IcoMoon name="ic24-remove" size={size} color={color} style={style} />
+  ),
+  check: () => (
+    <IcoMoon name="ic24-check" size={size} color={color} style={style} />
+  ),
+  clock: () => (
+    <IcoMoon name="ic24-alarm" size={size} color={color} style={style} />
+  ),
+  rotate: () => (
+    <IcoMoon name="ic24-rotate" size={size} color={color} style={style} />
   ),
 });
 

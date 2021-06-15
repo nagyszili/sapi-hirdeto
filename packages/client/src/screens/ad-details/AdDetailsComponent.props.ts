@@ -1,7 +1,0 @@
-import { AdByIdentifier_findAdByIdentifier } from '../../apollo/types/AdByIdentifier';
-import { CurrentUser_currentUser } from '../../apollo/types/CurrentUser';
-
-export interface AdDetailsComponentProps {
-  ad: AdByIdentifier_findAdByIdentifier;
-  user?: CurrentUser_currentUser;
-}

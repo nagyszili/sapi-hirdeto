@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import texts from '../../../assets/texts/texts.json';
@@ -7,15 +8,17 @@ import { useLocationsByCounty } from '../../apollo/locations/useLocationsByCount
 import { LocationInput } from '../../apollo/types/graphql-global-types';
 import { Fetching } from '.././Fetching';
 import { Element } from '../Filters/Select/SelectInput.props';
-import { SelectInput } from './Select/SelectInput';
+import { SelectInput } from './Select';
 
 interface Props {
   selectedCounty: string;
   setSelectedCounty: React.Dispatch<React.SetStateAction<string>>;
+  countyError?: string;
   selectedLocation?: LocationInput;
   setSelectedLocation: React.Dispatch<
     React.SetStateAction<LocationInput | undefined>
   >;
+  locationError?: string;
 }
 
 export const LocationFilter: React.FC<Props> = ({
@@ -23,12 +26,18 @@ export const LocationFilter: React.FC<Props> = ({
   setSelectedCounty,
   selectedLocation,
   setSelectedLocation,
+  countyError,
+  locationError,
 }) => {
   const { data: counties, loading } = useAllCounties();
+  const [first, setFirst] = useState(true);
 
   const { data: locations } = useLocationsByCounty({ county: selectedCounty });
-  if (loading || !counties) {
+  if (loading || !counties || (!locations && first)) {
     return <Fetching />;
+  }
+  if (first) {
+    setFirst(false);
   }
 
   const selectCounties = [{ label: texts['select'], value: '' }].concat(
@@ -40,7 +49,7 @@ export const LocationFilter: React.FC<Props> = ({
 
   const getLocations = () => {
     let selectLocations: Element[] | undefined = [
-      { label: texts['select'], value: {} },
+      { label: texts['select'], value: undefined },
     ];
 
     if (locations) {
@@ -69,6 +78,7 @@ export const LocationFilter: React.FC<Props> = ({
           elements={selectCounties}
           selectedElement={selectedCounty}
           setSelectedElement={(value) => setSelectedCounty(value)}
+          error={countyError}
         />
       </View>
       <View style={[styles.row, { zIndex: 99 }]}>
@@ -78,6 +88,7 @@ export const LocationFilter: React.FC<Props> = ({
           elements={getLocations()}
           selectedElement={selectedLocation}
           setSelectedElement={setSelectedLocation}
+          error={locationError}
         />
       </View>
     </View>

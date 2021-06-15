@@ -1,4 +1,7 @@
-import { Filter } from '../apollo/types/graphql-global-types';
+import {
+  Filter,
+  LocationQueryInput,
+} from '../apollo/types/graphql-global-types';
 import { ATTRIBUTE_TYPES } from './constants';
 
 export const parsePage = (page: string) => {
@@ -12,7 +15,7 @@ export const parseFilters = (filters: string) => {
     if (urlFilter) {
       const nameValue = urlFilter.split('_');
       const isInParsedFilters = parsedFilters.some(
-        (parsedFilter) => parsedFilter.name === nameValue[1]
+        (parsedFilter) => parsedFilter.name === nameValue[1],
       );
       if (nameValue.length > 1 && nameValue[0] === ATTRIBUTE_TYPES.RANGE) {
         const fromValue = nameValue[2].split('=');
@@ -53,7 +56,7 @@ export const parseFilters = (filters: string) => {
 
         if (
           parsedFilters.some(
-            (parsedFilter) => parsedFilter.name === fromValue[0]
+            (parsedFilter) => parsedFilter.name === fromValue[0],
           )
         ) {
           parsedFilters = parsedFilters.map((parsedFilter) =>
@@ -64,7 +67,7 @@ export const parseFilters = (filters: string) => {
                     ? [...parsedFilter.selectedAttributeValues, fromValue[1]]
                     : [fromValue[1]],
                 }
-              : parsedFilter
+              : parsedFilter,
           );
         } else {
           const pathFilter: Filter = {
@@ -79,6 +82,23 @@ export const parseFilters = (filters: string) => {
     }
   });
   return filters && parsedFilters;
+};
+
+export const parseLocation = (location: string): LocationQueryInput => {
+  const urlLocation = location.split(',');
+  const locationQuery: LocationQueryInput =
+    urlLocation.length > 1
+      ? {
+          type: 'location',
+          name: urlLocation[0],
+          county: urlLocation[1],
+        }
+      : {
+          type: 'county',
+          name: urlLocation[0],
+        };
+
+  return locationQuery;
 };
 
 export const stringifyPage = (page: number) => {
@@ -153,4 +173,15 @@ export const stringifyFilters = (filters: Filter[]) => {
     });
 
   return filters && urlFilters;
+};
+
+export const stringifyLocation = (
+  location?: LocationQueryInput | null,
+): string => {
+  if (location && location.name) {
+    return location?.county
+      ? `${location.name},${location.county}`
+      : `${location.name}`;
+  }
+  return undefined as unknown as string;
 };

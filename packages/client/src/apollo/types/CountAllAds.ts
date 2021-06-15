@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { LocationInput, Filter } from "./graphql-global-types";
+import { LocationQueryInput, Filter } from "./graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: CountAllAds
@@ -18,7 +18,8 @@ export interface CountAllAdsVariables {
   mainCategoryIdentifier?: string | null;
   categoryIdentifier?: string | null;
   inDescription?: boolean | null;
-  location?: LocationInput | null;
+  location?: LocationQueryInput | null;
   currency: string;
+  creatorId?: string | null;
   filters?: Filter[] | null;
 }

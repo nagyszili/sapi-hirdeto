@@ -1,7 +1,6 @@
-import { SortType } from './types';
-import { UIStateQuery_uiState } from './types/UIStateQuery';
+import { SortType, UIState } from './types';
 
-export const initialUIState: UIStateQuery_uiState = {
+export const initialUIState: UIState = {
   activeAlert: null,
   activeModal: {
     name: 'none',
@@ -11,6 +10,6 @@ export const initialUIState: UIStateQuery_uiState = {
 };
 
 export const initialSortType: SortType = {
-  sortField: 'createdAt',
+  sortField: 'actualizedAt',
   sortOrder: -1,
 };

@@ -1,35 +1,56 @@
 import { ArgsType, Field } from '@nestjs/graphql';
 import { AttributeValueInput } from 'src/attribute-value/attribute-value.input';
-import { MinLength, MaxLength, ArrayMaxSize } from 'class-validator';
-import { ImageInput } from './image/image.input';
+import {
+  MinLength,
+  MaxLength,
+  ArrayMaxSize,
+  IsArray,
+  IsOptional,
+} from 'class-validator';
+import { LocationInput } from 'src/location/location.input';
+import { ImageUpdate } from './image/image.update';
 
 @ArgsType()
 export class AdUpdate {
   @MinLength(12)
-  @MaxLength(60)
-  @Field({ nullable: true })
-  name?: string;
+  @MaxLength(100)
+  @Field()
+  name: string;
 
-  @Field({ nullable: true })
-  price?: number;
+  @Field()
+  price: number;
 
-  @Field({ nullable: true })
-  currency?: string;
+  @Field()
+  currency: string;
+
+  @Field()
+  negotiable: boolean;
 
   @MinLength(60)
   @MaxLength(9000)
-  @Field({ nullable: true })
-  description?: string;
+  @Field()
+  description: string;
+
+  @Field(() => ImageUpdate, { nullable: true })
+  thumbnail?: ImageUpdate;
 
   @ArrayMaxSize(8)
-  @Field(() => [ImageInput], { nullable: true })
-  images: ImageInput[];
+  @IsArray()
+  @IsOptional()
+  @Field(() => [String], { nullable: true })
+  deletedImages?: string[];
 
-  @Field({ nullable: true })
-  location?: string;
+  @ArrayMaxSize(8)
+  @IsArray()
+  @IsOptional()
+  @Field(() => [ImageUpdate], { nullable: true })
+  images?: ImageUpdate[];
 
-  @Field({ nullable: true })
-  category?: string;
+  @Field(() => LocationInput)
+  location: LocationInput;
+
+  @Field()
+  categoryId: string;
 
   @Field(() => [AttributeValueInput], { nullable: true })
   attributeValues?: AttributeValueInput[];

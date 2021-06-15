@@ -1,27 +1,29 @@
-import { ReactNativeFile } from 'apollo-upload-client';
+import * as ImageManipulator from 'expo-image-manipulator';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useEffect } from 'react';
 import { StyleSheet, View, Pressable, Platform, FlatList } from 'react-native';
-import * as mime from 'react-native-mime-types';
 
 import texts from '../../../../assets/texts/texts.json';
-import { ImageInput } from '../../../apollo/types/graphql-global-types';
+import { ImageUpdate } from '../../../apollo/types/graphql-global-types';
 import { Icon } from '../../../utils/icons';
 import * as Color from '../../../utils/theme/colors';
 import { Text } from '../../themed/Text';
 import { PreviewImage } from '../PreviewImage/PreviewImage';
+import { generateRNFile } from '../imageUtils';
 import { ImageUploadContainerProps } from './ImageUploadContainer.props';
 
 export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
   images,
   setImages,
+  setThumbnail,
+  thumbnail,
+  setDeletedImages,
 }) => {
   useEffect(() => {
     (async () => {
       if (Platform.OS !== 'web') {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } =
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
           alert('Sorry, we need camera roll permissions to make this work!');
         }
@@ -29,25 +31,18 @@ export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
     })();
   }, []);
 
-  const generateRNFile = (uri: string, name: string) => {
-    const mimeType: string = mime.lookup(uri).split('/');
-    const type = `image/${mimeType[1] || '*'}`;
-    return uri
-      ? new ReactNativeFile({
-          uri,
-          type,
-          name: name + `.${type}`,
-        })
-      : null;
-  };
+  const uploadImage = async (uri: string) => {
+    const image = await resizeImage(uri, `${Date.now()}`, 1080);
 
-  const uploadImage = (uri: string) => {
-    const image = generateRNFile(uri, `${Date.now()}`);
+    if (!thumbnail) {
+      const resizedThumbnail = await resizeImage(uri, `${Date.now()}`, 400);
+      setThumbnail({ image: resizedThumbnail, priority: 1 });
+    }
+
     if (image) {
       setImages((oldValue) => [
         ...oldValue,
         {
-          isThumbnail: oldValue.length === 0,
           image,
           priority: oldValue.length + 1,
         },
@@ -67,22 +62,129 @@ export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
     }
   };
 
-  const deleteImage = (key: number) =>
+  const rotate = async (image: ImageUpdate) => {
+    if (image.url) {
+      const result = await ImageManipulator.manipulateAsync(image.url, [
+        { rotate: -90 },
+      ]);
+      const rotated = generateRNFile(result.uri, `${Date.now()}.jpg`);
+      setDeletedImages &&
+        setDeletedImages((deletedImages) =>
+          deletedImages && image.url
+            ? [...deletedImages, image.url]
+            : [image.url as string]
+        );
+      setImages((oldImages) =>
+        oldImages.map((oldImage) =>
+          oldImage.priority === image.priority
+            ? {
+                image: rotated,
+                priority: oldImage.priority,
+              }
+            : oldImage
+        )
+      );
+      if (thumbnail?.priority === image.priority) {
+        const resizedThumbnail = await resizeImage(
+          rotated.uri,
+          `${Date.now()}`,
+          400
+        );
+        setThumbnail({
+          image: resizedThumbnail,
+          priority: image.priority,
+        });
+      }
+    } else {
+      const rotated = await ImageManipulator.manipulateAsync(image.image.uri, [
+        { rotate: -90 },
+      ]);
+      setImages((oldImages) =>
+        oldImages.map((oldImage) =>
+          oldImage.priority === image.priority
+            ? {
+                image: generateRNFile(rotated.uri, image.image.name),
+                priority: oldImage.priority,
+              }
+            : oldImage
+        )
+      );
+      if (thumbnail?.priority === image.priority) {
+        const resizedThumbnail = await resizeImage(
+          rotated.uri,
+          image.image.name,
+          400
+        );
+        setThumbnail({
+          image: resizedThumbnail,
+          priority: image.priority,
+        });
+      }
+    }
+  };
+
+  const resizeImage = async (uri: string, name: string, width: number) => {
+    const resizedImage = await ImageManipulator.manipulateAsync(
+      uri,
+      [{ resize: { width } }],
+      { compress: 1, format: ImageManipulator.SaveFormat.JPEG }
+    );
+    const image = generateRNFile(resizedImage.uri, name);
+    return image;
+  };
+
+  const deleteImage = async (item: ImageUpdate) => {
+    if (item.url) {
+      setDeletedImages &&
+        setDeletedImages((oldValue) => {
+          if (oldValue) {
+            return item.url ? [...oldValue, item.url] : oldValue;
+          }
+          return item.url ? [item.url] : undefined;
+        });
+    }
+    if (thumbnail && item.priority < thumbnail?.priority) {
+      setThumbnail(
+        (oldThumbnail) =>
+          oldThumbnail && {
+            ...oldThumbnail,
+            priority: oldThumbnail?.priority - 1,
+          }
+      );
+    }
+
+    if (item.priority === thumbnail?.priority && images.length > 1) {
+      const image = item.priority === 1 ? images[1].image : images[0].image;
+      const url = item.priority === 1 ? images[1].url : images[0].url;
+
+      const resizedThumbnail = await resizeImage(
+        image?.uri || url,
+        `${Date.now()}`,
+        400
+      );
+      setThumbnail({
+        image: resizedThumbnail,
+        priority: 1,
+      });
+    } else if (images.length === 1) {
+      setThumbnail(undefined);
+    }
     setImages((oldImages) =>
       oldImages
-        .filter((_, index) => index !== key)
-        .map((image, key) =>
-          key === 0 ? { ...image, isThumbnail: true } : image
-        )
+        .filter((image) => image.priority !== item.priority)
+        .map((image, key) => ({ ...image, priority: key + 1 }))
     );
+  };
 
-  const renderItem = (item: ImageInput, index: number) => {
+  const renderItem = (item: ImageUpdate, index: number) => {
     return (
       <PreviewImage
-        isThumbnail={index === 0}
-        image={item.image.uri}
+        isThumbnail={thumbnail?.priority === item.priority}
+        image={item?.image?.uri || item.url}
         key={index}
-        deleteImage={() => deleteImage(index)}
+        setThumbnail={() => setThumbnail(item)}
+        deleteImage={() => deleteImage(item)}
+        rotate={() => rotate(item)}
       />
     );
   };
@@ -95,7 +197,9 @@ export const ImageUploadContainer: React.FC<ImageUploadContainerProps> = ({
           showsHorizontalScrollIndicator={false}
           data={images}
           renderItem={({ item, index }) => renderItem(item, index)}
-          keyExtractor={(item, index) => item.image.uri + index}
+          keyExtractor={(item, index) =>
+            (item?.image?.uri || item?.url) + index
+          }
           horizontal
         />
       )}

@@ -24,6 +24,9 @@ export class AttributeModel extends Document {
   @Prop([PossibleValuesSchema])
   possibleValues: PossibleValuesModel[];
 
+  @Prop({ default: false })
+  required: boolean;
+
   @Prop()
   dependsBy: string;
 }

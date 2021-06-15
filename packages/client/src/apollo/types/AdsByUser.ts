@@ -7,35 +7,33 @@
 // GraphQL query operation: AdsByUser
 // ====================================================
 
+export interface AdsByUser_findAdsByUser_user {
+  __typename: "User";
+  id: string;
+}
+
 export interface AdsByUser_findAdsByUser_location {
   __typename: "Location";
-  longitude: number;
-  latitude: number;
   name: string;
   county: string;
 }
 
-export interface AdsByUser_findAdsByUser_attributeValues {
-  __typename: "AttributeValue";
-  key: string;
-  value: string;
-}
-
 export interface AdsByUser_findAdsByUser {
-  __typename: "Ad";
+  __typename: "AdListItem";
   id: string;
   identifier: string;
   name: string;
   price: number;
   currency: string;
+  negotiable: boolean;
+  status: string;
   description: string | null;
   createdAt: any;
   updatedAt: any | null;
   thumbnail: string | null;
   numberOfImages: number;
+  user: AdsByUser_findAdsByUser_user;
   location: AdsByUser_findAdsByUser_location;
-  views: number;
-  attributeValues: AdsByUser_findAdsByUser_attributeValues[] | null;
 }
 
 export interface AdsByUser {

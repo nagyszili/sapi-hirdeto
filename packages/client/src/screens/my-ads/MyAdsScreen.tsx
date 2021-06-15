@@ -1,46 +1,36 @@
+import { useReactiveVar } from '@apollo/client';
 import * as React from 'react';
-import { StyleSheet, SafeAreaView, FlatList } from 'react-native';
+import { StyleSheet, SafeAreaView } from 'react-native';
 
-import { AdsByUser_findAdsByUser } from '../../apollo/types/AdsByUser';
+import { isLoggedInVar } from '../../apollo/reactiveVariables';
 import { useCurrentUser } from '../../apollo/user/useCurrentUser';
 import { Fetching } from '../../components/Fetching';
+import { NotLoggedInComponent } from '../../components/NotLoggedIn/NotLoggedInComponent';
 import { useListAdsByUser } from '../../hooks/useListAdsByUser';
 import { greyLightColor } from '../../utils/theme/colors';
-import { AdListItem } from '../ads/ListAds/AdListItem/AdListItem';
+import { MyAdsComponent } from './MyAdsComponent';
 
 export const MyAdsScreen: React.FC<{}> = () => {
   const { ads, loadingAds, fetchMoreAds, refetchAds } = useListAdsByUser(10);
 
   const { data: user, loading: loadingUser } = useCurrentUser();
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
+
+  if (!isLoggedIn) {
+    return <NotLoggedInComponent />;
+  }
 
   if (loadingAds || loadingUser) {
     return <Fetching />;
   }
 
-  const renderItem = ({
-    item,
-    index,
-  }: {
-    item: AdsByUser_findAdsByUser;
-    index: number;
-  }) => <AdListItem item={item} index={index} user={user?.currentUser} />;
-
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        data={ads}
-        numColumns={2}
-        renderItem={renderItem}
-        onEndReached={() => fetchMoreAds()}
-        onEndReachedThreshold={3}
-        refreshing={loadingAds}
-        onRefresh={() => refetchAds()}
-        keyExtractor={(item) => item.id}
-        initialNumToRender={10}
-        maxToRenderPerBatch={20}
-        extraData={user?.currentUser}
+      <MyAdsComponent
+        user={user?.currentUser}
+        ads={ads}
+        fetchMoreAds={fetchMoreAds}
+        refetchAds={refetchAds}
       />
     </SafeAreaView>
   );

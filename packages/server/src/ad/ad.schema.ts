@@ -6,17 +6,26 @@ import {
   AttributeValueSchema,
 } from 'src/attribute-value/attribute-value.schema';
 import { UserModel } from 'src/user/user.schema';
-import { CURRENCY } from 'src/util/constants';
+import { CURRENCY, STATUS } from 'src/util/constants';
 import { LocationModel, LocationSchema } from 'src/location/locations.schema';
 import { ImageModel, ImageSchema } from './image/image.schema';
 
 @Schema({ timestamps: true })
 export class AdModel extends Document {
-  @Prop()
+  @Prop({ text: true })
   name: string;
 
   @Prop()
   identifier: string;
+
+  @Prop({
+    enum: [STATUS.ACTIVE, STATUS.INACTIVE, STATUS.DELETED],
+    default: STATUS.ACTIVE,
+  })
+  status: string;
+
+  @Prop()
+  reasonOfDelete: string;
 
   @Prop()
   price: number;
@@ -26,11 +35,14 @@ export class AdModel extends Document {
   })
   currency: string;
 
+  @Prop({ default: false })
+  negotiable: boolean;
+
   @Prop()
   description: string;
 
-  @Prop()
-  thumbnail: string;
+  @Prop(ImageSchema)
+  thumbnail: ImageModel;
 
   @Prop([ImageSchema])
   images: ImageModel[];
@@ -40,6 +52,9 @@ export class AdModel extends Document {
 
   @Prop({ type: Date })
   updatedAt: Date;
+
+  @Prop({ type: Date, default: new Date() })
+  actualizedAt: Date;
 
   @Prop({
     type: MongooseSchema.Types.ObjectId,

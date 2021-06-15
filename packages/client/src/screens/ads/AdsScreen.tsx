@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { useCategoriesByMainCategoryIdentifier } from '../../apollo/category/useCategoriesByMainCategoryIdentifier';
 import { useAllMainCategories } from '../../apollo/main-category/useAllMainCategories';
+import { LocationQueryInput } from '../../apollo/types/graphql-global-types';
 import { AdsScreenRouteProp } from '../../navigation/types';
 import { AdsScreenComponent } from './AdsScreenComponent';
 
@@ -11,18 +12,36 @@ export const AdsScreen: React.FC<{}> = () => {
   const { data: mainCategories } = useAllMainCategories();
   const route = useRoute<AdsScreenRouteProp>();
 
-  const setQueryString = (queryString: string) =>
+  const getFilters = () => {
+    const filters = route?.params?.filters?.filter(
+      (filter) => filter.name === 'price'
+    );
+    if (filters && filters.length > 0) {
+      return filters;
+    }
+    return undefined;
+  };
+
+  const setLocation = (location?: LocationQueryInput | null) => {
+    navigation.setParams({ location });
+  };
+
+  const setQueryString = (queryString: string) => {
     navigation.setParams({ query: queryString || undefined });
+  };
 
   const setMainCategoryIdentifier = (mainCategoryIdentifier: string) =>
     navigation.setParams({
       mainCategoryIdentifier,
       categoryIdentifier: '',
-      filters: undefined,
+      filters: getFilters(),
     });
 
   const setCategoryIdentifier = (categoryIdentifier: string) =>
-    navigation.setParams({ categoryIdentifier, filters: undefined });
+    navigation.setParams({
+      categoryIdentifier,
+      filters: getFilters(),
+    });
 
   const setSearchInDescription = (inDescription: boolean) =>
     navigation.setParams({ inDescription: inDescription || undefined });
@@ -43,11 +62,14 @@ export const AdsScreen: React.FC<{}> = () => {
       searchInDescription={route?.params?.inDescription || false}
       setSearchInDescription={setSearchInDescription}
       mainCategories={mainCategories?.findAllMainCategories}
-      selectedMainCategory={route?.params?.mainCategoryIdentifier || ''}
+      selectedMainCategory={route?.params?.mainCategoryIdentifier || undefined}
       setSelectedMainCategory={setMainCategoryIdentifier}
       categories={categories?.findCategoriesByMainCategoryIdentifier}
       selectedCategory={getSelectedCategory()}
       setSelectedCategory={setCategoryIdentifier}
+      setLocation={setLocation}
+      creatorId={route?.params?.creatorId}
+      location={route?.params?.location || undefined}
       filters={route?.params?.filters || undefined}
     />
   );

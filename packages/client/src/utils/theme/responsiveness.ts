@@ -1,0 +1,1 @@
+export const MIN_WIDTH_FOR_NATIVE_VIEW_ON_WEB = 670;

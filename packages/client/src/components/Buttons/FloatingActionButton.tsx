@@ -2,6 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Pressable, ViewStyle } from 'react-native';
 
 import { Icon } from '../../utils/icons';
+import * as Color from '../../utils/theme/colors';
 
 interface Props {
   style?: ViewStyle;
@@ -16,7 +17,7 @@ export const FloatingActionButton: React.FC<Props> = ({
 }) => {
   return (
     <Pressable style={[styles.container, style]} onPress={onPress}>
-      <Icon name="whatsapp" color="#FFFFFF" size={iconSize || 45} />
+      <Icon name="whatsapp" color={Color.whiteColor} size={iconSize || 45} />
     </Pressable>
   );
 };

@@ -1,31 +1,35 @@
+import { useReactiveVar } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { SafeAreaView, StyleSheet, Platform } from 'react-native';
 
+import texts from '../../../assets/texts/texts.json';
 import { useCreateAd } from '../../apollo/ad/useCreateAd';
 import { useCategoriesByMainCategoryIdentifier } from '../../apollo/category/useCategoriesByMainCategoryIdentifier';
 import { useAllMainCategories } from '../../apollo/main-category/useAllMainCategories';
-import {
-  LocationInput,
-  AttributeValueInput,
-  ImageInput,
-} from '../../apollo/types/graphql-global-types';
+import { isLoggedInVar } from '../../apollo/reactiveVariables';
+import { ImageInput } from '../../apollo/types/graphql-global-types';
+import { showLoginModal } from '../../apollo/ui/modalMutations';
 import { setLoading } from '../../apollo/ui/uiMutations';
 import { useCurrentUser } from '../../apollo/user/useCurrentUser';
 import { useUpdateCurrentUser } from '../../apollo/user/useUpdateCurrentUser';
 import { Fetching } from '../../components/Fetching';
-import { Element } from '../../components/Filters/Select/SelectInput.props';
+import { useAttributesInput } from '../../hooks/useAttributesInput';
+import { useSelectInput } from '../../hooks/useSelectInput';
+import { currencies, negotiableOptions } from '../../utils/constants';
 import { greyLightColor } from '../../utils/theme/colors';
-import { CreateAdComponent } from './CreateAdComponent/CreateAdComponent';
-
-const currencies: Element[] = [
-  { label: 'lei', value: 'lei' },
-  { label: '€', value: 'euro' },
-];
+import {
+  adCategoryError,
+  adMainCategoryError,
+  adLocationError,
+  adCountyError,
+} from '../../utils/validators';
+import { CreateAdComponent } from './CreateAdComponent';
 
 export const CreateAdScreen: React.FC<{}> = () => {
   const navigation = useNavigation();
+  const isLoggedIn = useReactiveVar(isLoggedInVar);
   const { data: user } = useCurrentUser();
   const [updateCurrentUser] = useUpdateCurrentUser();
   const { data: mainCategories, loading } = useAllMainCategories();
@@ -33,26 +37,60 @@ export const CreateAdScreen: React.FC<{}> = () => {
 
   const titleRef = useRef<any>();
   const descriptionRef = useRef<any>();
-  const priceRef = useRef<any>();
   const userNameRef = useRef<any>();
+  const priceRef = useRef<any>();
   const phoneNumberRef = useRef<any>();
+  const {
+    error: categoryError,
+    selectedElement: categoryIdentifier,
+    onChange: setCategoryIdentifier,
+    getValue: getCategoryIdentifier,
+  } = useSelectInput({ initialValue: '', errorMessage: adCategoryError });
 
-  const [categoryIdentifier, setCategoryIdentifier] = useState('');
-  const [mainCategoryIdentifier, setMainCategoryIdentifier] = useState('');
+  const {
+    error: mainCategoryError,
+    selectedElement: mainCategoryIdentifier,
+    onChange: setMainCategoryIdentifier,
+    getValue: getMainCategoryIdentifier,
+  } = useSelectInput({ initialValue: '', errorMessage: adMainCategoryError });
+
   const [images, setImages] = useState<ImageInput[]>([]);
+  const [thumbnail, setThumbnail] = useState<ImageInput | undefined>(undefined);
+
   const [currency, setCurrency] = useState(currencies[0].value);
+  const [negotiable, setNegotiable] = useState(negotiableOptions[0].value);
   const { data: categories } = useCategoriesByMainCategoryIdentifier(
     mainCategoryIdentifier
   );
+  const {
+    error: locationError,
+    selectedElement: selectedLocation,
+    onChange: setSelectedLocation,
+    getValue: getSelectedLocation,
+  } = useSelectInput({
+    initialValue: undefined,
+    errorMessage: adLocationError,
+  });
 
-  const [selectedCounty, setSelectedCounty] = useState('');
-  const [selectedLocation, setSelectedLocation] = useState<LocationInput>();
+  const {
+    error: countyError,
+    selectedElement: selectedCounty,
+    onChange: setSelectedCounty,
+    getValue: getSelectedCounty,
+  } = useSelectInput({ initialValue: '', errorMessage: adCountyError });
 
-  const [attributes, setAttributes] = useState<AttributeValueInput[]>([]);
+  const selectedCategory =
+    categories?.findCategoriesByMainCategoryIdentifier.find(
+      (cat) => cat.identifier === categoryIdentifier
+    );
 
-  useEffect(() => {
-    setAttributes([]);
-  }, [categoryIdentifier]);
+  const {
+    getAttributes,
+    getError,
+    getSelectedAttribute,
+    onChangeAttribute,
+    getPossibleValues,
+  } = useAttributesInput({ selectedCategory });
 
   useEffect(() => {
     setCategoryIdentifier('');
@@ -62,10 +100,6 @@ export const CreateAdScreen: React.FC<{}> = () => {
     return <Fetching />;
   }
 
-  const selectedCategory = categories?.findCategoriesByMainCategoryIdentifier.find(
-    (cat) => cat.identifier === categoryIdentifier
-  );
-
   const clearForm = () => {
     titleRef.current.clearValue();
     descriptionRef.current.clearValue();
@@ -73,8 +107,10 @@ export const CreateAdScreen: React.FC<{}> = () => {
     setMainCategoryIdentifier('');
     setImages([]);
     setCurrency(currencies[0].value);
+    setNegotiable(negotiableOptions[0].value);
     setSelectedCounty('');
     setSelectedLocation(undefined);
+    setThumbnail(undefined);
   };
 
   const _createAd = async () => {
@@ -83,58 +119,76 @@ export const CreateAdScreen: React.FC<{}> = () => {
     const price = priceRef.current.getValue();
     const userName = userNameRef.current.getValue();
     const phoneNumber = phoneNumberRef.current.getValue();
-
+    const category = getCategoryIdentifier();
+    const mainCategory = getMainCategoryIdentifier();
+    const location = getSelectedLocation();
+    const county = getSelectedCounty();
+    const attributeValues = getAttributes();
     if (
-      userName !== '' &&
-      phoneNumber !== '' &&
-      title !== '' &&
-      title.length > 12 &&
+      title &&
+      description &&
+      price &&
+      userName &&
+      phoneNumber &&
+      category &&
+      mainCategory &&
+      county &&
+      location &&
       selectedCategory?.id &&
-      parseInt(price, 10) > 0 &&
-      description.length > 60 &&
-      description.length < 9000 &&
-      selectedLocation
+      selectedLocation?.name &&
+      attributeValues
     ) {
-      setLoading(true);
-      try {
-        const result = await createAd({
-          variables: {
-            name: title,
-            categoryId: selectedCategory.id,
-            price: parseInt(price, 10),
-            location: selectedLocation,
-            images,
-            currency,
-            description,
-            attributeValues: attributes.filter((attribute) => attribute.value),
-          },
-        });
-
-        const userResult = await updateCurrentUser({
-          variables: { name: userName, phoneNumber },
-        });
-
-        if (result && userResult) {
-          setLoading(false);
-          clearForm();
-          if (Platform.OS === 'web') {
-            navigation.navigate('HomeScreen');
-          } else {
-            navigation.navigate('Main', { screen: 'Home' });
+      if (isLoggedIn && user) {
+        setLoading(true);
+        try {
+          const result = await createAd({
+            variables: {
+              name: title,
+              categoryId: selectedCategory.id,
+              price: parseInt(price, 10),
+              location: selectedLocation,
+              thumbnail,
+              images,
+              currency,
+              negotiable,
+              description,
+              attributeValues,
+            },
+          });
+          const userResult = await updateCurrentUser({
+            variables: { name: userName, phoneNumber },
+          });
+          if (result && userResult) {
+            setLoading(false);
+            clearForm();
+            if (Platform.OS === 'web') {
+              navigation.navigate('HomeScreen');
+            } else {
+              navigation.navigate('Main', {
+                screen: 'Home',
+                params: { screen: 'HomeScreen' },
+              });
+            }
           }
+        } catch (error) {
+          console.error(error);
+          setLoading(false);
+          alert(error);
         }
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-        alert('Error');
+      } else {
+        showLoginModal();
       }
-    } else {
-      alert('Please complete all fields!');
     }
   };
+
   return (
     <SafeAreaView style={styles.container}>
       <CreateAdComponent
+        categoryError={categoryError}
+        mainCategoryError={mainCategoryError}
+        countyError={countyError}
+        locationError={locationError}
+        pageTitle={texts['createNewAd']}
         titleRef={titleRef}
         descriptionRef={descriptionRef}
         priceRef={priceRef}
@@ -144,6 +198,9 @@ export const CreateAdScreen: React.FC<{}> = () => {
         currencies={currencies}
         currency={currency}
         setCurrency={setCurrency}
+        negotiableOptions={negotiableOptions}
+        negotiable={negotiable}
+        setNegotiable={setNegotiable}
         mainCategories={mainCategories.findAllMainCategories}
         mainCategoryIdentifier={mainCategoryIdentifier}
         setMainCategoryIdentifier={setMainCategoryIdentifier}
@@ -155,13 +212,18 @@ export const CreateAdScreen: React.FC<{}> = () => {
         selectedCategory={selectedCategory}
         selectedCounty={selectedCounty}
         setSelectedCounty={setSelectedCounty}
-        attributes={attributes}
-        setAttributes={setAttributes}
         selectedLocation={selectedLocation}
         setSelectedLocation={setSelectedLocation}
-        createAd={_createAd}
+        submit={_createAd}
+        submitButtonTitle={texts['uploadAd']}
         images={images}
+        setThumbnail={setThumbnail}
         setImages={setImages}
+        thumbnail={thumbnail}
+        getError={getError}
+        getSelectedAttribute={getSelectedAttribute}
+        onChangeAttribute={onChangeAttribute}
+        getPossibleValues={getPossibleValues}
       />
     </SafeAreaView>
   );

@@ -7,7 +7,7 @@ import Constants from 'expo-constants';
 import { cache } from './cache';
 //@ts-ignore
 const httpLink = createUploadLink({
-  uri: Constants.manifest.extra.backendUrl,
+  uri: Constants?.manifest?.extra?.backendUrl,
 });
 
 const authLink = setContext(async (_, { headers }) => {

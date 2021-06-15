@@ -3,24 +3,21 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { LocationInput, Filter } from "./graphql-global-types";
+import { LocationQueryInput, Filter } from "./graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: AllAds
 // ====================================================
 
-export interface AllAds_findAllAds_location {
-  __typename: "Location";
-  longitude: number;
-  latitude: number;
-  name: string;
-  county: string;
+export interface AllAds_findAllAds_user {
+  __typename: "User";
+  id: string;
 }
 
-export interface AllAds_findAllAds_attributeValues {
-  __typename: "AttributeValue";
-  key: string;
-  value: string;
+export interface AllAds_findAllAds_location {
+  __typename: "Location";
+  name: string;
+  county: string;
 }
 
 export interface AllAds_findAllAds {
@@ -29,15 +26,16 @@ export interface AllAds_findAllAds {
   identifier: string;
   name: string;
   price: number;
+  negotiable: boolean;
+  status: string;
   currency: string;
   description: string | null;
   createdAt: any;
   updatedAt: any | null;
   thumbnail: string | null;
   numberOfImages: number;
+  user: AllAds_findAllAds_user;
   location: AllAds_findAllAds_location;
-  views: number;
-  attributeValues: AllAds_findAllAds_attributeValues[] | null;
 }
 
 export interface AllAds {
@@ -53,7 +51,8 @@ export interface AllAdsVariables {
   mainCategoryIdentifier?: string | null;
   categoryIdentifier?: string | null;
   inDescription?: boolean | null;
-  location?: LocationInput | null;
+  location?: LocationQueryInput | null;
   currency: string;
+  creatorId?: string | null;
   filters?: Filter[] | null;
 }

@@ -14,6 +14,9 @@ export class Ad {
   identifier: string;
 
   @Field()
+  status: string;
+
+  @Field()
   name: string;
 
   @Field(() => User)
@@ -25,11 +28,14 @@ export class Ad {
   @Field()
   currency: string;
 
+  @Field()
+  negotiable: boolean;
+
   @Field({ nullable: true })
   description?: string;
 
-  @Field({ nullable: true })
-  thumbnail?: string;
+  @Field(() => Image, { nullable: true })
+  thumbnail?: Image;
 
   @Field(() => Int)
   numberOfImages: number;
@@ -42,6 +48,9 @@ export class Ad {
 
   @Field({ nullable: true })
   updatedAt?: Date;
+
+  @Field()
+  actualizedAt: Date;
 
   @Field(() => Location)
   location: Location;

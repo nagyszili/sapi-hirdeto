@@ -2,6 +2,7 @@ import { Resolver, Query, Int, Args } from '@nestjs/graphql';
 import { LocationService } from './location.service';
 import { mapModelsToObject } from 'src/util/mappers';
 import { Location } from './location.type';
+import { LocationQueryType } from './location-query.type';
 
 @Resolver()
 export class LocationResolver {
@@ -22,11 +23,12 @@ export class LocationResolver {
     return this.locationService.allCounties();
   }
 
-  @Query(() => [Location])
-  async findLocationsByName(@Args('name') name: string): Promise<Location[]> {
-    return mapModelsToObject(
-      await this.locationService.findLocationsByName(name),
-    );
+  @Query(() => [LocationQueryType])
+  async findLocationsByName(
+    @Args('name') name: string,
+    @Args('limit', { type: () => Int }) limit: number,
+  ): Promise<LocationQueryType[]> {
+    return this.locationService.findLocationsByName(name, limit);
   }
 
   @Query(() => [Location])

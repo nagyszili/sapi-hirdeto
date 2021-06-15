@@ -9,7 +9,17 @@
   "ad.notFound": "Hirdetés nem található",
   "ad.notFoundCount": "Nem található",
   "validator.emailEmpty": "Kérjük adja meg az email címet",
-  "validator.invalidEmail": "Érvéntelen email cím",
+  "validator.invalidEmail": "Érvénytelen email cím",
   "validator.passwordEmpty": "Kérjük adja meg a jelszót",
-  "validator.passwordToShort": "A jelszó túl rövid"
+  "validator.passwordToShort": "A jelszó túl rövid",
+  "validator.adNameError": "A cím minimum 12 és maximum 100 karakterből kell álljon",
+  "validator.adDescriptionError": "A leírás minimum 60 és maximum 9000 karaktert kell tartalmazzon",
+  "validator.adPriceError": "Az árat szükséges megadni",
+  "validator.phoneNumberError": "Adjon meg egy érvényes telefonszámot",
+  "validator.userNameError": "Kérjük adja meg a nevét",
+  "validator.mainCategoryError": "Kerjük válassza ki a főkategóriát",
+  "validator.categoryError": "Kerjük válassza ki az alkategóriát",
+  "validator.countyError": "Kerjük válassza ki a megyét",
+  "validator.locationError": "Kerjük válassza ki az települést",
+  "validator.attributeError": "Kerjük adjon meg egy értéket"
 }

@@ -7,15 +7,22 @@ import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 
 import pageNames from '../../assets/texts/pageNames.json';
-import { linking } from './LinkingConfiguration';
+import { useLinkingConfig } from './LinkingConfiguration/useLinkingConfig';
 import { RootNavigator } from './RootNavigator';
-import { UIStateContainer } from './UIStateContainer/UIStateContainer';
+import { UIStateContainer } from './UIStateContainer';
+import { navigationRef } from './navigation';
 
 export default function Navigation({
   colorScheme,
 }: {
   colorScheme: ColorSchemeName;
 }) {
+  const linkingConfig = useLinkingConfig();
+  const linking = {
+    prefixes: ['http://localhost:19006/, client://'],
+    config: linkingConfig,
+  };
+
   return (
     <NavigationContainer
       linking={linking}
@@ -26,8 +33,10 @@ export default function Navigation({
             options?.title ??
             pageNames[route?.name as keyof typeof pageNames] ??
             route?.name
-          } - Piacter`,
+          } - Sapi-Hirdető`,
       }}
+      // @ts-ignore
+      ref={navigationRef}
     >
       <UIStateContainer />
       <RootNavigator />

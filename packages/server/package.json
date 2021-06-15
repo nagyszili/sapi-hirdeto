@@ -28,7 +28,6 @@
     "@nestjs/mongoose": "^7.2.0",
     "@nestjs/passport": "^7.1.5",
     "@nestjs/platform-express": "^7.5.1",
-    "@types/sharp": "^0.28.0",
     "apollo-server": "^2.21.0",
     "apollo-server-express": "^2.19.1",
     "app-root-path": "^3.0.0",
@@ -38,6 +37,7 @@
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "convict": "^6.0.0",
+    "google-auth-library": "^7.0.4",
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.2",
     "graphql-upload": "^11.0.0",
@@ -48,8 +48,7 @@
     "passport-local": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.6.3",
-    "sharp": "^0.28.0"
+    "rxjs": "^6.6.3"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.5.1",

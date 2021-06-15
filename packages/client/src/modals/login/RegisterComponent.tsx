@@ -1,21 +1,18 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { SocialIcon } from 'react-native-elements';
 
 import texts from '../../../assets/texts/texts.json';
 import { useRegisterWithEmailAndPassword } from '../../apollo/user/useRegisterWithEmailAndPassword';
+import { useSignUpWithFacebook } from '../../apollo/user/useSignUpWithFacebook';
+import { useSignUpWithGoogle } from '../../apollo/user/useSignUpWithGoogle';
 import { Button } from '../../components/Buttons/Button';
 import { TextInput } from '../../components/TextInput/TextInput';
 import { HoverText } from '../../components/themed/HoverText';
 import { Text } from '../../components/themed/Text';
 import { getErrorMessage } from '../../utils/errors';
+import { Icon } from '../../utils/icons';
 import { ImageComponent } from '../../utils/images';
-import {
-  greyColor,
-  primaryColor,
-  greyLightColor,
-  greyDarkColor,
-} from '../../utils/theme/colors';
+import * as Color from '../../utils/theme/colors';
 import {
   isValidEmailPassword,
   emailErrorMessage,
@@ -24,18 +21,24 @@ import {
 interface Props {
   setTitle: (title: string) => void;
   switchLoginRegister: () => void;
+  hideModal?: () => void;
 }
 
 export const RegisterComponent: React.FC<Props> = ({
   setTitle,
   switchLoginRegister,
+  hideModal,
 }) => {
   const emailRef = React.useRef<any>();
   const passwordRef = React.useRef<any>();
 
   const { registerWithEmailAndPassword } = useRegisterWithEmailAndPassword();
 
-  React.useEffect(() => {
+  const { signUpWithGoogle } = useSignUpWithGoogle();
+
+  const { signUpWithFacebook } = useSignUpWithFacebook();
+
+  React.useLayoutEffect(() => {
     setTitle(texts['registration']);
   }, []);
 
@@ -46,6 +49,8 @@ export const RegisterComponent: React.FC<Props> = ({
       const { error } = await registerWithEmailAndPassword(email, password);
       if (error) {
         emailRef.current.showError(getErrorMessage(error));
+      } else {
+        hideModal && hideModal();
       }
     } else {
       emailRef.current.showError();
@@ -60,7 +65,13 @@ export const RegisterComponent: React.FC<Props> = ({
           <Text style={styles.label} regular greyDark>
             {texts['emailAddress']}
           </Text>
-          <TextInput ref={emailRef} errorMessage={emailErrorMessage} />
+          <TextInput
+            ref={emailRef}
+            errorMessage={emailErrorMessage}
+            textContentType="emailAddress"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
         </View>
         <View style={styles.labelInputGroup}>
           <View style={styles.passwordLabelContainer}>
@@ -73,6 +84,8 @@ export const RegisterComponent: React.FC<Props> = ({
             ref={passwordRef}
             secureTextEntry
             errorMessage={passwordErrorMessage}
+            textContentType="password"
+            autoCapitalize="none"
           />
         </View>
 
@@ -96,13 +109,12 @@ export const RegisterComponent: React.FC<Props> = ({
         <Button
           style={styles.fbButton}
           hoverStyle={styles.fbHover}
-          onPress={() => {}}
+          onPress={() => signUpWithFacebook()}
         >
-          <SocialIcon
-            iconSize={20}
-            raised={false}
+          <Icon
+            name="facebook"
             style={styles.fbIcon}
-            type="facebook"
+            color={Color.whiteColor}
           />
           <Text style={styles.buttonText} semiBold white>
             {texts['facebookRegistration']}
@@ -112,7 +124,7 @@ export const RegisterComponent: React.FC<Props> = ({
         <Button
           style={styles.googleButton}
           hoverStyle={styles.googleHover}
-          onPress={() => {}}
+          onPress={() => signUpWithGoogle()}
         >
           <View style={styles.googleIconContainer}>
             <ImageComponent name="google" style={styles.googleIcon} />
@@ -138,7 +150,7 @@ export const RegisterComponent: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Color.whiteColor,
     paddingHorizontal: 50,
     alignItems: 'flex-start',
     marginBottom: 20,
@@ -154,7 +166,7 @@ const styles = StyleSheet.create({
   forgotPasswordLabel: {
     lineHeight: 18,
     fontSize: 13,
-    color: primaryColor,
+    color: Color.primaryColor,
   },
   rememberLabel: {
     fontSize: 15,
@@ -170,7 +182,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   termsLink: {
-    color: greyDarkColor,
+    color: Color.greyDarkColor,
   },
   terms: {
     lineHeight: 19,
@@ -194,10 +206,6 @@ const styles = StyleSheet.create({
   fbIcon: {
     position: 'absolute',
     left: 18,
-    width: 0,
-    height: 0,
-    backgroundColor: 'transparent',
-    shadowColor: 'transparent',
   },
   googleIconContainer: {
     position: 'absolute',
@@ -212,14 +220,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    backgroundColor: greyLightColor,
+    backgroundColor: Color.greyLightColor,
   },
   googleButtonText: {
     fontSize: 15,
-    color: greyDarkColor,
+    color: Color.greyDarkColor,
   },
   googleHover: {
-    backgroundColor: greyColor,
+    backgroundColor: Color.greyColor,
   },
   button: {
     width: '100%',
@@ -230,7 +238,7 @@ const styles = StyleSheet.create({
   line: {
     width: '100%',
     height: 1,
-    backgroundColor: greyColor,
+    backgroundColor: Color.greyColor,
     marginVertical: 20,
   },
   textHover: {
@@ -239,12 +247,12 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     borderTopWidth: 1,
-    borderTopColor: greyColor,
+    borderTopColor: Color.greyColor,
     width: '100%',
     height: 70,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: greyLightColor,
+    backgroundColor: Color.greyLightColor,
     borderBottomRightRadius: 6,
     borderBottomLeftRadius: 6,
   },
@@ -254,6 +262,6 @@ const styles = StyleSheet.create({
   },
   loginText: {
     fontSize: 15,
-    color: primaryColor,
+    color: Color.primaryColor,
   },
 });

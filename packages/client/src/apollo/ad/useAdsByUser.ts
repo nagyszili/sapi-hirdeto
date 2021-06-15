@@ -10,21 +10,19 @@ export const FIND_ADS_BY_USER = gql`
       name
       price
       currency
+      negotiable
+      status
       description
       createdAt
       updatedAt
       thumbnail
       numberOfImages
+      user {
+        id
+      }
       location {
-        longitude
-        latitude
         name
         county
-      }
-      views
-      attributeValues {
-        key
-        value
       }
     }
   }

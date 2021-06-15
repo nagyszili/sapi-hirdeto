@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID, Int, Float } from '@nestjs/graphql';
 import { AttributeValue } from 'src/attribute-value/attribute-value.type';
 import { Location } from './../location/location.type';
+import { User } from 'src/user/user.type';
 
 @ObjectType()
 export class AdListItem {
@@ -11,13 +12,22 @@ export class AdListItem {
   identifier: string;
 
   @Field()
+  status: string;
+
+  @Field()
   name: string;
+
+  @Field(() => User)
+  user: User;
 
   @Field(() => Float)
   price: number;
 
   @Field()
   currency: string;
+
+  @Field()
+  negotiable: boolean;
 
   @Field({ nullable: true })
   description?: string;
@@ -33,6 +43,9 @@ export class AdListItem {
 
   @Field({ nullable: true })
   updatedAt?: Date;
+
+  @Field()
+  actualizedAt: Date;
 
   @Field(() => Location)
   location: Location;
