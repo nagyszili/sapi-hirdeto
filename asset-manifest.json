@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/sapi-hirdeto/static/js/app.ee2958d1.chunk.js",
-    "app.js.map": "/sapi-hirdeto/static/js/app.ee2958d1.chunk.js.map",
+    "app.js": "/sapi-hirdeto/static/js/app.4c96d727.chunk.js",
+    "app.js.map": "/sapi-hirdeto/static/js/app.4c96d727.chunk.js.map",
     "runtime~app.js": "/sapi-hirdeto/static/js/runtime~app.6500c2d4.js",
     "runtime~app.js.map": "/sapi-hirdeto/static/js/runtime~app.6500c2d4.js.map",
-    "static/js/2.03d2e39f.chunk.js": "/sapi-hirdeto/static/js/2.03d2e39f.chunk.js",
-    "static/js/2.03d2e39f.chunk.js.map": "/sapi-hirdeto/static/js/2.03d2e39f.chunk.js.map",
+    "static/js/2.87f3ebab.chunk.js": "/sapi-hirdeto/static/js/2.87f3ebab.chunk.js",
+    "static/js/2.87f3ebab.chunk.js.map": "/sapi-hirdeto/static/js/2.87f3ebab.chunk.js.map",
     "fonts/AntDesign.ttf": "/sapi-hirdeto/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/sapi-hirdeto/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/sapi-hirdeto/./fonts/Feather.ttf",
@@ -30,7 +30,7 @@
     "index.html": "/sapi-hirdeto/index.html",
     "manifest.json": "/sapi-hirdeto/manifest.json",
     "serve.json": "/sapi-hirdeto/serve.json",
-    "static/js/2.03d2e39f.chunk.js.LICENSE.txt": "/sapi-hirdeto/static/js/2.03d2e39f.chunk.js.LICENSE.txt",
+    "static/js/2.87f3ebab.chunk.js.LICENSE.txt": "/sapi-hirdeto/static/js/2.87f3ebab.chunk.js.LICENSE.txt",
     "static/media/active-image-upload.png": "/sapi-hirdeto/static/media/active-image-upload.6a52b0c6.png",
     "static/media/agriculture.png": "/sapi-hirdeto/static/media/agriculture.1d08836b.png",
     "static/media/appStore.png": "/sapi-hirdeto/static/media/appStore.964d535f.png",
@@ -48,6 +48,7 @@
     "static/media/playStore.png": "/sapi-hirdeto/static/media/playStore.3e6ca2dc.png",
     "static/media/real-estate.png": "/sapi-hirdeto/static/media/real-estate.ebdce655.png",
     "static/media/rocket.png": "/sapi-hirdeto/static/media/rocket.d2f3bf41.png",
+    "static/media/shopPatternTransparent.png": "/sapi-hirdeto/static/media/shopPatternTransparent.f8c25e19.png",
     "static/media/shopping.png": "/sapi-hirdeto/static/media/shopping.3dba5073.png",
     "static/media/sport.png": "/sapi-hirdeto/static/media/sport.51c30521.png",
     "static/media/star-filled.png": "/sapi-hirdeto/static/media/star-filled.bd8c86e6.png",
@@ -59,7 +60,7 @@
   },
   "entrypoints": [
     "static/js/runtime~app.6500c2d4.js",
-    "static/js/2.03d2e39f.chunk.js",
-    "static/js/app.ee2958d1.chunk.js"
+    "static/js/2.87f3ebab.chunk.js",
+    "static/js/app.4c96d727.chunk.js"
   ]
 }
