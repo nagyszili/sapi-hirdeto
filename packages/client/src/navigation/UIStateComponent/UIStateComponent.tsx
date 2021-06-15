@@ -135,7 +135,7 @@ export const UIStateComponent: React.FC<Props> = ({
               <View style={styles.disabledActiveModal} />
             )}
             <ModalHeader title={title} close={_hideModal} />
-            {modals({ setTitle, hideModal: _hideModal })[activeModal.name](
+            {modals({ setTitle, hideModal })[activeModal.name](
               activeModal.params
             )}
           </SafeAreaView>
