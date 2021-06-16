@@ -11,10 +11,12 @@ import google from '../../assets/images/googleIcon.png';
 import house from '../../assets/images/house.png';
 import household from '../../assets/images/household.png';
 import imageUpload from '../../assets/images/image-upload.png';
-import piacter from '../../assets/images/piacter.png';
+import logo from '../../assets/images/logo.png';
 import pig from '../../assets/images/pig.png';
 import placeholderImage from '../../assets/images/placeholderImage.png';
 import playStore from '../../assets/images/playStore.png';
+import projectName from '../../assets/images/projectName.png';
+import projectNameWhite from '../../assets/images/projectNameWhite1.png';
 import realEstate from '../../assets/images/real-estate.png';
 import shopping from '../../assets/images/shopping.png';
 import sport from '../../assets/images/sport.png';
@@ -37,7 +39,9 @@ const images = (props?: Props) => ({
   'white-logo': () => <Image source={whiteLogo} {...props} />,
   playStore: () => <Image source={playStore} {...props} />,
   appStore: () => <Image source={appStore} {...props} />,
-  piacter: () => <Image source={piacter} {...props} />,
+  logo: () => <Image source={logo} {...props} />,
+  projectName: () => <Image source={projectName} {...props} />,
+  projectNameWhite: () => <Image source={projectNameWhite} {...props} />,
   google: () => <Image source={google} {...props} />,
   mezogazdasag: () => <Image source={agriculture} {...props} />,
   kabanna: () => <Image source={house} {...props} />,

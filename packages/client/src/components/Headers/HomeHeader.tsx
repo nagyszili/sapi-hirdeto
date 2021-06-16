@@ -17,7 +17,7 @@ export const HomeHeader: React.FC<Props> = ({ topNotchSize }) => {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
-      <ImageComponent name="white-logo" style={styles().logo} />
+      <ImageComponent name="projectNameWhite" style={styles().logo} />
     </LinearGradient>
   );
 };
@@ -30,8 +30,8 @@ const styles = (topNotchSize?: number) =>
       alignItems: 'center',
     },
     logo: {
-      width: 110,
-      height: 31,
+      width: 180,
+      height: 35,
       position: 'absolute',
       bottom: 16,
     },

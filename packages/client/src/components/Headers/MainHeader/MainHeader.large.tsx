@@ -38,7 +38,7 @@ export const MainHeader: React.FC<MainHeaderProps> = () => {
           }
           style={styles.home}
         >
-          <ImageComponent name="piacter" style={styles.logo} />
+          <ImageComponent name="projectName" style={styles.logo} />
         </Pressable>
         <View style={styles.authContainer}>
           <HoverText
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     height: 50,
-    width: 130,
+    width: 200,
     marginLeft: -10,
   },
 });

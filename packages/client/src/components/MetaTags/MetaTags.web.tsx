@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const MetaTags: React.FC<Props> = ({
-  title = 'Piacter.ro',
+  title = 'Sapi-Hirdető',
   description = 'Vásárolj vagy hirdess nálunk!',
   image,
   url = `${Constants?.manifest?.extra?.clientUrl}`,
@@ -28,7 +28,7 @@ export const MetaTags: React.FC<Props> = ({
       {imageWidth && <meta property="og:image:width" content={imageWidth} />}
       {imageHeight && <meta property="og:image:height" content={imageHeight} />}
       <meta property="og:locale" content="hu_HU" />
-      <meta property="og:site_name" content="Piacter" />
+      <meta property="og:site_name" content="Sapi-Hirdető" />
       <meta property="og:type" content="website" />
       <meta property="og:app_id" content="481847872929237" />
       <meta property="fb:app_id" content="481847872929237" />

@@ -9,9 +9,9 @@ export default {
     privacy: 'hidden',
     orientation: 'portrait',
     primaryColor: '#256e43',
-    icon: './assets/images/icon.png',
+    icon: './assets/images/logo.png',
     splash: {
-      image: './assets/images/splash.png',
+      image: './assets/images/projectName.png',
       resizeMode: 'contain',
       backgroundColor: '#ffffff',
     },

@@ -22,7 +22,7 @@ export const Footer: React.FC<{}> = () => {
       <View style={styles.content}>
         <View style={styles.topContent}>
           <View>
-            <ImageComponent name="piacter" style={styles.logo} />
+            <ImageComponent name="projectName" style={styles.logo} />
             <Text style={styles.descriptionText}>
               {texts['footerDescription']}
             </Text>
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     marginLeft: -10,
     marginBottom: 7,
     height: 50,
-    width: 130,
+    width: 200,
   },
   descriptionText: {
     maxWidth: 300,
