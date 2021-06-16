@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/sapi-hirdeto/static/js/app.4c96d727.chunk.js",
-    "app.js.map": "/sapi-hirdeto/static/js/app.4c96d727.chunk.js.map",
+    "app.js": "/sapi-hirdeto/static/js/app.05db4b7b.chunk.js",
+    "app.js.map": "/sapi-hirdeto/static/js/app.05db4b7b.chunk.js.map",
     "runtime~app.js": "/sapi-hirdeto/static/js/runtime~app.6500c2d4.js",
     "runtime~app.js.map": "/sapi-hirdeto/static/js/runtime~app.6500c2d4.js.map",
-    "static/js/2.87f3ebab.chunk.js": "/sapi-hirdeto/static/js/2.87f3ebab.chunk.js",
-    "static/js/2.87f3ebab.chunk.js.map": "/sapi-hirdeto/static/js/2.87f3ebab.chunk.js.map",
+    "static/js/2.c949df79.chunk.js": "/sapi-hirdeto/static/js/2.c949df79.chunk.js",
+    "static/js/2.c949df79.chunk.js.map": "/sapi-hirdeto/static/js/2.c949df79.chunk.js.map",
     "fonts/AntDesign.ttf": "/sapi-hirdeto/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/sapi-hirdeto/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/sapi-hirdeto/./fonts/Feather.ttf",
@@ -30,7 +30,7 @@
     "index.html": "/sapi-hirdeto/index.html",
     "manifest.json": "/sapi-hirdeto/manifest.json",
     "serve.json": "/sapi-hirdeto/serve.json",
-    "static/js/2.87f3ebab.chunk.js.LICENSE.txt": "/sapi-hirdeto/static/js/2.87f3ebab.chunk.js.LICENSE.txt",
+    "static/js/2.c949df79.chunk.js.LICENSE.txt": "/sapi-hirdeto/static/js/2.c949df79.chunk.js.LICENSE.txt",
     "static/media/active-image-upload.png": "/sapi-hirdeto/static/media/active-image-upload.6a52b0c6.png",
     "static/media/agriculture.png": "/sapi-hirdeto/static/media/agriculture.1d08836b.png",
     "static/media/appStore.png": "/sapi-hirdeto/static/media/appStore.964d535f.png",
@@ -42,10 +42,12 @@
     "static/media/heart.png": "/sapi-hirdeto/static/media/heart.23b5c2c0.png",
     "static/media/house.png": "/sapi-hirdeto/static/media/house.aa0eb8a2.png",
     "static/media/household.png": "/sapi-hirdeto/static/media/household.e4ef569e.png",
-    "static/media/piacter.png": "/sapi-hirdeto/static/media/piacter.112537b2.png",
+    "static/media/logo.png": "/sapi-hirdeto/static/media/logo.dfef4973.png",
     "static/media/pig.png": "/sapi-hirdeto/static/media/pig.45efef03.png",
     "static/media/placeholderImage.png": "/sapi-hirdeto/static/media/placeholderImage.c3644cb7.png",
     "static/media/playStore.png": "/sapi-hirdeto/static/media/playStore.3e6ca2dc.png",
+    "static/media/projectName.png": "/sapi-hirdeto/static/media/projectName.1241f63b.png",
+    "static/media/projectNameWhite1.png": "/sapi-hirdeto/static/media/projectNameWhite1.1ae4168f.png",
     "static/media/real-estate.png": "/sapi-hirdeto/static/media/real-estate.ebdce655.png",
     "static/media/rocket.png": "/sapi-hirdeto/static/media/rocket.d2f3bf41.png",
     "static/media/shopPatternTransparent.png": "/sapi-hirdeto/static/media/shopPatternTransparent.f8c25e19.png",
@@ -60,7 +62,7 @@
   },
   "entrypoints": [
     "static/js/runtime~app.6500c2d4.js",
-    "static/js/2.87f3ebab.chunk.js",
-    "static/js/app.4c96d727.chunk.js"
+    "static/js/2.c949df79.chunk.js",
+    "static/js/app.05db4b7b.chunk.js"
   ]
 }
