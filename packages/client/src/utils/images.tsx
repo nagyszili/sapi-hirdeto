@@ -4,7 +4,9 @@ import { Image, ImageProps } from 'react-native';
 import activeImageUpload from '../../assets/images/active-image-upload.png';
 import agriculture from '../../assets/images/agriculture.png';
 import appStore from '../../assets/images/appStore.png';
+import book from '../../assets/images/book.png';
 import child from '../../assets/images/child.png';
+import deal from '../../assets/images/deal.png';
 import profilePic from '../../assets/images/defaultProfilePicture.png';
 import electronics from '../../assets/images/electronics.png';
 import google from '../../assets/images/googleIcon.png';
@@ -57,7 +59,8 @@ const images = (props?: Props) => ({
   'muszaki-cikkek-es-elektronika': () => (
     <Image source={electronics} {...props} />
   ),
-  'uzlet-es-szolgaltatas': () => <Image source={work} {...props} />,
+  'uzlet-es-szolgaltatas': () => <Image source={deal} {...props} />,
+  konyvek: () => <Image source={book} {...props} />,
   munkahely: () => <Image source={work} {...props} />,
   elektronika: () => <Image source={electronics} {...props} />,
   'divat-ruhazat': () => <Image source={shopping} {...props} />,

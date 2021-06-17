@@ -8,7 +8,7 @@ import { MainCategoryMock } from './mock-data/main-category.mock';
 import { MainCategoryInput } from 'src/main-category/main-category.input';
 import { MainCategoryModel } from 'src/main-category/main-category.schema';
 import { CategoryModel } from 'src/category/category.schema';
-import { CategoryMock } from './mock-data/categories.mock';
+import { CategoryMock } from './mock-data/new-categories.mock';
 import { CategoryInput } from 'src/category/category.input';
 import { LocationModel } from 'src/location/locations.schema';
 // eslint-disable-next-line @typescript-eslint/no-var-requires

@@ -248,6 +248,18 @@ export const ATTRIBUTE_NAMES = {
     TYPE: 'type',
     CONDITION: 'condition',
   },
+  TEXTBOOKS: {
+    TYPE: 'type',
+    CONDITION: 'condition',
+  },
+  LITERATURE: {
+    TYPE: 'type',
+    CONDITION: 'condition',
+  },
+  COURSEBOOK: {
+    TYPE: 'type',
+    CONDITION: 'condition',
+  },
 };
 
 export const ERROR_CODES = {
