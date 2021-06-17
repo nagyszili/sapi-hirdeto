@@ -23,9 +23,9 @@ export const Footer: React.FC<{}> = () => {
         <View style={styles.topContent}>
           <View>
             <ImageComponent name="projectName" style={styles.logo} />
-            <Text style={styles.descriptionText}>
+            {/* <Text style={styles.descriptionText}>
               {texts['footerDescription']}
-            </Text>
+            </Text> */}
           </View>
           <View style={styles.column}>
             <Text style={styles.columnTitle} black>
@@ -40,9 +40,9 @@ export const Footer: React.FC<{}> = () => {
             <HoverText style={styles.columnText} greyDark>
               {texts['privacyPolicy']}
             </HoverText>
-            <HoverText style={styles.columnText} greyDark>
+            {/* <HoverText style={styles.columnText} greyDark>
               {texts['career']}
-            </HoverText>
+            </HoverText> */}
           </View>
 
           <View style={styles.column}>

@@ -33,13 +33,17 @@ export const MainCategoryMock: MainCategoryInput[] = [
     identifier: 'mezogazdasag-es-ipar',
     name: 'Mezőgazdaság és ipar',
   },
+  // {
+  //   identifier: 'haztartas-es-kert',
+  //   name: 'Háztartás és kert',
+  // },
+  // {
+  //   identifier: 'baba-mama',
+  //   name: 'Baba-mama',
+  // },
   {
-    identifier: 'haztartas-es-kert',
-    name: 'Háztartás és kert',
-  },
-  {
-    identifier: 'baba-mama',
-    name: 'Baba-mama',
+    identifier: 'konyvek',
+    name: 'Könyvek',
   },
   {
     identifier: 'divat-ruhazat',

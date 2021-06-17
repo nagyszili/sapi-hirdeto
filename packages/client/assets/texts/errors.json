@@ -20,6 +20,6 @@
   "validator.mainCategoryError": "Kerjük válassza ki a főkategóriát",
   "validator.categoryError": "Kerjük válassza ki az alkategóriát",
   "validator.countyError": "Kerjük válassza ki a megyét",
-  "validator.locationError": "Kerjük válassza ki az települést",
+  "validator.locationError": "Kerjük válassza ki a települést",
   "validator.attributeError": "Kerjük adjon meg egy értéket"
 }

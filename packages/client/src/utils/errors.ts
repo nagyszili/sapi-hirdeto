@@ -8,7 +8,7 @@ import errors from '../../assets/texts/errors.json';
 export const getErrorCode = (error: ApolloError): string | null | undefined =>
   error?.graphQLErrors?.find(
     (graphQLError: GraphQLError) =>
-      graphQLError?.extensions?.exception?.response?.code,
+      graphQLError?.extensions?.exception?.response?.code
   )?.extensions?.exception?.response?.code;
 
 export const getErrorMessage = (error: ApolloError): string => {

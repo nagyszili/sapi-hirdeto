@@ -3,7 +3,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import texts from '../../../assets/texts/texts.json';
 import * as Color from '../../utils/theme/colors';
 import { maxContentWidth, globalPadding } from '../../utils/theme/layout';
 import { HoverText } from '../themed/HoverText';
@@ -13,7 +12,7 @@ export const GradientHeader: React.FC<{}> = () => {
 
   return (
     <LinearGradient
-      colors={[Color.secondaryColor, Color.primaryColor]}
+      colors={[Color.primaryColor, Color.secondaryColor]}
       style={styles.categoryHeader}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
@@ -28,7 +27,7 @@ export const GradientHeader: React.FC<{}> = () => {
             onPress={() =>
               navigation.navigate('AdsScreen', {
                 mainCategoryIdentifier: 'ingatlan',
-                categoryIdentifier: '',
+                categoryIdentifier: 'lakas',
                 filters: undefined,
                 price: undefined,
                 location: undefined,
@@ -36,7 +35,7 @@ export const GradientHeader: React.FC<{}> = () => {
               })
             }
           >
-            {texts['property']}
+            Lakás
           </HoverText>
         </View>
 
@@ -48,7 +47,7 @@ export const GradientHeader: React.FC<{}> = () => {
             textHoverStyle={styles.categoryHover}
             onPress={() =>
               navigation.navigate('AdsScreen', {
-                mainCategoryIdentifier: 'jarmuvek',
+                mainCategoryIdentifier: 'allas',
                 categoryIdentifier: '',
                 filters: undefined,
                 price: undefined,
@@ -57,7 +56,7 @@ export const GradientHeader: React.FC<{}> = () => {
               })
             }
           >
-            {texts['vehicle']}
+            Állás
           </HoverText>
         </View>
 
@@ -69,7 +68,7 @@ export const GradientHeader: React.FC<{}> = () => {
             textHoverStyle={styles.categoryHover}
             onPress={() =>
               navigation.navigate('AdsScreen', {
-                mainCategoryIdentifier: 'mezogazdasag',
+                mainCategoryIdentifier: 'konyvek',
                 categoryIdentifier: '',
                 filters: undefined,
                 price: undefined,
@@ -78,7 +77,7 @@ export const GradientHeader: React.FC<{}> = () => {
               })
             }
           >
-            {texts['agriculture']}
+            Könyvek
           </HoverText>
         </View>
       </View>
