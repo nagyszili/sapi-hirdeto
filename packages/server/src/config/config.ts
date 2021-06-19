@@ -8,7 +8,7 @@ export const config = convict({
       doc: 'The port to bind',
       format: 'port',
       default: 3000,
-      env: 'BACKEND_PORT',
+      env: 'PORT',
     },
   },
   db: {
