@@ -9,10 +9,12 @@ import { AdModule } from './ad/ad.module';
 import { SeederModule } from './seeder/seeder.module';
 import { CategoryModule } from './category/category.module';
 import { LocationModule } from './location/locations.module';
+import { RestModule } from './rest/RestModule';
 
 @Module({
   imports: [
     AuthModule,
+    RestModule,
     AdModule,
     MainCategoryModule,
     UserModule,

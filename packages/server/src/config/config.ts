@@ -33,7 +33,8 @@ export const config = convict({
   },
   google: {
     apiKey: {
-      doc: 'Api key to access google Identity Toolkit API, Directions API. Used for phone number validation and delivery time estimation.',
+      doc:
+        'Api key to access google Identity Toolkit API, Directions API. Used for phone number validation and delivery time estimation.',
       format: String,
       default: '',
       env: 'GOOGLE_API_KEY',
