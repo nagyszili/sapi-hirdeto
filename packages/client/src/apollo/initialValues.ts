@@ -13,3 +13,8 @@ export const initialSortType: SortType = {
   sortField: 'actualizedAt',
   sortOrder: -1,
 };
+
+export const initialHomeSortType: SortType = {
+  sortField: 'createdAt',
+  sortOrder: -1,
+};

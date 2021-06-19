@@ -4538,10 +4538,15 @@ export const CategoryMock: CategoryInput[] = [
           {
             values: [
               'Mezőgazdaság és erdészet',
-              'Építőipar és tervezés',
-              'Szállítás',
-              'Babysitter - takarítás',
+              'Építőipar, Tervezés',
+              'Egészségügy, Gyógyszeripar',
+              'HR, Munkaügy',
+              'IT programozás, Fejlesztés',
+              'Közigazgatás',
+              'Marketing, Média, PR',
+              'Jog, Jogi tanácsadás',
               'Turizmus és vendéglátás',
+              'Szállítás, Logisztika',
               'Kereskedelem',
               'Egyéb',
             ],

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { StyleSheet, View, ScrollView, Platform } from 'react-native';
 
 import shopPattern from '../../../../assets/images/shopPatternTransparent.png';
-import { initialSortType } from '../../../apollo/initialValues';
+import { initialHomeSortType } from '../../../apollo/initialValues';
 import { Footer } from '../../../components/Footer/Footer.web';
 import { GradientHeader } from '../../../components/Headers/GradientHeader.web';
 import { MainCategoryContainer } from '../../../components/MainCategoryContainer';
@@ -59,7 +59,7 @@ export const HomeComponent: React.FC<HomeComponentProps> = ({
         />
         <View style={styles.list}>
           <ListAdsContainer
-            sort={initialSortType}
+            sort={initialHomeSortType}
             location={location}
             scrollToTop={scrollToTop}
             creatorId={creatorId}

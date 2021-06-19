@@ -53,7 +53,7 @@ export const AddFavoriteButton: React.FC<Props> = ({ user, adId, style }) => {
   return (
     <Pressable style={[styles.starIcon, style]} onPress={onPress}>
       {favorite ? (
-        <Icon name="star-empty" size={24} color={Color.primaryLightColor} />
+        <Icon name="star-filled" size={24} color={Color.primaryLightColor} />
       ) : (
         <Icon name="star-empty" size={24} color={Color.blackColor} />
       )}
