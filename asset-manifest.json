@@ -1,7 +1,7 @@
 {
   "files": {
-    "app.js": "/sapi-hirdeto/static/js/app.a88d83a4.chunk.js",
-    "app.js.map": "/sapi-hirdeto/static/js/app.a88d83a4.chunk.js.map",
+    "app.js": "/sapi-hirdeto/static/js/app.f605fdb9.chunk.js",
+    "app.js.map": "/sapi-hirdeto/static/js/app.f605fdb9.chunk.js.map",
     "runtime~app.js": "/sapi-hirdeto/static/js/runtime~app.6500c2d4.js",
     "runtime~app.js.map": "/sapi-hirdeto/static/js/runtime~app.6500c2d4.js.map",
     "static/js/2.b532b170.chunk.js": "/sapi-hirdeto/static/js/2.b532b170.chunk.js",
@@ -65,6 +65,6 @@
   "entrypoints": [
     "static/js/runtime~app.6500c2d4.js",
     "static/js/2.b532b170.chunk.js",
-    "static/js/app.a88d83a4.chunk.js"
+    "static/js/app.f605fdb9.chunk.js"
   ]
 }
