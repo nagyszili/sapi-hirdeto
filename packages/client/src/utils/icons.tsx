@@ -160,6 +160,9 @@ const icons = (size: number, color: string, style: StyleProp<TextStyle>) => ({
   rotate: () => (
     <IcoMoon name="ic24-rotate" size={size} color={color} style={style} />
   ),
+  logout: () => (
+    <IcoMoon name="ic24-turn-off" size={size} color={color} style={style} />
+  ),
 });
 
 export type IconName = keyof ReturnType<typeof icons>;

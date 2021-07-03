@@ -1,20 +1,21 @@
 import { useReactiveVar } from '@apollo/client';
 import { useNavigation } from '@react-navigation/native';
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Pressable } from 'react-native';
 
 import texts from '../../../../assets/texts/texts.json';
 import { isLoggedInVar } from '../../../apollo/reactiveVariables';
+import { logoutUser } from '../../../apollo/user/logoutUser';
 import { useCurrentUser } from '../../../apollo/user/useCurrentUser';
 import { AttributeLine } from '../../../components/AttributeLine/AttributeLine';
 import { Button } from '../../../components/Buttons/Button';
 import { Fetching } from '../../../components/Fetching';
-import { HeaderContentComponent } from '../../../components/Headers/HeaderContentComponent';
 import { ProfilePicture } from '../../../components/ImageUpload/ProfilePicture/ProfilePicture';
 import { NotLoggedInComponent } from '../../../components/NotLoggedIn/NotLoggedInComponent';
 import { HoverText } from '../../../components/themed/HoverText';
 import { Text } from '../../../components/themed/Text';
 import { ROLES } from '../../../utils/constants';
+import { Icon } from '../../../utils/icons';
 import * as Color from '../../../utils/theme/colors';
 
 export const ProfileScreen: React.FC<{}> = () => {
@@ -95,7 +96,10 @@ export const ProfileScreen: React.FC<{}> = () => {
           style={styles.adminButton}
         />
       )}
-      <HeaderContentComponent />
+      <Pressable style={styles.button} onPress={() => logoutUser()}>
+        <Icon name="logout" size={22} style={styles.buttonIcon} />
+        <Text large>{texts.logout}</Text>
+      </Pressable>
     </View>
   );
 };
@@ -122,5 +126,16 @@ const styles = StyleSheet.create({
   },
   adminButton: {
     marginRight: 300,
+  },
+  button: {
+    marginVertical: 6,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Color.whiteColor,
+    borderRadius: 6,
+    height: 49,
+  },
+  buttonIcon: {
+    marginHorizontal: 25,
   },
 });
