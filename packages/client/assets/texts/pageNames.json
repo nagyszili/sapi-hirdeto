@@ -3,5 +3,11 @@
   "AdsScreen": "Hirdetések",
   "AdDetailsScreen": "Hirdetés",
   "CreateAdScreen": "Hirdetés feladása",
+  "UpdateAdScreen": "Hirdetés módosítása",
+  "ProfileScreen": "Profilom",
+  "FavoritesScreen": "Kedvencek",
+  "LegalDocumentScreen": "Hirdetés módosítása",
+  "AdminScreen": "Admin",
+  "MyAdsScreen": "Hirdetéseim",
   "NotFound": "A keresett oldal nem található"
 }

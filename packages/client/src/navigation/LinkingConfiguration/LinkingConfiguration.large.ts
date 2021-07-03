@@ -15,7 +15,7 @@ import { LinkingConfig } from './types';
 export const linkingConfig: LinkingConfig = {
   screens: {
     HomeScreen: {
-      path: '',
+      path: 'sapi-hirdeto',
       parse: {
         location: (location: string) => parseLocation(location),
       },
@@ -25,7 +25,7 @@ export const linkingConfig: LinkingConfig = {
       },
     },
     AdsScreen: {
-      path: '/hirdetesek/:mainCategoryIdentifier?/:categoryIdentifier?',
+      path: 'sapi-hirdeto/hirdetesek/:mainCategoryIdentifier?/:categoryIdentifier?',
       parse: {
         inDescription: Boolean,
         page: (page: string) => parsePage(page),
@@ -39,13 +39,13 @@ export const linkingConfig: LinkingConfig = {
           stringifyLocation(location),
       },
     },
-    AdDetailsScreen: '/ad-details/:identifier',
-    CreateAdScreen: '/uj-hirdetes',
-    ProfileScreen: 'profil',
-    AdminScreen: 'admin-panel',
-    FavoritesScreen: 'kedvencek',
-    MyAdsScreen: 'sajat-hirdeteseim',
-    UpdateAdScreen: 'hirdetes-frissitese/:identifier',
-    NotFound: '*',
+    AdDetailsScreen: 'sapi-hirdeto/hirdetes/:identifier',
+    CreateAdScreen: 'sapi-hirdeto/uj-hirdetes',
+    ProfileScreen: 'sapi-hirdeto/profil',
+    AdminScreen: 'sapi-hirdeto/admin-panel',
+    FavoritesScreen: 'sapi-hirdeto/kedvencek',
+    MyAdsScreen: 'sapi-hirdeto/sajat-hirdeteseim',
+    UpdateAdScreen: 'sapi-hirdeto/hirdetes-frissitese/:identifier',
+    NotFound: 'sapi-hirdeto/*',
   },
 };
