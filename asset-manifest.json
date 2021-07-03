@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/sapi-hirdeto/static/js/app.05db4b7b.chunk.js",
-    "app.js.map": "/sapi-hirdeto/static/js/app.05db4b7b.chunk.js.map",
+    "app.js": "/sapi-hirdeto/static/js/app.db33e40a.chunk.js",
+    "app.js.map": "/sapi-hirdeto/static/js/app.db33e40a.chunk.js.map",
     "runtime~app.js": "/sapi-hirdeto/static/js/runtime~app.6500c2d4.js",
     "runtime~app.js.map": "/sapi-hirdeto/static/js/runtime~app.6500c2d4.js.map",
-    "static/js/2.c949df79.chunk.js": "/sapi-hirdeto/static/js/2.c949df79.chunk.js",
-    "static/js/2.c949df79.chunk.js.map": "/sapi-hirdeto/static/js/2.c949df79.chunk.js.map",
+    "static/js/2.b532b170.chunk.js": "/sapi-hirdeto/static/js/2.b532b170.chunk.js",
+    "static/js/2.b532b170.chunk.js.map": "/sapi-hirdeto/static/js/2.b532b170.chunk.js.map",
     "fonts/AntDesign.ttf": "/sapi-hirdeto/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/sapi-hirdeto/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/sapi-hirdeto/./fonts/Feather.ttf",
@@ -30,12 +30,14 @@
     "index.html": "/sapi-hirdeto/index.html",
     "manifest.json": "/sapi-hirdeto/manifest.json",
     "serve.json": "/sapi-hirdeto/serve.json",
-    "static/js/2.c949df79.chunk.js.LICENSE.txt": "/sapi-hirdeto/static/js/2.c949df79.chunk.js.LICENSE.txt",
+    "static/js/2.b532b170.chunk.js.LICENSE.txt": "/sapi-hirdeto/static/js/2.b532b170.chunk.js.LICENSE.txt",
     "static/media/active-image-upload.png": "/sapi-hirdeto/static/media/active-image-upload.6a52b0c6.png",
     "static/media/agriculture.png": "/sapi-hirdeto/static/media/agriculture.1d08836b.png",
     "static/media/appStore.png": "/sapi-hirdeto/static/media/appStore.964d535f.png",
     "static/media/bell.png": "/sapi-hirdeto/static/media/bell.cf04af27.png",
+    "static/media/book.png": "/sapi-hirdeto/static/media/book.a9aa8ddf.png",
     "static/media/child.png": "/sapi-hirdeto/static/media/child.17568ebd.png",
+    "static/media/deal.png": "/sapi-hirdeto/static/media/deal.f6fea21f.png",
     "static/media/defaultProfilePicture.png": "/sapi-hirdeto/static/media/defaultProfilePicture.818aaa0c.png",
     "static/media/electronics.png": "/sapi-hirdeto/static/media/electronics.62e18966.png",
     "static/media/googleIcon.png": "/sapi-hirdeto/static/media/googleIcon.8f7a60f8.png",
@@ -62,7 +64,7 @@
   },
   "entrypoints": [
     "static/js/runtime~app.6500c2d4.js",
-    "static/js/2.c949df79.chunk.js",
-    "static/js/app.05db4b7b.chunk.js"
+    "static/js/2.b532b170.chunk.js",
+    "static/js/app.db33e40a.chunk.js"
   ]
 }
