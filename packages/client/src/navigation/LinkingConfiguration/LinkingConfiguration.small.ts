@@ -15,7 +15,7 @@ import { LinkingConfig } from './types';
 export const linkingConfig: LinkingConfig = {
   screens: {
     Main: {
-      path: '',
+      path: 'sapi-hirdeto/',
       screens: {
         Home: {
           path: '',
@@ -76,7 +76,7 @@ export const linkingConfig: LinkingConfig = {
       },
     },
     FiltersScreen: {
-      path: '/filters/:mainCategoryIdentifier?/:categoryIdentifier?',
+      path: 'sapi-hirdeto/szurok/:mainCategoryIdentifier?/:categoryIdentifier?',
       parse: {
         inDescription: Boolean,
         filters: (filter: string) => parseFilters(filter),
@@ -85,10 +85,10 @@ export const linkingConfig: LinkingConfig = {
         filters: (filters: Filter[]) => stringifyFilters(filters),
       },
     },
-    FullScreenMultiSelect: 'fullScreenMultiSelect',
-    FullScreenSelect: 'fullScreenSelect',
-    AdDetailsScreen: '/ad-details/:identifier',
-    UpdateAdScreen: 'hirdetes-frissitese/:identifier',
-    NotFound: '*',
+    FullScreenMultiSelect: 'sapi-hirdeto/fullScreenMultiSelect',
+    FullScreenSelect: 'sapi-hirdeto/fullScreenSelect',
+    AdDetailsScreen: 'sapi-hirdeto/hirdetes/:identifier',
+    UpdateAdScreen: 'sapi-hirdeto/hirdetes-frissitese/:identifier',
+    NotFound: 'sapi-hirdeto/*',
   },
 };

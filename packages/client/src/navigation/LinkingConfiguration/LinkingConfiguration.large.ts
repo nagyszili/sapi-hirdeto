@@ -15,7 +15,7 @@ import { LinkingConfig } from './types';
 export const linkingConfig: LinkingConfig = {
   screens: {
     HomeScreen: {
-      path: 'sapi-hirdeto',
+      path: 'sapi-hirdeto/',
       parse: {
         location: (location: string) => parseLocation(location),
       },
