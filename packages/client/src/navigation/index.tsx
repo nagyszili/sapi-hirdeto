@@ -19,7 +19,7 @@ export default function Navigation({
 }) {
   const linkingConfig = useLinkingConfig();
   const linking = {
-    prefixes: ['http://localhost:19006/, client://'],
+    prefixes: ['https://nagyszili.github.io/sapi-hirdeto/, client://'],
     config: linkingConfig,
   };
 
