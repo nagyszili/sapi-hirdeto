@@ -10,7 +10,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "deploy": "gh-pages -d web-build",
-    "predeploy": "expo build:web",
+    "predeploy": "expo build:web && cd web-build && cp index.html 404.html",
     "build:web": "GENERATE_SOURCEMAP=false expo build:web",
     "lint": "tsc --noEmit --skipLibCheck && eslint ../client --ext .js,.jsx,.ts,.tsx",
     "generate-types": "yarn apollo codegen:generate --endpoint=http://localhost:3001/graphql --target=typescript --includes='src/apollo/**/*.ts' --tagName=gql  --globalTypesFile=src/apollo/types/graphql-global-types.ts src/apollo/types --outputFlat"
