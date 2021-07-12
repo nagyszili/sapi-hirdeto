@@ -3,7 +3,7 @@ import { Element } from '../components/Filters/Select/SelectInput.props';
 
 export const ROLES = {
   USER: 'user',
-  MANAGER: 'manager',
+  ADMIN: 'admin',
 };
 
 export const CURRENCY = {

@@ -36,7 +36,6 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
   React.useEffect(() => {
     navigation.setOptions({ title: ad.name });
   });
-
   return (
     <ScrollView
       style={styles.container}
@@ -251,48 +250,48 @@ export const AdDetailsComponent: React.FC<AdDetailsComponentProps> = ({
                   </Text>
                   <Icon name="clock" size={22} color={Color.activateAdColor} />
                 </Pressable>
-
-                <ShareComponent ad={ad} />
               </>
             ) : (
-              <>
-                <View style={styles.dashContainer}>
-                  <Text style={styles.containerTitle} black large>
-                    {texts['markAsFavorite']}
-                  </Text>
-                  <AddFavoriteButton adId={ad.id} user={user} />
-                </View>
-                <ShareComponent ad={ad} />
-                <View style={styles.userContainer}>
-                  <Text large black>
-                    {texts['sender']}
-                  </Text>
-                  <View style={styles.userNameImageContainer}>
-                    <Image
-                      style={styles.userProfilePic}
-                      source={ad.user.profilePictureUrl || profilePic}
-                    />
-                    <View style={styles.nameContainer}>
-                      <Text medium black semiBold style={styles.userName}>
-                        {ad.user.name}
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={styles.callContainer}>
-                    <Icon
-                      color={Color.blackColor}
-                      name="phone"
-                      style={styles.whatsappIcon}
-                    />
-                    <Text small black>
-                      {ad.user.phoneNumber}
+              <View style={styles.dashContainer}>
+                <Text style={styles.containerTitle} black large>
+                  {texts['markAsFavorite']}
+                </Text>
+                <AddFavoriteButton adId={ad.id} user={user} />
+              </View>
+            )}
+
+            <ShareComponent ad={ad} />
+
+            {user?.id !== ad.user.id && (
+              <View style={styles.userContainer}>
+                <Text large black>
+                  {texts['sender']}
+                </Text>
+                <View style={styles.userNameImageContainer}>
+                  <Image
+                    style={styles.userProfilePic}
+                    source={ad.user.profilePictureUrl || profilePic}
+                  />
+                  <View style={styles.nameContainer}>
+                    <Text medium black semiBold style={styles.userName}>
+                      {ad.user.name}
                     </Text>
                   </View>
                 </View>
-              </>
+                <View style={styles.callContainer}>
+                  <Icon
+                    color={Color.blackColor}
+                    name="phone"
+                    style={styles.whatsappIcon}
+                  />
+                  <Text small black>
+                    {ad.user.phoneNumber}
+                  </Text>
+                </View>
+              </View>
             )}
 
-            {!isAdBelongsToUser && (
+            {user?.id !== ad.user.id && (
               <Pressable
                 onPress={() => {
                   navigation.navigate('AdsScreen', { creatorId: ad.user.id });
@@ -358,12 +357,7 @@ const ShareComponent: React.FC<{ ad: AdByIdentifier_findAdByIdentifier }> = ({
     <Text style={[styles.containerTitle, { color: Color.facebookColor }]} large>
       {texts['shareOnFacebook']}
     </Text>
-    <Icon
-      name="facebook"
-      size={22}
-      style={styles.fbIcon}
-      color={Color.facebookColor}
-    />
+    <Icon name="facebook" size={22} color={Color.facebookColor} />
   </Pressable>
 );
 
@@ -503,9 +497,6 @@ const styles = StyleSheet.create({
   },
   containerTitle: {
     fontWeight: '500',
-  },
-  fbIcon: {
-    padding: 5,
   },
   userNameImageContainer: {
     flexDirection: 'row',

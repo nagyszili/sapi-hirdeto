@@ -1,6 +1,6 @@
 export const ROLES = {
   USER: 'user',
-  MANAGER: 'manager',
+  ADMIN: 'admin',
 };
 
 export const LOGIN_TYPES = {

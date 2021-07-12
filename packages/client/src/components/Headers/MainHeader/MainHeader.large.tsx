@@ -53,7 +53,7 @@ export const MainHeader: React.FC<MainHeaderProps> = () => {
           </HoverText>
           {isLoggedIn ? (
             <>
-              {user?.currentUser.role === ROLES.MANAGER && (
+              {user?.currentUser.role === ROLES.ADMIN && false && (
                 <HoverText
                   black
                   style={[

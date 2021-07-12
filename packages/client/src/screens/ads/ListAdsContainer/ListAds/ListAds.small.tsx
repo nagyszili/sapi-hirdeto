@@ -6,6 +6,7 @@ import { StyleSheet, View, FlatList } from 'react-native';
 import { listTypeVar } from '../../../../apollo/reactiveVariables';
 import { ListTypeEnum } from '../../../../apollo/types';
 import { AllAds_findAllAds } from '../../../../apollo/types/AllAds';
+import { hideAddToFavorite } from '../../../../utils';
 import { greyLightColor } from '../../../../utils/theme/colors';
 import { AdGalleryItem } from '../AdGalleryItem';
 import { AdGridItem } from '../AdGridItem';
@@ -37,20 +38,20 @@ export const ListAds: React.FC<ListAdsProps> = ({
         item={item}
         index={index}
         user={user}
-        hideAdToFavorite={user?.id === item.user.id}
+        hideAdToFavorite={hideAddToFavorite(item, user)}
       />
     ) : listType === ListTypeEnum.list ||
       (!listType && listLayoutType === ListTypeEnum.list) ? (
       <AdListItem
         item={item}
         user={user}
-        hideAdToFavorite={user?.id === item.user.id}
+        hideAdToFavorite={hideAddToFavorite(item, user)}
       />
     ) : (
       <AdGalleryItem
         item={item}
         user={user}
-        hideAdToFavorite={user?.id === item.user.id}
+        hideAdToFavorite={hideAddToFavorite(item, user)}
       />
     );
   };

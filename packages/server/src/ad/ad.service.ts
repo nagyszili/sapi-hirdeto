@@ -230,7 +230,7 @@ export class AdService {
   async updateAd(id: string, adUpdate: AdUpdate, user: User): Promise<AdModel> {
     const currentAd = await this.findAdById(id);
 
-    if (currentAd.user.id === user.id || user.role === ROLES.MANAGER) {
+    if (currentAd.user.id === user.id || user.role === ROLES.ADMIN) {
       const { thumbnail, images, deletedImages, ...rest } = adUpdate;
 
       currentAd.set({ ...rest });
@@ -340,7 +340,7 @@ export class AdService {
     reasonOfDelete?: string,
   ): Promise<AdModel> {
     const ad = await this.findAdById(id);
-    if (ad.user.id === user.id || user.role === ROLES.MANAGER) {
+    if (ad.user.id === user.id || user.role === ROLES.ADMIN) {
       if (status === 'DELETED' && reasonOfDelete) {
         ad.reasonOfDelete = reasonOfDelete;
       }
@@ -362,7 +362,7 @@ export class AdService {
 
     if (
       diffBetweenDates >= 1 &&
-      (ad.user.id == user.id || user.role == ROLES.MANAGER)
+      (ad.user.id == user.id || user.role == ROLES.ADMIN)
     ) {
       const actualizedAt = new Date();
       ad.actualizedAt = actualizedAt;

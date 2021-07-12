@@ -4,7 +4,7 @@ import { useSetAdStatus } from '../apollo/ad/useSetAdStatus';
 import { isLoggedInVar } from '../apollo/reactiveVariables';
 import { setLoading } from '../apollo/ui/uiMutations';
 import { useCurrentUser } from '../apollo/user/useCurrentUser';
-import { STATUS, CURRENCY } from '../utils/constants';
+import { STATUS, CURRENCY, ROLES } from '../utils/constants';
 
 interface SetAdStatusParams {
   userId: string;
@@ -72,7 +72,10 @@ export const useSetAdStatusById = () => {
   };
 
   const isAdBelongsToUser = (userId: string) =>
-    isLoggedIn ? user?.currentUser.id === userId : false;
+    isLoggedIn
+      ? user?.currentUser.id === userId ||
+        user?.currentUser.role === ROLES.ADMIN
+      : false;
 
   return {
     setAdStatus: _setAdStatus,

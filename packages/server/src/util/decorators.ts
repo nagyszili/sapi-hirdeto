@@ -20,11 +20,11 @@ export const CurrentUser = createParamDecorator(
 export const UserRole = () =>
   applyDecorators(
     UseGuards(RoleJwtAuthGuard, RolesGuard),
-    SetMetadata('roles', [ROLES.USER, ROLES.MANAGER]),
+    SetMetadata('roles', [ROLES.USER, ROLES.ADMIN]),
   );
 
-export const ManagerRole = () =>
+export const AdminRole = () =>
   applyDecorators(
     UseGuards(RoleJwtAuthGuard, RolesGuard),
-    SetMetadata('roles', [ROLES.MANAGER]),
+    SetMetadata('roles', [ROLES.ADMIN]),
   );

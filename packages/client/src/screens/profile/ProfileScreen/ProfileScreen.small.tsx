@@ -89,7 +89,7 @@ export const ProfileScreen: React.FC<{}> = () => {
           </Text>
         )}
       </View>
-      {user?.currentUser.role === ROLES.MANAGER && (
+      {user?.currentUser.role === ROLES.ADMIN && false && (
         <Button
           onPress={() => navigation.navigate('AdminScreen')}
           text="Admin Panel"

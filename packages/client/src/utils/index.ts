@@ -2,8 +2,10 @@ import Constants from 'expo-constants';
 import { Share } from 'react-native';
 
 import attributesText from '../../assets/texts/attributes.json';
+import { AllAds_findAllAds } from '../apollo/types/AllAds';
+import { CurrentUser_currentUser } from '../apollo/types/CurrentUser';
 import { Filter } from '../apollo/types/graphql-global-types';
-import { ATTRIBUTE_TYPES } from './constants';
+import { ATTRIBUTE_TYPES, ROLES } from './constants';
 
 export const attributeName = (text: string): string =>
   attributesText[text as keyof typeof attributesText] || text;
@@ -63,7 +65,7 @@ export const addRangeFilter = (
   from: string,
   to: string,
   filters?: Filter[],
-  filter?: Filter,
+  filter?: Filter
 ) =>
   filter && filters
     ? filters.map((oldFilter) =>
@@ -74,7 +76,7 @@ export const addRangeFilter = (
               from: parseInt(from, 10),
               to: parseInt(to, 10),
             }
-          : oldFilter,
+          : oldFilter
       )
     : filters
     ? [
@@ -99,7 +101,7 @@ export const addMultiSelectFilter = (
   title: string,
   selectedElements: string[],
   filters?: Filter[],
-  filter?: Filter,
+  filter?: Filter
 ) =>
   filter && filters
     ? filters.map((oldFilter) =>
@@ -108,7 +110,7 @@ export const addMultiSelectFilter = (
               ...oldFilter,
               selectedAttributeValues: selectedElements,
             }
-          : oldFilter,
+          : oldFilter
       )
     : filters
     ? [
@@ -131,13 +133,13 @@ export const addSelectFilter = (
   title: string,
   element: string,
   filters?: Filter[],
-  filter?: Filter,
+  filter?: Filter
 ) =>
   filters && filter
     ? filters.map((oldFilter) =>
         oldFilter.name === title
           ? { ...oldFilter, selectedAttributeValues: [element] }
-          : oldFilter,
+          : oldFilter
       )
     : filters
     ? [
@@ -171,7 +173,7 @@ export const shareAd = ({
     },
     {
       dialogTitle: `${adName}`,
-    },
+    }
   );
 
 export const shareAdOnFacebook = ({
@@ -188,3 +190,8 @@ export const shareAdOnFacebook = ({
     href: `${Constants?.manifest?.extra?.clientUrl}/ad-details/${adIdentifier}`,
     display: 'popup',
   });
+
+export const hideAddToFavorite = (
+  item: AllAds_findAllAds,
+  user: CurrentUser_currentUser | undefined
+) => user?.id === item.user.id || user?.role === ROLES.ADMIN;

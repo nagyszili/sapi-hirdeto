@@ -6,6 +6,7 @@ import texts from '../../../../../assets/texts/texts.json';
 import { AllAds_findAllAds } from '../../../../apollo/types/AllAds';
 import { PaginationComponent } from '../../../../components/PaginationComponent.web';
 import { Text } from '../../../../components/themed/Text';
+import { hideAddToFavorite } from '../../../../utils';
 import { maxContentWidth, globalPadding } from '../../../../utils/theme/layout';
 import { AdListItem } from '../AdListItem';
 import { ListAdsProps } from './ListAds.props';
@@ -25,7 +26,7 @@ export const ListAds: React.FC<ListAdsProps> = ({
       <AdListItem
         item={item}
         user={user}
-        hideAdToFavorite={user?.id === item.user.id}
+        hideAdToFavorite={hideAddToFavorite(item, user)}
       />
     );
   };
