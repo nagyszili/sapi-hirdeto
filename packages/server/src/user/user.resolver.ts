@@ -2,7 +2,7 @@ import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './user.type';
 import { UserInput } from './user.input';
-import { UserRole, CurrentUser, AdminRole } from './../util/decorators';
+import { UserRole, CurrentUser, ManagerRole } from './../util/decorators';
 import { UserUpdate } from './user.update';
 import { modelToObject, mapUserToUserAdsList } from 'src/util/mappers';
 import { UserAdsList } from './user-ads-list.type';
@@ -20,7 +20,7 @@ export class UserResolver {
     };
   }
 
-  @AdminRole()
+  @ManagerRole()
   @Query(() => Int)
   async countUsersByDate(
     @Args('fromDate') fromDate: Date,
@@ -59,7 +59,7 @@ export class UserResolver {
     );
   }
 
-  @AdminRole()
+  @ManagerRole()
   @Mutation(() => User)
   async updateUser(
     @Args('id') id: string,

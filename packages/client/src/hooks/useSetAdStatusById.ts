@@ -74,7 +74,7 @@ export const useSetAdStatusById = () => {
   const isAdBelongsToUser = (userId: string) =>
     isLoggedIn
       ? user?.currentUser.id === userId ||
-        user?.currentUser.role === ROLES.ADMIN
+        user?.currentUser.role === ROLES.MANAGER
       : false;
 
   return {

@@ -194,4 +194,4 @@ export const shareAdOnFacebook = ({
 export const hideAddToFavorite = (
   item: AllAds_findAllAds,
   user: CurrentUser_currentUser | undefined
-) => user?.id === item.user.id || user?.role === ROLES.ADMIN;
+) => user?.id === item.user.id || user?.role === ROLES.MANAGER;

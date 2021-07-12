@@ -36,7 +36,7 @@ export const RootNavigator: React.FC<{}> = (props: any) => {
       <RootStack.Screen name="NotFound" component={NotFoundScreen} />
       <RootStack.Screen name="FavoritesScreen" component={FavoritesScreen} />
       <RootStack.Screen name="CreateAdScreen" component={CreateAdScreen} />
-      {isLoggedIn && user?.currentUser.role === ROLES.ADMIN && false && (
+      {isLoggedIn && user?.currentUser.role === ROLES.MANAGER && false && (
         <RootStack.Screen name="AdminScreen" component={AdminScreen} />
       )}
       {isLoggedIn && (

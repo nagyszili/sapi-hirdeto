@@ -4,6 +4,7 @@ import { Element } from '../components/Filters/Select/SelectInput.props';
 export const ROLES = {
   USER: 'user',
   ADMIN: 'admin',
+  MANAGER: 'manager',
 };
 
 export const CURRENCY = {

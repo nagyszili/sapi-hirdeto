@@ -7,7 +7,7 @@ import {
   mapObjectsToAds,
   mapObjectToAd,
 } from 'src/util/mappers';
-import { UserRole, CurrentUser, AdminRole } from 'src/util/decorators';
+import { UserRole, CurrentUser, ManagerRole } from 'src/util/decorators';
 import { User } from 'src/user/user.type';
 import { QueryParameters } from 'src/util/graphql-util-types/QueryParameters';
 import { AdListItem } from './ad-list-item.type';
@@ -18,7 +18,7 @@ import { AdUpdate } from './ad.update';
 export class AdResolver {
   constructor(private adService: AdService) {}
 
-  @AdminRole()
+  @ManagerRole()
   @Query(() => Int)
   async countAdsByDate(
     @Args('fromDate') fromDate: Date,

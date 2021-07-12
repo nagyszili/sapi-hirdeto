@@ -26,7 +26,7 @@ export class UserModel extends Document {
   @Prop()
   phoneNumber: string;
 
-  @Prop({ default: ROLES.USER, enum: [ROLES.USER, ROLES.ADMIN] })
+  @Prop({ default: ROLES.USER, enum: [ROLES.USER, ROLES.MANAGER] })
   role: string;
 
   @Prop({ type: Date })
