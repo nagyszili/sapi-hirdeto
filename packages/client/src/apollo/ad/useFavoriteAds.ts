@@ -27,4 +27,5 @@ export const FAVORITE_ADS = gql`
   }
 `;
 
-export const useFavoriteAds = () => useQuery<FavoriteAds>(FAVORITE_ADS);
+export const useFavoriteAds = () =>
+  useQuery<FavoriteAds>(FAVORITE_ADS, { fetchPolicy: 'cache-and-network' });

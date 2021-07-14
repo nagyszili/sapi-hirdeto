@@ -69,6 +69,10 @@ export const cache = new InMemoryCache({
             return merged;
           },
         },
+
+        findFavoriteAdsByUser: {
+          merge: false,
+        },
       },
     },
     AdListItem: {

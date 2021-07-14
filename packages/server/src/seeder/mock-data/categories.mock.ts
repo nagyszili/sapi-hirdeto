@@ -4876,6 +4876,18 @@ export const CategoryMock: CategoryInput[] = [
     ],
   },
   {
+    mainCategoryId: 'muszaki-cikkek-es-elektronika',
+    identifier: 'mernoki-eszkozok',
+    name: 'Mérnöki eszközök',
+    attributes: [
+      {
+        title: ATTRIBUTE_NAMES.ACCESSORIES_PARTS.CONDITION,
+        type: ATTRIBUTE_TYPES.MULTI_SELECT,
+        possibleValues: [{ values: ['Használt', 'Új'] }],
+      },
+    ],
+  },
+  {
     mainCategoryId: 'uzlet-es-szolgaltatas',
     identifier: 'auto-es-szallitas',
     name: 'Autó és Szállítás',
